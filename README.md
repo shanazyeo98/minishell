@@ -42,6 +42,8 @@ https://sutdapac-my.sharepoint.com/:p:/g/personal/shayeo_42mail_sutd_edu_sg/EY87
 
 [] Week 2 (Deadline: 29 September)
 
+• Complete a working Makefile
+
 • Research on echo with option -n
 
 • Research on cd with only a relative or absolute path
