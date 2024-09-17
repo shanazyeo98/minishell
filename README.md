@@ -20,6 +20,8 @@ https://sutdapac-my.sharepoint.com/:p:/g/personal/shayeo_42mail_sutd_edu_sg/EY87
 
 • Logic for parsing the command - Data structures, Tokens, ast??, etc (Both)
 
+• Research on History (Shanaz)
+
 • Research on Single Quotes & Double Quotes (Shanaz)
 
 • Research on Redirections (MJ)
