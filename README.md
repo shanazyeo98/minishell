@@ -34,6 +34,12 @@ https://sutdapac-my.sharepoint.com/:p:/g/personal/shayeo_42mail_sutd_edu_sg/EY87
 
 • Research on interactive mode vs non-interactive mode (Ctrl-C, ctrl-D, ctrl-\) (Signals) (Shanaz)
 
+• (BONUS) Research on && and || with parenthesis for priorities X (MJ)
+
+• (BONUS) Research on wildcards only for current working directory (Shanaz)
+
+[] Week 2 (Deadline: 29 September)
+
 • Research on echo with option -n
 
 • Research on cd with only a relative or absolute path
@@ -47,5 +53,3 @@ https://sutdapac-my.sharepoint.com/:p:/g/personal/shayeo_42mail_sutd_edu_sg/EY87
 • Research on env with no options or arguments
 
 • Research on exit with no options
-• (BONUS) Research on && and || with parenthesis for priorities X (MJ)
-• (BONUS) Research on wildcards only for current working directory (Shanaz)
