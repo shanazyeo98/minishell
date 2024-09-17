@@ -6,11 +6,11 @@
 3. When in doubt, reference bash manual and/or look up on slack and/or ask Ben & Gernaine!
 4. HAVE FUN!
 
-**Program Flow Chart**
+**PROGRAM FLOW CHART**
 
 https://sutdapac-my.sharepoint.com/:p:/g/personal/shayeo_42mail_sutd_edu_sg/EY87D0YVr_tLj1OM2Bw0zMwBillK-_V_paPSI-3RSV2_Pg?e=j9OObK
 
-**Chill Timeline**
+**CHILL TIMELINE**
 
 [] Week 1 (Deadline: 22 September)
 
