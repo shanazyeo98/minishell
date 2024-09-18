@@ -2,9 +2,10 @@
 
 **GROUND RULES**
 1. When working on own code, create a git branch!!
-2. When feature is ready, switch to main, git pull & merge (& fix conflicts if any)
-3. When in doubt, reference bash manual and/or look up on slack and/or ask Ben & Gernaine!
-4. HAVE FUN!
+2. Commit to the local git branch and push to the remote branch.
+3. When feature is ready, switch to main, git pull & merge (& fix conflicts if any)
+4. When in doubt, reference bash manual and/or look up on slack and/or ask Ben & Gernaine!
+5. HAVE FUN!
 
 **PROGRAM FLOW CHART**
 
