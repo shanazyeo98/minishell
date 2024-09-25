@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mj_test_1.c                                        :+:      :+:    :+:   */
+/*   ft_bzero.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 04:40:40 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/18 06:04:17 by mintan           ###   ########.fr       */
+/*   Created: 2024/05/20 17:38:03 by shayeo            #+#    #+#             */
+/*   Updated: 2024/05/20 17:47:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+/*Function: Writes n zeroed bytes to the string s. If n is 0, do nothing*/
 
-int	main(void)
+#include "libft.h"
+
+void	ft_bzero(void *s, size_t n)
 {
-	printf("This is a test\n");
-	printf("Test git commit --amend\n");
-	printf("Try creating branch from vs code");
+	size_t	a;
+	char	*s_string;
+
+	s_string = (char *) s;
+	a = 0;
+	while (a < n)
+	{
+		s_string[a] = 0;
+		a++;
+	}
 }
