@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/28 18:21:14 by mintan           ###   ########.fr       */
+/*   Updated: 2024/09/30 06:46:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <time.h>
+
+/* Error messages */
+# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye"
 
 enum	token
 {
@@ -46,5 +49,11 @@ typedef struct	s_minishell
 	char	**path;
 	t_token	**tokenlist;
 }	t_minishell;
+
+/* Initialisation functions */
+char	**getpaths(void);
+
+/* xx functions xx*/
+
 
 #endif

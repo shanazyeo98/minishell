@@ -1,13 +1,13 @@
 CC = cc
 FLAGS = -Wall -Wextra -Werror
 NAME = minishell
-SRCS = srcs/main.c
+SRCS = srcs/main.c srcs/initialisation.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
-LIB = -lreadline
-HEADERS = srcs/pipex.h
-HEADERS_BONUS = bonus/pipex_bonus.h
+LIB = -lreadline -lncurses
+HEADERS = srcs/minishell.h
+HEADERS_BONUS = bonus/minishell_bonus.h
 
 all: $(NAME)
 
