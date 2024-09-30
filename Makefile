@@ -1,12 +1,16 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
-SRCS = srcs/main.c
+SRCS = srcs/declarechar.c \
+srcs/token_list.c \
+srcs/token_new.c \
+srcs/token_read.c \
+srcs/tokenize.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
-LIB = -lreadline
-HEADERS = srcs/pipex.h
+#LIB = -lreadline
+HEADERS = srcs/minishell.h
 HEADERS_BONUS = bonus/pipex_bonus.h
 
 all: $(NAME)
@@ -21,7 +25,7 @@ $(LIBFT):
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) $(LIB) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

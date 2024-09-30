@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:03:54 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 13:33:06 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/09/30 15:32:55 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,5 @@ void	declarearray(t_minishell *params)
 	declareconnector(params);
 	declareoperator(params);
 	declareredirector(params);
+	declarevalidopre(params);
 }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 13:19:06 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/09/30 18:16:39 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ enum	exitstat
 	SUCCESS,
 	FAIL,
 	ERROR,
-	NIL
 };
 
 enum	token
@@ -38,8 +37,8 @@ enum	token
 enum	character
 {
 	CONNECTOR,
-	REDIRECTOR,
-	OPERATOR,
+	REDIRECTION,
+	OPERATION,
 	OTHERS
 };
 
@@ -71,7 +70,7 @@ typedef struct	s_minishell
 //	char	special[11];
 	char	operator[3];
 	char	redirector[3];
-	char	*validopre[8]
+	char	*validopre[8];
 }	t_minishell;
 
 t_token	*lsttoken(t_token *token);
@@ -79,6 +78,8 @@ int		assigntoken(int type, t_tokendets *info, t_minishell *params);
 void	declarearray(t_minishell *params);
 int		newtoken(char a, t_minishell *params, t_tokendets *info, int i);
 int		chartype(char a, t_minishell *params);
-int		readchar(char a, t_minishell *params, t_tokendets *info, int i);
+int		readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int		returntype(char a, t_minishell *params);
+int		closetoken(t_tokendets *info, int i, t_token *open);
 
 #endif

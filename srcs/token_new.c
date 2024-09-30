@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 12:22:28 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/09/30 18:16:05 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,54 +20,58 @@ int	editgrps(char a, t_tokendets *tokeninfo, t_minishell *params)
 		tokeninfo->wordgrp++;
 	else if (a == '(')
 	{
-		if (params->tokenlist == NULL || \
-		(lsttoken(*(params->tokenlist)))->type == token(OPERATOR))
+		if (*(params->tokenlist) == NULL || \
+		(lsttoken(*(params->tokenlist)))->type == OPERATOR)
 			tokeninfo->grp++;
 		else
-			return (exitstat(ERROR));
+			return (ERROR);
 	}
 	else
 		tokeninfo->grp--;
 	if (tokeninfo->grp < 0)
-		return (exitstat(ERROR));
-	return (exitstat(SUCCESS));
+		return (ERROR);
+	return (SUCCESS);
 }
 
 int	checkpreced(t_minishell *params, int type)
 {
 	t_token *preceding;
 
-	preceding = lsttoken(*(params->tokenlist));
-	if (preceding->type == token(REDIRECTOR))
-		return (exitstat(ERROR));
-	if (type == token(OPERATOR))
+	if (params->tokenlist == NULL)
+		preceding = NULL;
+	else
+		preceding = lsttoken(*(params->tokenlist));
+	if (type == OPERATOR)
 	{
-		if (preceding == NULL || preceding->type == token(OPERATOR))
-			return (exitstat(ERROR));
+		if (preceding == NULL || preceding->type == OPERATOR)
+			return (ERROR);
 	}
-	return (exitstat(SUCCESS));
+	if (preceding != NULL && preceding->type == REDIRECTOR)
+		return (ERROR);
+	return (SUCCESS);
 }
 
 int	newtoken(char a, t_minishell *params, t_tokendets *info, int i)
 {
 	int type;
 
-	if (chartype(a, params) == character(CONNECTOR))
+	if (chartype(a, params) == CONNECTOR)
 	{
-		if (editgrps(a, info, params) == exitstat(ERROR))
-			return (exitstat(ERROR));
+		if (editgrps(a, info, params) == ERROR)
+			return (ERROR);
+		return (SUCCESS);
 	}
 	type = returntype(a, params);
-	if (type == token(OPERATOR) || type == token(REDIRECTOR))
+	if (type == OPERATOR || type == REDIRECTOR)
 	{
-		if (checkpreced(params, type) == exitstat(ERROR))
-			return (exitstat(ERROR));
+		if (checkpreced(params, type) == ERROR)
+			return (ERROR);
 	}
-	if (assigntoken(type, info, params) == exitstat(FAIL))
-		return (exitstat(FAIL));
+	if (assigntoken(type, info, params) == FAIL)
+		return (FAIL);
 	info->status = OPEN;
 	info->start_i = i;
-	if (type == token(SINGLE) || type == token(DOUBLE))
+	if (type == SINGLE || type == DOUBLE)
 		info->start_i++;
-	return (exitstat(SUCCESS));
+	return (SUCCESS);
 }
