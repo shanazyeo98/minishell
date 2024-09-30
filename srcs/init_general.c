@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/01 02:46:31 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/01 03:40:36 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,6 @@ void	getinput(t_minishell *ms)
 	add_history(input);
 	ms->input = input;
 }
-
-/* Description: XXX some signal stuff
-*/
-
-
-
 
 /* Description: Initialises the t_minishell structure.
    Members:
