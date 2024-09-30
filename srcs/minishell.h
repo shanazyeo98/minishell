@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 09:08:43 by mintan           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:28:06 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,20 @@ typedef struct	s_token
 typedef struct	s_minishell
 {
 	char	**path;
+	char	*input;
 	t_token	**tokenlist;
 }	t_minishell;
 
 /* Initialisation functions */
-char	**getpaths(void);
-char	*getinput(void);
+char		**getpaths(void);
+void		getinput(t_minishell *ms);
+t_minishell	init_ms(void);
 
 /* xx functions xx*/
 
+
+
+/* Clean up functions */
+void		free_ft_split(char **arr);
 
 #endif

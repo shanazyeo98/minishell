@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/30 09:11:02 by mintan           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:27:27 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,14 @@ char	**getpaths(void)
 }
 
 
-/* Description: Displays a prompt and stores the user input into a string var.
+/* Description: Displays a prompt and stores the user input into a string var
+   in the t_minishell structure.
    Also stores whatever the user inputs into the history
    Returns:
 	- string: user input
 */
 
-char	*getinput(void)
+void	getinput(t_minishell *ms)
 {
 	char	*input;
 
@@ -56,5 +57,21 @@ char	*getinput(void)
 		printf("Your input: %s\n", input);
 		add_history(input);
 	}
-	return (input);
+	ms->input = input;
+}
+
+/* Description: Initialises the t_minishell structure.
+   Members:
+	- paths: an array of strings containing the environment paths
+	- input: user input from the command line
+	- TO ADD ON AS WE ADD MORE MEMBERS IN THE STRUCT
+*/
+
+t_minishell	init_ms(void)
+{
+	t_minishell	ms;
+
+	ms.path = getpaths();
+	ms.input = NULL;
+	return (ms);
 }

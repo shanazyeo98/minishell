@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/30 09:09:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:26:42 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,15 @@
 
 int	main(void)
 {
-	char	**paths;
-	// char	*input;
+	t_minishell	ms;
 
-
-	paths = getpaths();
-	printf("Test paths: %s\n", paths[0]);
+	ms = init_ms();
+	printf("Test paths: %s\n", ms.path[0]);
 	while (1)			//use a global variable to store the signal for the while loop?
 	{
-		getinput();
+		getinput(&ms);
+		printf("Test print input: %s\n", ms.input);
 	}
-
-
-
-
-
-	// {
-	// 	input = readline("٩(ఠ益ఠ)۶");
-	// 	ft_printf("%s\n", input);
-	// }
-
-
 
 
 
