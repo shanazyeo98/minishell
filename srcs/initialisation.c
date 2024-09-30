@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/30 13:27:27 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/01 02:46:31 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,22 @@ void	getinput(t_minishell *ms)
 {
 	char	*input;
 
-	input = readline("٩(ఠ益ఠ)۶ > ");
-	if (input)
+	input = readline(PROMPT);
+	if (input == NULL)
 	{
-		printf("Your input: %s\n", input);
-		add_history(input);
+		ft_printf(EXIT_MSG);
+		spick_and_span(*ms);
+		exit(EXIT_SUCCESS);
 	}
+	add_history(input);
 	ms->input = input;
 }
+
+/* Description: XXX some signal stuff
+*/
+
+
+
 
 /* Description: Initialises the t_minishell structure.
    Members:

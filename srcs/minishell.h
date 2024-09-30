@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 13:28:06 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/01 03:16:08 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,14 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <time.h>
+
+/* General */
+# define PROMPT "٩(ఠ益ఠ)۶ > "
+# define EXIT_CMD "exit"
+# define EXIT_MSG "Goodbye\n"
+
+/* Signal handling - Global variable to indicate if a signal is recieved*/
+extern	volatile sig_atomic_t	sig_received;
 
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye"
@@ -51,10 +59,17 @@ typedef struct	s_minishell
 	t_token	**tokenlist;
 }	t_minishell;
 
+
+
+
+
+
 /* Initialisation functions */
 char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
+
+
 
 /* xx functions xx*/
 
@@ -62,5 +77,7 @@ t_minishell	init_ms(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
+void		spick_and_span(t_minishell ms);
+void		break_shell(t_minishell *ms);
 
 #endif
