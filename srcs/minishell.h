@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 06:46:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/09/30 09:08:43 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct	s_minishell
 
 /* Initialisation functions */
 char	**getpaths(void);
+char	*getinput(void);
 
 /* xx functions xx*/
 

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/30 06:52:17 by mintan           ###   ########.fr       */
+/*   Updated: 2024/09/30 09:11:02 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,3 +39,22 @@ char	**getpaths(void)
 	return (paths);
 }
 
+
+/* Description: Displays a prompt and stores the user input into a string var.
+   Also stores whatever the user inputs into the history
+   Returns:
+	- string: user input
+*/
+
+char	*getinput(void)
+{
+	char	*input;
+
+	input = readline("٩(ఠ益ఠ)۶ > ");
+	if (input)
+	{
+		printf("Your input: %s\n", input);
+		add_history(input);
+	}
+	return (input);
+}
