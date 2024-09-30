@@ -6,14 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/29 18:06:25 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:32:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //to continue working on:
-// 1. newtoken function
 // 2. tokenize function
 
 //notes: $ cannot be alone in double quotes and basic
@@ -38,6 +37,10 @@ int	chartype(char a, t_minishell *params)
 {
 	if (checkarray(params->connector, a) == exitstat(SUCCESS))
 		return (character(CONNECTOR));
+	if (checkarray(params->operator, a) == exitstat(SUCCESS))
+		return (character(OPERATOR));
+	if (checkarray(params->redirector, a) == exitstat(SUCCESS))
+		return (character(REDIRECTOR));
 	return (character(OTHERS));
 }
 
@@ -51,50 +54,10 @@ int	returntype(char a, t_minishell *params)
 		return(token(OPERATOR));
 	else if (chartype(a, params) == character(REDIRECTOR))
 		return(token(REDIRECTOR));
-	//remaining basic token and NIL
+	return(token(BASIC));
 }
 
-//splitting into tokens functions
-
-int	editgrps(char a, t_tokendets *tokeninfo, t_minishell *params)
-{
-	if (a == ' ')
-		tokeninfo->wordgrp++;
-	else if (a == '(')
-	{
-		if (params->tokenlist == NULL || \
-		(lsttoken(*(params->tokenlist)))->type == token(OPERATOR))
-			tokeninfo->grp++;
-		else
-			return (exitstat(ERROR));
-	}
-	else
-		tokeninfo->grp--;
-	if (tokeninfo->grp < 0)
-		return (exitstat(ERROR));
-	return (exitstat(SUCCESS));
-}
-
-int	newtoken(char a, t_minishell *params, t_tokendets *info, int i)
-{
-	int type;
-
-	if (chartype(a, params) == character(CONNECTOR))
-	{
-		if (editgrps(a, info, params) == exitstat(ERROR))
-			return (exitstat(ERROR));
-	}
-	//retrieve the type of token here
-	//for operator and redirector, check if previous token is valid
-	else
-		return(exitstat(ERROR));
-	if (assigntoken(type, info, params) == exitstat(FAIL))
-		return (exitstat(FAIL));
-	info->start_i = i;
-	if (type == token(SINGLE) || type == token(DOUBLE))
-		info->start_i++;
-	return (exitstat(SUCCESS));
-}
+//main functions
 
 int	tokenize(char *prompt, t_minishell *params)
 {
@@ -102,6 +65,7 @@ int	tokenize(char *prompt, t_minishell *params)
 	t_tokendets	info;
 	int	status;
 
+	info.prompt = prompt;
 	info.status = CLOSED;
 	info.wordgrp = 0;
 	info.grp = 0;
@@ -113,8 +77,14 @@ int	tokenize(char *prompt, t_minishell *params)
 			status = newtoken(prompt[i], params, &info, i);
 			if (status != exitstat(SUCCESS))
 				return (status);
+			i++;
 		}
-		//function for where token is open
+		else
+		{
+			status = readchar(prompt[i], params, &info, &i);
+			if (status != exitstat(SUCCESS))
+				return (status);
+		}
 	}
 }
 
@@ -122,9 +92,5 @@ int	main(void)
 {
 	t_minishell	params;
 
-	//add a function to declare the type of arrays storing the various characters
-	params.connector[0] = '(';
-	params.connector[1] = ')';
-	params.connector[2] = ' ';
-	params.connector[3] = '\0';
+	declarearray(&params);
 }

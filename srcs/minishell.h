@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/29 18:06:30 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/09/30 13:19:06 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ enum	character
 {
 	CONNECTOR,
 	REDIRECTOR,
-	SPECIAL, // \,#,=,[,],!,;,{,},~ these are out of scope
+	OPERATOR,
 	OTHERS
 };
 
@@ -55,11 +55,12 @@ typedef struct	s_token
 
 typedef struct s_tokendets
 {
-	int	wordgrp;
-	int	grp;
-	int	status;
-	int	start_i;
-	int	end_i;
+	char	*prompt;
+	int		wordgrp;
+	int		grp;
+	int		status;
+	int		start_i;
+//	int	end_i;
 }	t_tokendets;
 
 typedef struct	s_minishell
@@ -67,9 +68,17 @@ typedef struct	s_minishell
 	char	**path;
 	t_token	**tokenlist;
 	char	connector[4];
+//	char	special[11];
+	char	operator[3];
+	char	redirector[3];
+	char	*validopre[8]
 }	t_minishell;
 
 t_token	*lsttoken(t_token *token);
 int		assigntoken(int type, t_tokendets *info, t_minishell *params);
+void	declarearray(t_minishell *params);
+int		newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int		chartype(char a, t_minishell *params);
+int		readchar(char a, t_minishell *params, t_tokendets *info, int i);
 
 #endif

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenlist.c                                        :+:      :+:    :+:   */
+/*   token_list.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/29 18:06:32 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/09/30 12:22:13 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,5 @@ int	assigntoken(int type, t_tokendets *info, t_minishell *params)
 		last->next = new;
 		new->prev = last;
 	}
-	info->status = OPEN;
 	return (exitstat(SUCCESS));
 }
