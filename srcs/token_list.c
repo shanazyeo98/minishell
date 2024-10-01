@@ -6,12 +6,14 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 17:44:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 10:23:09 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Description: Retrieves the last token in the token list.
+NULL if it is empty*/
 t_token	*lsttoken(t_token *token)
 {
 	if (token == NULL)
@@ -21,6 +23,7 @@ t_token	*lsttoken(t_token *token)
 	return (token);
 }
 
+/*Description: Frees the token list*/
 void	freetokens(t_token **list)
 {
 	t_token	*token;
@@ -40,6 +43,8 @@ void	freetokens(t_token **list)
 	}
 }
 
+/*Description: Creates and return a token object based on the values
+provided*/
 t_token	*createtoken(int type, t_tokendets *info)
 {
 	t_token	*newtoken;
@@ -56,6 +61,8 @@ t_token	*createtoken(int type, t_tokendets *info)
 	return (newtoken);
 }
 
+/*Description: Creates a token and assigns it to the back of the
+token list.*/
 int	assigntoken(int type, t_tokendets *info, t_minishell *params)
 {
 	t_token	*new;

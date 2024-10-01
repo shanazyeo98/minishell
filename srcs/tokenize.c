@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 18:19:29 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 10:33:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 //notes: $ cannot be alone in double quotes and basic
 //brackets must have a token inside
-
 //next steps:
 //test with operators and the different error cases. implement the above.
 
 //character matching functions
+
+/*Description: To check if a character exists in an array of characters*/
 int	checkarray(char *array, char a)
 {
 	int	i;
@@ -34,6 +35,8 @@ int	checkarray(char *array, char a)
 	return (ERROR);
 }
 
+/*Description: To return the type of character - Connector, Operator, Redirector,
+Others*/
 int	chartype(char a, t_minishell *params)
 {
 	if (checkarray(params->connector, a) == SUCCESS)
@@ -45,6 +48,8 @@ int	chartype(char a, t_minishell *params)
 	return (OTHERS);
 }
 
+/*Description: Return the type of token - Single, Double, Operator, Redirector,
+Basic*/
 int	returntype(char a, t_minishell *params)
 {
 	if (a == '\'')
@@ -60,6 +65,10 @@ int	returntype(char a, t_minishell *params)
 
 //end of string function
 
+/*Description: To handle the end of prompt.
+If status is open and last token is a basic token, to close the token
+Else if status is open and last token is double or single, error
+If last token is a redirector or operator, error*/
 int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 {
 	t_token *last;
@@ -69,7 +78,7 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 	last = lsttoken(*(params->tokenlist));
 	if (last == NULL)
 		return (SUCCESS);
-	if (last->type == BASIC)
+	if (last->type == BASIC && info->status == OPEN)
 		closetoken(info, i, last);
 	if (info->status == OPEN && (last->type == DOUBLE || last->type == SINGLE))
 		return (ERROR);
@@ -80,6 +89,9 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 
 //main functions
 
+/*Description: Start of the tokenizing module
+Initialises the token info variables and determines the action based on the
+status of the token & prompt*/
 int	tokenize(char *prompt, t_minishell *params)
 {
 	int	i;
@@ -96,22 +108,19 @@ int	tokenize(char *prompt, t_minishell *params)
 		if (info.status == CLOSED)
 		{
 			status = newtoken(prompt[i], params, &info, i);
-			if (status != SUCCESS)
-				return (status);
 			i++;
 		}
 		else
-		{
 			status = readchar(prompt[i], params, &info, &i);
-			if (status != SUCCESS)
-				return (status);
-		}
+		if (status != SUCCESS)
+			return (status);
 	}
 	if (endofprompt(params, &info, i) == ERROR)
 		return (ERROR);
 	return (SUCCESS);
 }
 
+/*Description: Testing main for the tokenize function */
 int	main(void)
 {
 	t_minishell	params;
@@ -120,6 +129,6 @@ int	main(void)
 	declarearray(&params);
 	params.tokenlist = malloc(sizeof(t_token *));
 	*(params.tokenlist) = NULL;
-	status = tokenize("(", &params);
+	status = tokenize("< && inputfile", &params);
 	printf("%d\n", status);
 }

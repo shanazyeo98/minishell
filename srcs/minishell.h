@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 18:16:39 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 10:30:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_tokendets
 	int		grp;
 	int		status;
 	int		start_i;
-//	int	end_i;
 }	t_tokendets;
 
 typedef struct	s_minishell
@@ -67,7 +66,6 @@ typedef struct	s_minishell
 	char	**path;
 	t_token	**tokenlist;
 	char	connector[4];
-//	char	special[11];
 	char	operator[3];
 	char	redirector[3];
 	char	*validopre[8];

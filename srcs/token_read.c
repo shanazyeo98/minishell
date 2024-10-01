@@ -6,12 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:23:10 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 18:04:54 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 10:30:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Description: Checks if character is a closing character for the open token*/
 int	checkifending(char a, t_minishell *params, t_token *opentoken)
 {
 	if (opentoken->type == SINGLE && a == '\'')
@@ -36,10 +37,8 @@ int	checkifending(char a, t_minishell *params, t_token *opentoken)
 	return (ERROR);
 }
 
-//echo hi - start_i: 0, i = 4
-//echo "hi" - start_i: 6, i = 8
-// << heredoc - start_i: 0, i = 2
-
+/*Description: Closes the token by assigning the str and setting status to
+closed*/
 int	closetoken(t_tokendets *info, int i, t_token *open)
 {
 	open->str = ft_substr(info->prompt, info->start_i, i - info->start_i);
@@ -49,8 +48,8 @@ int	closetoken(t_tokendets *info, int i, t_token *open)
 	return (SUCCESS);
 }
 
-// &&, || , >, <, >>, <<, |
-
+/*Description: If token is operator or redirector, check if it is valid
+e.g. '&' is not valid*/
 int	checkvalidopre(char *str, t_minishell *params)
 {
 	int	i;
@@ -65,6 +64,10 @@ int	checkvalidopre(char *str, t_minishell *params)
 	return (ERROR);
 }
 
+/*Description: Based on the open token, check if the token can be closed
+If so, close and check if it is valid. Single & Double will increment i
+Else, increment i
+Returns error if closed token is not valid*/
 int	readchar(char a, t_minishell *params, t_tokendets *info, int *i)
 {
 	t_token *open;

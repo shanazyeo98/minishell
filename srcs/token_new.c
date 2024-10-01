@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/09/30 18:16:05 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 10:26:57 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 
 //functions for when there is no open token
 
+/*Description: Updates the word groups / groups based on whether the char
+is a space or parenthesis.
+If open parenthesis is called without a preceding operator, error
+If group goes negative (i.e. close bracket without corresponding open), error*/
 int	editgrps(char a, t_tokendets *tokeninfo, t_minishell *params)
 {
 	if (a == ' ')
@@ -33,6 +37,9 @@ int	editgrps(char a, t_tokendets *tokeninfo, t_minishell *params)
 	return (SUCCESS);
 }
 
+/*Description: For token type = operator / redirector
+Operator: If preceding is null or operator, error
+Redirector: If preceding is redirector, error*/
 int	checkpreced(t_minishell *params, int type)
 {
 	t_token *preceding;
@@ -51,6 +58,8 @@ int	checkpreced(t_minishell *params, int type)
 	return (SUCCESS);
 }
 
+/*Description: Determines the new token to be created / connector
+and executes the corresponding actions*/
 int	newtoken(char a, t_minishell *params, t_tokendets *info, int i)
 {
 	int type;
