@@ -2,6 +2,7 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 SRCS = srcs/declarechar.c \
+srcs/token_checktype.c \
 srcs/token_list.c \
 srcs/token_new.c \
 srcs/token_read.c \
