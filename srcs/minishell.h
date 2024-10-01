@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 10:30:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 14:20:27 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 # include "../libft/libft.h"
 
-#define OPEN 0
-#define CLOSED 1
+# define OPEN 0
+# define CLOSED 1
 
-enum	exitstat
+enum	e_exitstat
 {
 	SUCCESS,
 	FAIL,
 	ERROR,
 };
 
-enum	token
+enum	e_token
 {
 	BASIC,
 	SINGLE,
@@ -34,7 +34,7 @@ enum	token
 	REDIRECTOR
 };
 
-enum	character
+enum	e_character
 {
 	CONNECTOR,
 	REDIRECTION,
@@ -42,7 +42,7 @@ enum	character
 	OTHERS
 };
 
-typedef struct	s_token
+typedef struct s_token
 {
 	int				type;
 	char			*str;
@@ -61,7 +61,7 @@ typedef struct s_tokendets
 	int		start_i;
 }	t_tokendets;
 
-typedef struct	s_minishell
+typedef struct s_minishell
 {
 	char	**path;
 	t_token	**tokenlist;
@@ -79,5 +79,6 @@ int		chartype(char a, t_minishell *params);
 int		readchar(char a, t_minishell *params, t_tokendets *info, int *i);
 int		returntype(char a, t_minishell *params);
 int		closetoken(t_tokendets *info, int i, t_token *open);
+int		chartype(char a, t_minishell *params);
 
 #endif

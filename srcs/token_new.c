@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 10:26:57 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 13:46:54 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ Operator: If preceding is null or operator, error
 Redirector: If preceding is redirector, error*/
 int	checkpreced(t_minishell *params, int type)
 {
-	t_token *preceding;
+	t_token	*preceding;
 
 	if (params->tokenlist == NULL)
 		preceding = NULL;
@@ -62,7 +62,7 @@ int	checkpreced(t_minishell *params, int type)
 and executes the corresponding actions*/
 int	newtoken(char a, t_minishell *params, t_tokendets *info, int i)
 {
-	int type;
+	int	type;
 
 	if (chartype(a, params) == CONNECTOR)
 	{

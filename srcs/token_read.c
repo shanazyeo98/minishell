@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:23:10 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 10:30:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/01 13:47:05 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ Else, increment i
 Returns error if closed token is not valid*/
 int	readchar(char a, t_minishell *params, t_tokendets *info, int *i)
 {
-	t_token *open;
+	t_token	*open;
 
 	open = lsttoken(*(params->tokenlist));
 	if (checkifending(a, params, open) == SUCCESS)
