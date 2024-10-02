@@ -1,7 +1,7 @@
 CC = cc
-FLAGS = -Wall -Wextra -Werror
+FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
-SRCS = srcs/main.c srcs/init_general.c srcs/init_signals.c srcs/cleanup.c
+SRCS = srcs/main.c srcs/init_general.c srcs/cleanup.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
