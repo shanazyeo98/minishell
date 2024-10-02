@@ -6,14 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 14:20:27 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 11:06:01 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include <stdio.h>
 
-//brackets must have a token inside
 //next steps:
 //test with operators and the different error cases. implement the above.
 
@@ -34,11 +33,7 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 		return (SUCCESS);
 	if (last->type == BASIC && info->status == OPEN)
 		closetoken(info, i, last);
-	if (info->status == OPEN && (last->type == DOUBLE || last->type == SINGLE))
-		return (ERROR);
-	if (last->type == OPERATOR || last->type == REDIRECTOR)
-		return (ERROR);
-	return (SUCCESS);
+	return (checkend(params, info));
 }
 
 //main functions
@@ -75,7 +70,7 @@ int	tokenize(char *prompt, t_minishell *params)
 }
 
 /*Description: Testing main for the tokenize function */
-int	main(void)
+/*int	main(void)
 {
 	t_minishell	params;
 	int			status;
@@ -83,6 +78,6 @@ int	main(void)
 	declarearray(&params);
 	params.tokenlist = malloc(sizeof(t_token *));
 	*(params.tokenlist) = NULL;
-	status = tokenize("< && inputfile", &params);
+	status = tokenize("echo ($)", &params);
 	printf("%d\n", status);
-}
+}*/

@@ -6,13 +6,43 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 13:46:54 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 10:42:54 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //functions for when there is no open token
+
+int	checkend(t_minishell *params, t_tokendets *info)
+{
+	t_token *last;
+
+	last = lsttoken(*(params->tokenlist));
+	if (info->status == OPEN && (last->type == DOUBLE || last->type == SINGLE))
+		return (ERROR);
+	if (last->type == OPERATOR || last->type == REDIRECTOR)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int	checkparenthesis(t_tokendets *info, t_minishell *params)
+{
+	t_token *token;
+	int		count;
+
+	token = *(params->tokenlist);
+	count = 0;
+	while (token != NULL)
+	{
+		if (token->grp == info->grp)
+			count++;
+		token = token->next;
+	}
+	if (count == 0)
+		return (ERROR);
+	return (checkend(params, info));
+}
 
 /*Description: Updates the word groups / groups based on whether the char
 is a space or parenthesis.
@@ -31,7 +61,11 @@ int	editgrps(char a, t_tokendets *tokeninfo, t_minishell *params)
 			return (ERROR);
 	}
 	else
+	{
+		if (checkparenthesis(tokeninfo, params) == ERROR)
+			return (ERROR);
 		tokeninfo->grp--;
+	}
 	if (tokeninfo->grp < 0)
 		return (ERROR);
 	return (SUCCESS);
