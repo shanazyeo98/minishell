@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 10:23:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:02:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	freetokens(t_token **list)
 			free(token);
 			token = next;
 		}
+		free(list);
 	}
 }
 

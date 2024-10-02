@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 12:04:36 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 14:59:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye"
+# define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 
 # define OPEN 0
 # define CLOSED 1
@@ -101,7 +102,8 @@ int		returntype(char a, t_minishell *params);
 int		closetoken(t_tokendets *info, int i, t_token *open);
 int		chartype(char a, t_minishell *params);
 int		checkend(t_minishell *params, t_tokendets *info);
-int		tokenize(char *prompt, t_minishell *params);
+void	tokenize(char *prompt, t_minishell *params);
+void	freetokens(t_token **list);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

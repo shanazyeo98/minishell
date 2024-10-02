@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/02 12:04:55 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 14:44:56 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ int	main(void)
 	t_minishell	ms;
 
 	ms = init_ms();
-	printf("Test paths: %s\n", ms.path[0]);
+//	printf("Test paths: %s\n", ms.path[0]);
 	while (1)			//use a global variable to store the signal for the while loop?
 	{
 		getinput(&ms);
-		printf("Test print input: %s\n", ms.input);
+//		printf("Test print input: %s\n", ms.input);
 		tokenize(ms.input, &ms);
 	}
 

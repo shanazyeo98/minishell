@@ -6,12 +6,12 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 12:12:29 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:06:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include <stdio.h>
+//#include <stdio.h>
 
 //next steps:
 //test with operators and the different error cases. implement the above.
@@ -36,15 +36,34 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 	return (checkend(params, info));
 }
 
-//main functions
-
-void	inittokenlist(t_minishell *params)
+/*Description: Handles error or failures from tokenizing.
+Fail: Free memory and exits out of minishell
+Error: Free tokenlist and prints error message*/
+void	tokenerrors(t_minishell *params, int status)
 {
+	if (status == FAIL)
+	{
+		//clean up function
+		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
+		exit(FAIL);
+	}
+	ft_putendl_fd(ERR_SYNTAX, 2);
+	freetokens(params->tokenlist);
+	params->tokenlist = NULL;
+}
+
+/*Description: Initialises the token list and the info*/
+void	inittokenlist(t_minishell *params, t_tokendets *info, char *prompt)
+{
+	info->prompt = prompt;
+	info->status = CLOSED;
+	info->wordgrp = 0;
+	info->grp = 0;
 	params->tokenlist = malloc(sizeof(t_token *));
 	if (params->tokenlist == NULL)
 	{
 		//clean up function
-		write(2, ERR_MALLOC_FAIL, 49);
+		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
 		exit(FAIL);
 	}
 	*(params->tokenlist) = NULL;
@@ -53,18 +72,15 @@ void	inittokenlist(t_minishell *params)
 /*Description: Start of the tokenizing module
 Initialises the token info variables and determines the action based on the
 status of the token & prompt*/
-int	tokenize(char *prompt, t_minishell *params)
+void	tokenize(char *prompt, t_minishell *params)
 {
 	int			i;
 	t_tokendets	info;
 	int			status;
 
-	info.prompt = prompt;
-	info.status = CLOSED;
-	info.wordgrp = 0;
-	info.grp = 0;
 	i = 0;
-	inittokenlist(params);
+	inittokenlist(params, &info, prompt);
+	status = SUCCESS;
 	while (prompt[i] != '\0')
 	{
 		if (info.status == CLOSED)
@@ -75,9 +91,12 @@ int	tokenize(char *prompt, t_minishell *params)
 		else
 			status = readchar(prompt[i], params, &info, &i);
 		if (status != SUCCESS)
-			return (status);
+			break ;
 	}
-	return (endofprompt(params, &info, i));
+	if (status == SUCCESS)
+		status = endofprompt(params, &info, i);
+	if (status != SUCCESS)
+		tokenerrors(params, status);
 }
 
 //	if (endofprompt(params, &info, i) == ERROR)
