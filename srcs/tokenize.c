@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 15:06:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/02 15:16:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 /*Description: Handles error or failures from tokenizing.
 Fail: Free memory and exits out of minishell
 Error: Free tokenlist and prints error message*/
-void	tokenerrors(t_minishell *params, int status)
+void	tokenstatus(t_minishell *params, int status)
 {
 	if (status == FAIL)
 	{
@@ -47,9 +47,13 @@ void	tokenerrors(t_minishell *params, int status)
 		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
 		exit(FAIL);
 	}
-	ft_putendl_fd(ERR_SYNTAX, 2);
-	freetokens(params->tokenlist);
-	params->tokenlist = NULL;
+	else if (status == ERROR)
+		ft_putendl_fd(ERR_SYNTAX, 2);
+	if (status == ERROR || *(params->tokenlist) == NULL)
+	{
+		freetokens(params->tokenlist);
+		params->tokenlist = NULL;
+	}
 }
 
 /*Description: Initialises the token list and the info*/
@@ -95,8 +99,7 @@ void	tokenize(char *prompt, t_minishell *params)
 	}
 	if (status == SUCCESS)
 		status = endofprompt(params, &info, i);
-	if (status != SUCCESS)
-		tokenerrors(params, status);
+	tokenstatus(params, status);
 }
 
 //	if (endofprompt(params, &info, i) == ERROR)
