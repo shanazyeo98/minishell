@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/30 13:26:42 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/02 12:04:55 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
-
 
 /* Description: main programme for minishell
 
@@ -27,6 +26,7 @@ int	main(void)
 	{
 		getinput(&ms);
 		printf("Test print input: %s\n", ms.input);
+		tokenize(ms.input, &ms);
 	}
 
 

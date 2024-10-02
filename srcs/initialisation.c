@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialisation.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/09/30 13:27:27 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/02 12:03:43 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ t_minishell	init_ms(void)
 
 	ms.path = getpaths();
 	ms.input = NULL;
+	ms.tokenlist = NULL;
+	declarearray(&ms);
 	return (ms);
 }
