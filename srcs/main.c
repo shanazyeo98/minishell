@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/02 19:37:53 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/03 11:42:47 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,17 @@ void	sig_handler(int signum)
 {
 	// printf("Caught signal %d\n", signum);
 	if (signum == SIGINT)
-	{
+	// {
 		prompt_again = 1;
-		// rl_done = 1;
-	}
+
+	// 	rl_replace_line("", 1);
+		ft_putstr_fd("\n", STDOUT_FILENO);
+	// 	rl_on_new_line();
+	// 	rl_redisplay();
+
+
 }
+
 
 
 
@@ -56,6 +62,8 @@ int	main(void)
 	act.sa_flags = SA_SIGINFO | SA_RESTART;
 	sigaction(SIGINT, &act, NULL);
 
+	// signal(SIGINT, sig_handler);
+
 
 
 	ms = init_ms();
@@ -67,18 +75,17 @@ int	main(void)
 
 		if (prompt_again == 1)
 		{
-			write(1, "\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			printf("Caught sigint. enter something\n");
-			fflush(stdout);
 
-			// rl_redisplay();
+			// ft_putstr_fd("test\n", STDOUT_FILENO);
+			rl_on_new_line();
+			// printf("Caught sigint. enter something\n");
+			rl_replace_line("", 1);
+
+			rl_redisplay();
 			// getinput(&ms);
 			prompt_again = 0;
 			continue;
 		}
-		// getinput(&ms);
 
 		if (ms.input == NULL || (ft_strncmp(ms.input, EXIT_CMD, 4) == 0 &&
 		ft_strlen(ms.input) == 4))
