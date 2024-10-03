@@ -21,7 +21,7 @@ $(LIBFT):
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) $(LIB) -c $< -o $@
+	$(CC) $(FLAGS)  -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

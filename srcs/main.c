@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/03 11:42:47 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/03 17:38:02 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,27 @@ void	break_shell(t_minishell *ms)
 	exit(EXIT_SUCCESS);
 }
 
+int	event()
+{
+	return (0);
+}
+
 
 void	sig_handler(int signum)
 {
 	// printf("Caught signal %d\n", signum);
 	if (signum == SIGINT)
-	// {
+	{
 		prompt_again = 1;
+		rl_done = 1;
+		ft_putstr_fd("\n", STDIN_FILENO);
+	}
+
+	// {
+
 
 	// 	rl_replace_line("", 1);
-		ft_putstr_fd("\n", STDOUT_FILENO);
+		// ft_putstr_fd("\n", STDOUT_FILENO);
 	// 	rl_on_new_line();
 	// 	rl_redisplay();
 
@@ -60,6 +71,7 @@ int	main(void)
 	sigaddset(&signal_set, SIGINT);
 	act.sa_mask = signal_set;
 	act.sa_flags = SA_SIGINFO | SA_RESTART;
+	rl_event_hook = event;
 	sigaction(SIGINT, &act, NULL);
 
 	// signal(SIGINT, sig_handler);
@@ -70,22 +82,20 @@ int	main(void)
 	while (1)			//use a global variable to store the signal for the while loop?
 	{
 
-
 		getinput(&ms);
+		// if (prompt_again == 1)
+		// {
 
-		if (prompt_again == 1)
-		{
+		// 	// ft_putstr_fd("\n", STDOUT_FILENO);
+		// 	// rl_on_new_line();
+		// 	// printf("Caught sigint. enter something\n");
+		// 	rl_replace_line("", 0);
 
-			// ft_putstr_fd("test\n", STDOUT_FILENO);
-			rl_on_new_line();
-			// printf("Caught sigint. enter something\n");
-			rl_replace_line("", 1);
-
-			rl_redisplay();
-			// getinput(&ms);
-			prompt_again = 0;
-			continue;
-		}
+		// 	rl_redisplay();
+		// 	// getinput(&ms);
+		// 	prompt_again = 0;
+		// 	continue;
+		// }
 
 		if (ms.input == NULL || (ft_strncmp(ms.input, EXIT_CMD, 4) == 0 &&
 		ft_strlen(ms.input) == 4))
