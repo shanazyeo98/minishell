@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 04:10:11 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/02 13:39:03 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
 
-/* Signal handling - Global variable to indicate if a signal is recieved*/
-extern	volatile sig_atomic_t	sig_received;
+// /* Signal handling - Global variable to indicate if a signal is recieved*/
+// extern	volatile sig_atomic_t	prompt_again;
 
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye"

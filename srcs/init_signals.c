@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/01 17:47:19 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/02 08:57:20 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,22 +29,9 @@ void	init_signals(void)
 {
 	struct sigaction act;
 
-	act.sa_handler = handler;
+	act.sa_handler = &handler;
 	sigemptyset(&act.sa_mask);
 	sigaddset(&act.sa_mask, SIGINT);
 
-	sigaction(SIGINT, &act, NULL);
+	return (sigaction(SIGINT, &act, NULL));
 }
-
-
-sigaction	init_signals(void)
-{
-	struct sigaction act;
-
-	act.sa_handler = handler;
-	sigemptyset(&act.sa_mask);
-	sigaddset(&act.sa_mask, SIGINT);
-
-	sigaction(SIGINT, &act, NULL);
-}
-
