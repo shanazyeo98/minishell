@@ -6,20 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:57:18 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 21:14:34 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 23:41:37 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-int	ret_op(char *str)
-{
-	if (ft_strcmp(str, "&&") == 0)
-		return (AND);
-	if (ft_strcmp(str, "||") == 0)
-		return (OR);
-	return (PIPE);
-}
 
 int	assignops(t_ast **branch, t_token *token, int grp)
 {
@@ -37,6 +28,25 @@ int	assignops(t_ast **branch, t_token *token, int grp)
 		token = token->prev;
 	}
 	return (SUCCESS);
+}
+
+int	assigncmd(t_ast **branch, t_token *token, int grp)
+{
+	t_ast	*newnode;
+	t_token	*cmdstart;
+
+	while (token != NULL)
+	{
+		if (token->type == OPERATOR && token->grp == grp)
+		{
+			cmdstart = token->next;
+			if (cmdstart->grp == grp)
+			{
+				newnode = createnode(cmdstart->id, CMD, NIL, cmdstart->grp);
+				//filling of command function
+			}
+		}
+	}
 }
 
 t_ast	**createbranch(t_minishell *params, int grp)

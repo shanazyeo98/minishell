@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 21:13:40 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 23:41:42 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ typedef struct s_tokendets
 
 enum	e_node
 {
-	COMMAND,
+	CMD,
 	OP
 };
 
@@ -84,7 +84,16 @@ enum	e_operators
 {
 	AND,
 	OR,
-	PIPE
+	PIPE,
+	NIL
+};
+
+enum	e_redirectors
+{
+	INPUT,
+	OUTPUT,
+	APPEND,
+	HEREDOC
 };
 
 struct	s_cmd;
@@ -150,9 +159,13 @@ void	tokenize(char *prompt, t_minishell *params);
 void	freetokens(t_token **list);
 
 //parsing
+int		ret_op(char *str);
+int 	ret_redir(char *str);
 t_ast	*createnode(int id, int type, int op, int grp);
 void	addleftnode(t_ast **branch, t_ast *new);
 t_ast	**createbranch(t_minishell *params, int grp);
+int		fillcmd(t_token *token, t_ast *node);
+
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

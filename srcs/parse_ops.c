@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:04:59 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 21:12:55 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 22:56:00 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_ast	*createnode(int id, int type, int op, int grp)
 	return (node);
 }
 
-t_ast	*ret_lstleftnode(t_ast *branch)
+t_ast	*lstleftnode(t_ast *branch)
 {
 	if (branch == NULL)
 		return (NULL);
@@ -43,7 +43,7 @@ void	addleftnode(t_ast **branch, t_ast *new)
 		*branch = new;
 	else
 	{
-		lst = ret_lstleftnode(*branch);
+		lst = lstleftnode(*branch);
 		lst->left = new;
 	}
 }
