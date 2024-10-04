@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 16:04:12 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 16:09:27 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,18 @@ typedef struct s_tokendets
 
 //ast data structure
 
+struct	s_cmd;
+
 typedef struct s_ast
 {
 	int		id;
 	int		type;
 	int		op;
 	int		grp;
-	t_ast	*up;
-	t_ast	*left;
-	t_ast	*right;
-	t_cmd	*cmd;
+	struct s_ast	*up;
+	struct s_ast	*left;
+	struct s_ast	*right;
+	struct s_cmd	*cmd;
 }	t_ast;
 
 typedef struct s_cmd
