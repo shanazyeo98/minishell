@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/02 14:44:56 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 20:57:39 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ int	main(void)
 		getinput(&ms);
 //		printf("Test print input: %s\n", ms.input);
 		tokenize(ms.input, &ms);
+		createbranch(&ms, 0);
 	}
 
 

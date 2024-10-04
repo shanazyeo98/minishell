@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 16:09:27 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 21:13:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,19 @@ typedef struct s_tokendets
 
 //ast data structure
 
+enum	e_node
+{
+	COMMAND,
+	OP
+};
+
+enum	e_operators
+{
+	AND,
+	OR,
+	PIPE
+};
+
 struct	s_cmd;
 
 typedef struct s_ast
@@ -135,6 +148,11 @@ int		chartype(char a, t_minishell *params);
 int		checkend(t_minishell *params, t_tokendets *info);
 void	tokenize(char *prompt, t_minishell *params);
 void	freetokens(t_token **list);
+
+//parsing
+t_ast	*createnode(int id, int type, int op, int grp);
+void	addleftnode(t_ast **branch, t_ast *new);
+t_ast	**createbranch(t_minishell *params, int grp);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
