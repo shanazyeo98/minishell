@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 15:16:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 16:02:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	inittokenlist(t_minishell *params, t_tokendets *info, char *prompt)
 	info->status = CLOSED;
 	info->wordgrp = 0;
 	info->grp = 0;
+	info->id = 0;
 	params->tokenlist = malloc(sizeof(t_token *));
 	if (params->tokenlist == NULL)
 	{

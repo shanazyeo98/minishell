@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 14:59:38 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/04 16:04:12 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,7 @@
 # define OPEN 0
 # define CLOSED 1
 
-enum	e_exitstat
-{
-	SUCCESS,
-	FAIL,
-	ERROR,
-};
+//token data structure
 
 enum	e_token
 {
@@ -58,6 +53,7 @@ enum	e_character
 
 typedef struct s_token
 {
+	int				id;
 	int				type;
 	char			*str;
 	int				wordgrp;
@@ -73,7 +69,39 @@ typedef struct s_tokendets
 	int		grp;
 	int		status;
 	int		start_i;
+	int		id;
 }	t_tokendets;
+
+//ast data structure
+
+typedef struct s_ast
+{
+	int		id;
+	int		type;
+	int		op;
+	int		grp;
+	t_ast	*up;
+	t_ast	*left;
+	t_ast	*right;
+	t_cmd	*cmd;
+}	t_ast;
+
+typedef struct s_cmd
+{
+	char	**args;
+	int		redir;
+	char	*redirfile;
+	t_ast	*up;
+}	t_cmd;
+
+//overall data structure
+
+enum	e_exitstat
+{
+	SUCCESS,
+	FAIL,
+	ERROR,
+};
 
 typedef struct s_minishell
 {
@@ -84,10 +112,11 @@ typedef struct s_minishell
 	char	operator[3];
 	char	redirector[3];
 	char	*validopre[8];
+	t_ast	**ast;
 }	t_minishell;
 
 /* Initialisation functions */
-void	declarearray(t_minishell *params);
+void		declarearray(t_minishell *params);
 char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
