@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 13:39:03 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/04 09:02:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 // extern	volatile sig_atomic_t	prompt_again;
 
 /* Error messages */
-# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye"
+# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
+# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the programme now. Goodbye."
 
 enum	token
 {
@@ -68,9 +69,13 @@ typedef struct	s_minishell
 char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
+int			rl_empty_event(void);
 
-void	init_signals(void);
 
+/* Signal functions */
+void		init_all_sig_handler(void);
+void		init_signal_handler(int signum);
+void		sig_handler(int signum);
 
 
 /* xx functions xx*/

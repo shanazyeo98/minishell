@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/01 18:19:39 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/04 08:53:45 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,29 @@ char	**getpaths(void)
 	return (paths);
 }
 
+/* Description: empty function that is called periodically when readline is
+   waiting for user input.
+*/
+
+int	rl_empty_event(void)
+{
+	return (0);
+}
 
 /* Description: Displays a prompt and stores the user input into a string var
-   in the t_minishell structure.
-   Also stores whatever the user inputs into the history
+   in the t_minishell structure. Also stores whatever the user inputs into
+   the history. Sets the variable rl_event_hook to the address of an empty
+   function that is called periodically when readline is waiting for user
+   input. This helps reset the prompt when a SIGINT is received.
    Returns:
-	- string: user input
+	- string: user input in the ms struct
 */
 
 void	getinput(t_minishell *ms)
 {
 	char	*input;
 
+	rl_event_hook = rl_empty_event;
 	input = readline(PROMPT);
 	if (input == NULL)
 	{
