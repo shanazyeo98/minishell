@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/01 02:45:07 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/05 07:49:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,6 @@
 //Items to free so far
 // **paths from get paths
 // *input from readline
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /* Description: frees memory allocated for members in an array of strings
    generated from ft_split. The array of strings has NULL as the final member.

@@ -6,12 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/04 09:03:37 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/05 07:53:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "minishell.h"
-
 volatile sig_atomic_t	prompt_again = 0;
 
 /* Description: prints the exit message, cleans up all allocated memory, and
@@ -38,9 +37,10 @@ int	main(void)
 	{
 
 		getinput(&ms);
-		if (ms.input == NULL || (ft_strncmp(ms.input, EXIT_CMD, 4) == 0 &&
+//		if (ms.input == NULL || (ft_strncmp(ms.input, EXIT_CMD, 4) == 0 &&
 		ft_strlen(ms.input) == 4))
 			break_shell(&ms);
+		tokenize(ms.input, &ms);
 	}
 	return (EXIT_SUCCESS);
 	//Logic
