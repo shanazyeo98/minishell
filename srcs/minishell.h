@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 14:59:38 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/05 07:55:58 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,17 @@
 # include <sys/stat.h>
 # include <time.h>
 
+/* General */
+# define PROMPT "٩(ఠ益ఠ)۶ > "
+# define EXIT_CMD "exit"
+# define EXIT_MSG "Goodbye\n"
+
+// /* Signal handling - Global variable to indicate if a signal is recieved*/
+// extern	volatile sig_atomic_t	prompt_again;
+
 /* Error messages */
-# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye"
+# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
+# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 
 # define OPEN 0
@@ -86,11 +95,24 @@ typedef struct s_minishell
 	char	*validopre[8];
 }	t_minishell;
 
+
+
+
+
+
 /* Initialisation functions */
 void	declarearray(t_minishell *params);
 char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
+int			rl_empty_event(void);
+
+
+/* Signal functions */
+void		init_all_sig_handler(void);
+void		init_signal_handler(int signum);
+void		sig_handler(int signum);
+
 
 //tokens
 t_token	*lsttoken(t_token *token);
@@ -107,5 +129,7 @@ void	freetokens(t_token **list);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
+void		spick_and_span(t_minishell ms);
+void		break_shell(t_minishell *ms);
 
 #endif

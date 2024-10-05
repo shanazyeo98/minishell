@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initialisation.c                                   :+:      :+:    :+:   */
+/*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/02 12:03:43 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/05 07:50:51 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,24 +39,37 @@ char	**getpaths(void)
 	return (paths);
 }
 
+/* Description: empty function that is called periodically when readline is
+   waiting for user input.
+*/
+
+int	rl_empty_event(void)
+{
+	return (0);
+}
 
 /* Description: Displays a prompt and stores the user input into a string var
-   in the t_minishell structure.
-   Also stores whatever the user inputs into the history
+   in the t_minishell structure. Also stores whatever the user inputs into
+   the history. Sets the variable rl_event_hook to the address of an empty
+   function that is called periodically when readline is waiting for user
+   input. This helps reset the prompt when a SIGINT is received.
    Returns:
-	- string: user input
+	- string: user input in the ms struct
 */
 
 void	getinput(t_minishell *ms)
 {
 	char	*input;
 
-	input = readline("٩(ఠ益ఠ)۶ > ");
-	if (input)
+	rl_event_hook = rl_empty_event;
+	input = readline(PROMPT);
+	if (input == NULL)
 	{
-		printf("Your input: %s\n", input);
-		add_history(input);
+		ft_printf(EXIT_MSG);
+		spick_and_span(*ms);
+		exit(EXIT_SUCCESS);
 	}
+	add_history(input);
 	ms->input = input;
 }
 
