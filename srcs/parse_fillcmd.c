@@ -6,40 +6,37 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 23:32:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 23:38:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/06 18:17:29 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	cmdparams(t_token *token, int *redir, int *args)
+/*Description: Counts how many redirectors there are in the a given set of
+valid commands*/
+void	redircount(t_token *token, t_cmd *cmd)
 {
 	while (token != NULL && token->type != OPERATOR)
 	{
 		if (token->type == REDIRECTOR)
-		{
-			*(redir)++;
-			token = (token->next)->next;
-		}
-		else
-		{
-			(*args)++;
-			token = token->next;
-		}
+			cmd->n_redir++;
+		token = token->next;
 	}
 }
 
-int	fillcmd(t_token *token, t_ast *node)
+/*Description: Initializes a command node and stores the starting token
+and ending token of the command*/
+t_cmd	*createcmd(t_token *token)
 {
-	t_cmd	*command;
-	int		args;
-	int		redir;
+	t_cmd	*cmd;
 
-	command = malloc(sizeof(t_cmd));
-	if (command == NULL)
-		return (FAIL);
-	args = 0;
-	redir = 0;
-	cmdparams(token, &redir, &args);
-	//function to assign the values
+	cmd = malloc(sizeof(t_cmd));
+	if (cmd == NULL)
+		return (NULL);
+	redircount(token, cmd);
+	cmd->start = token;
+	while (token != NULL && token->type != OPERATOR)
+		token = token->next;
+	cmd->end = token;
+	return (cmd);
 }

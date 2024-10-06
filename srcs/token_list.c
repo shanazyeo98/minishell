@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 16:03:13 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/06 21:11:22 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,15 @@ int	assigntoken(int type, t_tokendets *info, t_minishell *params)
 		new->prev = last;
 	}
 	return (SUCCESS);
+}
+
+t_token	*ret_token(int id, t_token *token)
+{
+	while (token != NULL)
+	{
+		if (token->id > id)
+			break;
+		token = token->next;
+	}
+	return (token);
 }
