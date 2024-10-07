@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:57:18 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/07 13:42:03 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:17:59 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ int	assignops(t_ast **branch, t_token *token, int grp)
 {
 	t_ast	*newnode;
 
-	while (token != NULL)
+	while (token != NULL && token->grp >= grp)
 	{
 		if (token->type == OPERATOR && token->grp == grp)
 		{
 			newnode = createnode(token->id, OP, ret_op(token->str), grp);
 			if (newnode == NULL)
 				return (FAIL);
-			addleftnode(branch, newnode);
+			adduppernode(branch, newnode);
 		}
-		token = token->prev;
+		token = token->next;
 	}
 	return (SUCCESS);
 }
@@ -83,22 +83,17 @@ int	assigncmd(t_ast **branch, t_token *token, int grp)
 	return (SUCCESS);
 }
 
-t_ast	**createbranch(t_minishell *params, int grp)
+t_ast	*createbranch(t_token *token, int grp)
 {
-	t_ast	**branch;
-	t_token	*token;
+	t_ast	*branch;
 
-	branch = malloc(sizeof(t_ast *));
-	if (branch == NULL)
-		return (NULL);
-	*branch = NULL;
-	token = lsttoken(*(params->tokenlist));
-	if (assignops(branch, token, grp) == FAIL)
+	branch = NULL;
+	if (assignops(&branch, token, grp) == FAIL)
 	{
 		//clean up branch
 		return (NULL);
 	}
-	if (assigncmd(branch, *(params->tokenlist), grp) == FAIL)
+	if (assigncmd(&branch, token, grp) == FAIL)
 	{
 		//clean up branch
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/06 22:54:50 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:19:43 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	main(void)
 		getinput(&ms);
 //		printf("Test print input: %s\n", ms.input);
 		tokenize(ms.input, &ms);
-		parse(&ms);
+		ms.ast = parse(*ms.tokenlist, -1);
+		//testing
+//		printf("%d\n", mst);
 	}
 
 

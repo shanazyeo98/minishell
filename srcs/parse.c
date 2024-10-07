@@ -6,78 +6,48 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 15:28:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/07 12:16:48 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:16:56 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ret_grp(t_token *token, int op)
+int	ret_grp(t_token *token, int basegrp)
 {
 	int	grp;
 
 	grp = token->grp;
-	if (op == MIN)
+	while (token != NULL && token->grp > basegrp)
 	{
-		while (token != NULL)
-		{
-			if (token->grp < grp)
-				grp = token->grp;
-			token = token->next;
-		}
-	}
-	if (op == MAX)
-	{
-		while (token != NULL)
-		{
-			if (token->grp > grp)
-				grp = token->grp;
-			token = token->next;
-		}
+		if (token->grp < grp)
+			grp = token->grp;
+		token = token->next;
 	}
 	return (grp);
 }
 
-void	assignbranch(t_ast **branch, t_ast **newbranch)
+t_ast	*parse(t_token *token, int grp)
 {
-	int		id;
-	t_ast	*node;
+	int		grp_min;
+	t_ast	*branch;
+	t_ast	*branch_cpy;
 
-	if (*branch == NULL)
-		*branch = *newbranch;
-	else
+	grp_min = ret_grp(token, grp);
+	branch = createbranch(token, grp_min);
+	branch_cpy = branch;
+	while (branch_cpy->type == OP)
 	{
-		id = (*newbranch)->id;
-		node = *branch;
-		while (node != NULL && node->type == OP)
+		if (branch_cpy->right == NULL)
 		{
-			if (node->id < id)
-			node->right = *newbranch;
-			node = node->left;
+			branch_cpy->right = parse(ret_token(branch_cpy->id, token), branch_cpy->grp);
 		}
+		if (branch_cpy->left == NULL)
+			break ;
+		branch_cpy = branch_cpy->left;
 	}
-}
-
-void	parse(t_minishell *params)
-{
-	int	grp_min;
-	int	grp_max;
-	t_ast	**branch;
-
-	params->ast = malloc(sizeof(t_ast *));
-	if (params->ast == NULL)
+	if (branch_cpy->type == OP && branch_cpy->left == NULL)
 	{
-		//clean up function
-		exit(1);
+		branch_cpy->left = parse(token, branch_cpy->grp);
 	}
-	*(params->ast) = NULL;
-	grp_min = ret_grp(*(params->tokenlist), MIN);
-	grp_max = ret_grp(*(params->tokenlist), MAX);
-	while (grp_min <= grp_max)
-	{
-		branch = createbranch(params, grp_min);
-		assignbranch(params->ast, branch);
-		free(branch);
-		grp_min++;
-	}
+	return (branch);
 }

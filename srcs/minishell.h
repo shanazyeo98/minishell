@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/06 22:52:41 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/07 17:18:53 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@
 
 # define OPEN 0
 # define CLOSED 1
-# define MIN 0
-# define MAX 1
 
 //token data structure
 
@@ -146,7 +144,7 @@ typedef struct s_minishell
 	char	operator[3];
 	char	redirector[3];
 	char	*validopre[8];
-	t_ast	**ast;
+	t_ast	*ast;
 }	t_minishell;
 
 /* Initialisation functions */
@@ -156,27 +154,28 @@ void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
 
 //tokens
-t_token	*lsttoken(t_token *token);
-int		assigntoken(int type, t_tokendets *info, t_minishell *params);
-int		newtoken(char a, t_minishell *params, t_tokendets *info, int i);
-int		chartype(char a, t_minishell *params);
-int		readchar(char a, t_minishell *params, t_tokendets *info, int *i);
-int		returntype(char a, t_minishell *params);
-int		closetoken(t_tokendets *info, int i, t_token *open);
-int		chartype(char a, t_minishell *params);
-int		checkend(t_minishell *params, t_tokendets *info);
-void	tokenize(char *prompt, t_minishell *params);
-void	freetokens(t_token **list);
-t_token	*ret_token(int id, t_token *token);
+t_token		*lsttoken(t_token *token);
+int			assigntoken(int type, t_tokendets *info, t_minishell *params);
+int			newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int			chartype(char a, t_minishell *params);
+int			readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int			returntype(char a, t_minishell *params);
+int			closetoken(t_tokendets *info, int i, t_token *open);
+int			chartype(char a, t_minishell *params);
+int			checkend(t_minishell *params, t_tokendets *info);
+void		tokenize(char *prompt, t_minishell *params);
+void		freetokens(t_token **list);
+t_token		*ret_token(int id, t_token *token);
 
 //parsing
-int		ret_op(char *str);
-int 	ret_redir(char *str);
-t_ast	*createnode(int id, int type, int op, int grp);
-void	addleftnode(t_ast **branch, t_ast *new);
-t_ast	**createbranch(t_minishell *params, int grp);
-t_cmd	*createcmd(t_token *token);
-void	parse(t_minishell *params);
+int			ret_op(char *str);
+int 		ret_redir(char *str);
+t_ast		*createnode(int id, int type, int op, int grp);
+void		addleftnode(t_ast **branch, t_ast *new);
+void		adduppernode(t_ast **branch, t_ast *new);
+t_ast		*createbranch(t_token *token, int grp);
+t_cmd		*createcmd(t_token *token);
+t_ast		*parse(t_token *token, int id);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
