@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/05 07:55:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/05 13:35:44 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int		chartype(char a, t_minishell *params);
 int		checkend(t_minishell *params, t_tokendets *info);
 void	tokenize(char *prompt, t_minishell *params);
 void	freetokens(t_token **list);
+void	print_token_list(t_minishell ms);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

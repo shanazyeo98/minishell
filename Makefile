@@ -10,7 +10,8 @@ srcs/token_checktype.c \
 srcs/token_list.c \
 srcs/token_new.c \
 srcs/token_read.c \
-srcs/tokenize.c
+srcs/tokenize.c \
+srcs/token_utils.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
