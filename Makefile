@@ -14,13 +14,13 @@ srcs/parse_error.c \
 srcs/parse_fillcmd.c \
 srcs/parse_ops.c \
 srcs/parse_retrievetype.c \
-srcs/parse.c
+srcs/parse.c \
+srcs/ast_utils.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
 LIB = -lreadline
 HEADERS = srcs/minishell.h
-#HEADERS_BONUS = bonus/pipex_bonus.h
 
 all: $(NAME)
 

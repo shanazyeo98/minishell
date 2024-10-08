@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 16:08:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 18:37:31 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,11 @@ t_ast		*parse(t_token *token, int id);
 int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
+
+/* AST Traversal */
+void	print_ast_node(t_ast *node);
+void	print_cmds_first_last(t_ast *node);
+
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

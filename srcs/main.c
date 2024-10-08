@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 16:04:08 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 18:38:11 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ int	main(void)
 //		printf("Test print input: %s\n", ms.input);
 		tokenize(ms.input, &ms);
 		ms.ast = parse(*ms.tokenlist, -1);
-		//testing
-//		printf("%d\n", mst);
+		print_cmds_first_last(ms.ast);
+
+
 	}
 	return (EXIT_SUCCESS);
 	//Logic
