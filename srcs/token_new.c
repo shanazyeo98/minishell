@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/02 12:05:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:02:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	checkend(t_minishell *params, t_tokendets *info)
 {
-	t_token *last;
+	t_token	*last;
 
 	last = lsttoken(*(params->tokenlist));
 	if (info->status == OPEN && (last->type == DOUBLE || last->type == SINGLE))
@@ -28,7 +28,7 @@ int	checkend(t_minishell *params, t_tokendets *info)
 
 int	checkparenthesis(t_tokendets *info, t_minishell *params)
 {
-	t_token *token;
+	t_token	*token;
 	int		count;
 
 	token = *(params->tokenlist);

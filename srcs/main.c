@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/07 17:19:43 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:04:08 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 /* Description: main programme for minishell
 
@@ -22,7 +22,7 @@ int	main(void)
 
 	ms = init_ms();
 //	printf("Test paths: %s\n", ms.path[0]);
-	while (1)			//use a global variable to store the signal for the while loop?
+	while (1)
 	{
 		getinput(&ms);
 //		printf("Test print input: %s\n", ms.input);
@@ -31,18 +31,9 @@ int	main(void)
 		//testing
 //		printf("%d\n", mst);
 	}
-
-
-
-
 	return (EXIT_SUCCESS);
-
-
-
-
 	//Logic
 	//Might want to print smth to indicate the start of minishell
 	//Init struct
 	//Clean up
-
 }

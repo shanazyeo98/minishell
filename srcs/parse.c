@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 15:28:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/07 17:16:56 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 15:59:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,26 +28,28 @@ int	ret_grp(t_token *token, int basegrp)
 
 t_ast	*parse(t_token *token, int grp)
 {
-	int		grp_min;
 	t_ast	*branch;
-	t_ast	*branch_cpy;
+	t_ast	*cpy;
 
-	grp_min = ret_grp(token, grp);
-	branch = createbranch(token, grp_min);
-	branch_cpy = branch;
-	while (branch_cpy->type == OP)
+	branch = createbranch(token, grp);
+	if (branch == NULL)
+		return (NULL);
+	cpy = branch;
+	while (cpy->type == OP)
 	{
-		if (branch_cpy->right == NULL)
-		{
-			branch_cpy->right = parse(ret_token(branch_cpy->id, token), branch_cpy->grp);
-		}
-		if (branch_cpy->left == NULL)
+		if (cpy->right == NULL)
+			cpy->right = parse(ret_token(cpy->id, token), cpy->grp);
+		if (cpy->right == NULL)
+			return (tree_error(branch), NULL);
+		if (cpy->left == NULL)
 			break ;
-		branch_cpy = branch_cpy->left;
+		cpy = cpy->left;
 	}
-	if (branch_cpy->type == OP && branch_cpy->left == NULL)
+	if (cpy->type == OP)
 	{
-		branch_cpy->left = parse(token, branch_cpy->grp);
+		cpy->left = parse(token, cpy->grp);
+		if (cpy->left == NULL)
+			return (tree_error(branch), NULL);
 	}
 	return (branch);
 }

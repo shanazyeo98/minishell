@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:57:18 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/07 17:17:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:05:12 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_ast	*createcmdnode(t_token *cmdstart)
 
 int	lstcmd(t_token *token, t_ast *node, t_ast **branch)
 {
-	t_ast *newnode;
+	t_ast	*newnode;
 
 	newnode = createcmdnode(token);
 	if (newnode == NULL)
@@ -86,16 +86,18 @@ int	assigncmd(t_ast **branch, t_token *token, int grp)
 t_ast	*createbranch(t_token *token, int grp)
 {
 	t_ast	*branch;
+	int		grp_min;
 
 	branch = NULL;
-	if (assignops(&branch, token, grp) == FAIL)
+	grp_min = ret_grp(token, grp);
+	if (assignops(&branch, token, grp_min) == FAIL)
 	{
-		//clean up branch
+		branch_error(branch);
 		return (NULL);
 	}
-	if (assigncmd(&branch, token, grp) == FAIL)
+	if (assigncmd(&branch, token, grp_min) == FAIL)
 	{
-		//clean up branch
+		branch_error(branch);
 		return (NULL);
 	}
 	return (branch);

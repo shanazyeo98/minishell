@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/02 12:03:43 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:01:52 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 /* Description: Retrieves the environment path stored in the $PATH variable
    Returns:
@@ -38,7 +38,6 @@ char	**getpaths(void)
 	}
 	return (paths);
 }
-
 
 /* Description: Displays a prompt and stores the user input into a string var
    in the t_minishell structure.

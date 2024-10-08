@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 23:23:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 23:25:16 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:03:05 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ret_op(char *str)
 	return (PIPE);
 }
 
-int ret_redir(char *str)
+int	ret_redir(char *str)
 {
 	if (ft_strcmp(str, "<") == 0)
 		return (INPUT);
