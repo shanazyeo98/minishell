@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/05 13:34:12 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/08 16:07:51 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ int	main(void)
 		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
-		print_token_list(ms);
-
 	}
 	return (EXIT_SUCCESS);
 	//Logic
