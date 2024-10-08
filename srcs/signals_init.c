@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   signals_init.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/04 09:03:40 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:28:44 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 /* Description: handler function when signals are received:
 	- SIGINT: sets rl_done = 1 to break out of readline
@@ -32,11 +32,12 @@ void	sig_handler(int signum)
 
 void	init_signal_handler(int signum)
 {
-	struct sigaction action;
+	struct sigaction	action;
 
 	action.sa_handler = &sig_handler;
 	sigemptyset(&action.sa_mask);
-	sigaddset(&action.sa_mask, SIGINT);				//probably need to register more signals here
+	//probably need to register more signals here
+	sigaddset(&action.sa_mask, SIGINT);
 	action.sa_flags = 0;
 	if (sigaction(signum, &action, NULL) == -1)
 	{

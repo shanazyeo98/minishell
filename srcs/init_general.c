@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/05 07:50:51 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:16:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 /* Description: Retrieves the environment path stored in the $PATH variable
    Returns:
@@ -87,6 +87,7 @@ t_minishell	init_ms(void)
 	ms.path = getpaths();
 	ms.input = NULL;
 	ms.tokenlist = NULL;
+	ms.ast = NULL;
 	declarearray(&ms);
 	return (ms);
 }

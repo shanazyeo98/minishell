@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/05 07:49:52 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/08 17:29:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "minishell.h"
+#include "minishell.h"
 
 //Items to free so far
 // **paths from get paths
@@ -37,8 +37,6 @@ void	free_ft_split(char **arr)
 	free(arr[i]);
 	free(arr);
 }
-
-
 
 /* Description: Overall clean up function. Frees all allocated memory:
 	- t_minishell -> char **paths
