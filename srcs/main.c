@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:29:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 09:09:14 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(void)
 	t_minishell	ms;
 
 	ms = init_ms();
-
 	init_all_sig_handler();
 	while (1)
 	{
@@ -40,8 +39,8 @@ int	main(void)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
 		ms.ast = parse(*ms.tokenlist, -1);
-		//testing
-//		printf("%d\n", mst);
+		print_ast(ms.ast, 0);
+
 	}
 	return (EXIT_SUCCESS);
 	//Logic
