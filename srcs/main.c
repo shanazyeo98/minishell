@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:29:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 18:38:07 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	main(void)
 		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
-		ms.ast = parse(*ms.tokenlist, -1);
+		if (ms.tokenlist != NULL)
+			ms.ast = parse(*ms.tokenlist, -1);
 		//testing
 //		printf("%d\n", mst);
 	}

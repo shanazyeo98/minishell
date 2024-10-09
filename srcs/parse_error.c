@@ -6,17 +6,21 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:20:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 16:07:32 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 19:38:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Description: Frees cmd node and its ast node*/
 
 void	freecmdnode(t_ast *node)
 {
 	free(node->cmd);
 	free(node);
 }
+
+/*Description: Frees the node in a tree*/
 
 void	tree_error(t_ast *node)
 {
@@ -35,6 +39,8 @@ void	tree_error(t_ast *node)
 	if (node != NULL)
 		freecmdnode(node);
 }
+
+/*Description: Frees the nodes in a branch*/
 
 void	branch_error(t_ast *branch)
 {

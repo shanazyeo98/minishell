@@ -6,11 +6,14 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 15:28:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 15:59:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 19:32:31 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Description: Retrieves the smallest group relative to the basegrp in
+a set of tokens*/
 
 int	ret_grp(t_token *token, int basegrp)
 {
@@ -25,6 +28,10 @@ int	ret_grp(t_token *token, int basegrp)
 	}
 	return (grp);
 }
+
+/*Description: Start of parsing module.
+Creates branch based on the group and loops through node to build other
+branches accordingly*/
 
 t_ast	*parse(t_token *token, int grp)
 {

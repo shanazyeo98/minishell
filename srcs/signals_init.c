@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:28:44 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 15:54:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
+	{
 		rl_done = 1;
+		kill(0, SIGINT);
+	}
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the

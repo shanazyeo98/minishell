@@ -6,6 +6,7 @@ srcs/init_general.c \
 srcs/signals_init.c \
 srcs/cleanup.c \
 srcs/declarechar.c \
+srcs/heredoc.c \
 srcs/token_checktype.c \
 srcs/token_list.c \
 srcs/token_new.c \
@@ -23,20 +24,22 @@ LIBFTDIR = libft
 LIBFT = libft.a
 LIB = -lreadline
 HEADERS = srcs/minishell.h
+MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
+MAC_LIB = -L/opt/homebrew/opt/readline/lib
 
 all: $(NAME)
 
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:23:10 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 13:47:05 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 17:58:44 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ int	readchar(char a, t_minishell *params, t_tokendets *info, int *i)
 		}
 		if (open->type == SINGLE || open->type == DOUBLE)
 			(*i)++;
+		if (heredoccheck(params) != SUCCESS)
+			return (CANCEL);
 	}
 	else
 		(*i)++;
