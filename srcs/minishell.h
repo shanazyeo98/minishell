@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 18:37:31 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/09 08:32:40 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,7 @@ void		tree_error(t_ast *node);
 /* AST Traversal */
 void	print_ast_node(t_ast *node);
 void	print_cmds_first_last(t_ast *node);
+void	print_ast(t_ast *node, int ctr);
 
 
 /* Clean up functions */
