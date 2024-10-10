@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:29:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/11 01:03:38 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,13 @@ void	free_ft_split(char **arr)
 /* Description: Overall clean up function. Frees all allocated memory:
 	- t_minishell -> char **paths
 	- t_minishell -> char * input
+	- t_minishell -> t_list *envp
 	- TO ADD ON AFTERWARDS
 */
 void	spick_and_span(t_minishell ms)
 {
 	free (ms.input);
 	free_ft_split(ms.path);
+	if (ms.envp != NULL)
+		ft_lstclear(&(ms.envp), ft_lst_freecntnt);
 }

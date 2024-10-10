@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/10 18:40:27 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/11 01:30:13 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@ void	break_shell(t_minishell *ms)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
-	int			i;
+	t_list		*curr;
 
-	i = 0;
 	ms = init_ms(argc, argv, envp);
-	while (ms.envp[i] != NULL)
+	curr = ms.envp;
+	printf("Check envp list size: %d\n", ft_lstsize(ms.envp));
+	printf("========Test if the env is converted to linked list properly========\n");
+	while (curr != NULL)
 	{
-		printf("Env: %s\n", ms.envp[i]);
-		i++;
+		printf("envp llist: %s\n", (char *)curr->content);
+		curr = curr->next;
 	}
-	printf("Test path: %s\n", ms.path[1]);
 	init_all_sig_handler();
 	while (1)
 	{

@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_lst_freecntnt.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/23 15:19:56 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/10 20:04:42 by mintan           ###   ########.fr       */
+/*   Created: 2024/10/10 23:22:54 by mintan            #+#    #+#             */
+/*   Updated: 2024/10/10 23:37:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Function: Adds a new node at the back of the list
-*/
-
 #include "libft.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*last_node;
+/* Description: Frees memory allocated to a memory location by taking in a
+   pointer and using free(). This function is mainly passed into the
+   ft_lstclear() function to delete the content in a linked list.
+*/
 
-	if (*lst == NULL)
-		*lst = new;
-	else
-	{
-		last_node = ft_lstlast(*lst);
-		last_node->next = new;
-	}
+void	ft_lst_freecntnt(void *ptr)
+{
+	free(ptr);
 }

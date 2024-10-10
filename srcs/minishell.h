@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/10 18:32:15 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/11 00:56:03 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ enum	e_exitstat
 
 typedef struct s_minishell
 {
-	char	**envp;
+	t_list	*envp;
 	char	**path;
 	char	*input;
 	t_token	**tokenlist;
@@ -171,6 +171,11 @@ void		getinput(t_minishell *ms);
 t_minishell	init_ms(int argc, char *argv[], char *envp[]);
 // t_minishell	init_ms(void);
 int			rl_empty_event(void);
+
+
+/* Environment funtions */
+t_list	*stray_to_llist(char **str);
+char	**llist_to_stray(t_list *llist);
 
 
 /* Signal functions */
