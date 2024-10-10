@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/09 09:09:14 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/10 18:40:27 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,19 @@ void	break_shell(t_minishell *ms)
 /* Description: main programme for minishell
 */
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
+	int			i;
 
-	ms = init_ms();
+	i = 0;
+	ms = init_ms(argc, argv, envp);
+	while (ms.envp[i] != NULL)
+	{
+		printf("Env: %s\n", ms.envp[i]);
+		i++;
+	}
+	printf("Test path: %s\n", ms.path[1]);
 	init_all_sig_handler();
 	while (1)
 	{
@@ -38,6 +46,7 @@ int	main(void)
 		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
+		print_token_list(ms);
 		ms.ast = parse(*ms.tokenlist, -1);
 		print_ast(ms.ast, 0);
 
