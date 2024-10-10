@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:16:46 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 16:08:25 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ void	getinput(t_minishell *ms)
 {
 	char	*input;
 
-	rl_event_hook = rl_empty_event;
 	input = readline(PROMPT);
 	if (input == NULL)
 	{
@@ -88,6 +87,9 @@ t_minishell	init_ms(void)
 	ms.input = NULL;
 	ms.tokenlist = NULL;
 	ms.ast = NULL;
+	ms.pid = 0;
 	declarearray(&ms);
+	rl_event_hook = rl_empty_event;
+	rl_signal_event_hook = rl_empty_event;
 	return (ms);
 }

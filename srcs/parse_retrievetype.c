@@ -6,11 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 23:23:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 16:03:05 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 19:33:03 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Description: Returns the type of operator*/
 
 int	ret_op(char *str)
 {
@@ -20,6 +22,8 @@ int	ret_op(char *str)
 		return (OR);
 	return (PIPE);
 }
+
+/*Description: Returns the type of redirection*/
 
 int	ret_redir(char *str)
 {

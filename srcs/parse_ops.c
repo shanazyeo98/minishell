@@ -6,11 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:04:59 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 17:26:41 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 19:34:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Description: Creates a AST node*/
 
 t_ast	*createnode(int id, int type, int op, int grp)
 {
@@ -26,6 +28,8 @@ t_ast	*createnode(int id, int type, int op, int grp)
 	return (node);
 }
 
+/*Description: Retrieves the last left node of a tree*/
+
 t_ast	*lstleftnode(t_ast *node)
 {
 	if (node == NULL)
@@ -34,6 +38,8 @@ t_ast	*lstleftnode(t_ast *node)
 		node = node->left;
 	return (node);
 }
+
+/*Description: Adds a node to the left of the tree*/
 
 void	addleftnode(t_ast **branch, t_ast *new)
 {
@@ -47,6 +53,8 @@ void	addleftnode(t_ast **branch, t_ast *new)
 		lst->left = new;
 	}
 }
+
+/*Description: Adds a upper node at the top of the tree*/
 
 void	adduppernode(t_ast **branch, t_ast *new)
 {

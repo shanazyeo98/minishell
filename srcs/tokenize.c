@@ -6,17 +6,12 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/04 16:02:50 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 19:31:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 //#include <stdio.h>
-
-//next steps:
-//test with operators and the different error cases. implement the above.
-
-//end of string function
 
 /*Description: To handle the end of prompt.
 If status is open and last token is a basic token, to close the token
@@ -32,7 +27,11 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 	if (last == NULL)
 		return (SUCCESS);
 	if (last->type == BASIC && info->status == OPEN)
+	{
 		closetoken(info, i, last);
+		if (heredoccheck(params) != SUCCESS)
+			return (CANCEL);
+	}
 	return (checkend(params, info));
 }
 
@@ -49,7 +48,7 @@ void	tokenstatus(t_minishell *params, int status)
 	}
 	else if (status == ERROR)
 		ft_putendl_fd(ERR_SYNTAX, 2);
-	if (status == ERROR || *(params->tokenlist) == NULL)
+	if (status == ERROR || status == CANCEL || *(params->tokenlist) == NULL)
 	{
 		freetokens(params->tokenlist);
 		params->tokenlist = NULL;
@@ -64,6 +63,7 @@ void	inittokenlist(t_minishell *params, t_tokendets *info, char *prompt)
 	info->wordgrp = 0;
 	info->grp = 0;
 	info->id = 0;
+	params->hdcount = 0;
 	params->tokenlist = malloc(sizeof(t_token *));
 	if (params->tokenlist == NULL)
 	{
@@ -102,20 +102,3 @@ void	tokenize(char *prompt, t_minishell *params)
 		status = endofprompt(params, &info, i);
 	tokenstatus(params, status);
 }
-
-//	if (endofprompt(params, &info, i) == ERROR)
-//		return (ERROR);
-//	return (SUCCESS);
-
-/*Description: Testing main for the tokenize function */
-/*int	main(void)
-{
-	t_minishell	params;
-	int			status;
-
-	declarearray(&params);
-	params.tokenlist = malloc(sizeof(t_token *));
-	*(params.tokenlist) = NULL;
-	status = tokenize("echo ($)", &params);
-	printf("%d\n", status);
-}*/

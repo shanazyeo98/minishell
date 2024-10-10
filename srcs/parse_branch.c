@@ -6,11 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:57:18 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 16:05:12 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/09 19:37:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Description: Creates the operator nodes in a branch*/
 
 int	assignops(t_ast **branch, t_token *token, int grp)
 {
@@ -30,6 +32,8 @@ int	assignops(t_ast **branch, t_token *token, int grp)
 	return (SUCCESS);
 }
 
+/*Description: Create a command AST node and its corresponding ast node*/
+
 t_ast	*createcmdnode(t_token *cmdstart)
 {
 	t_ast	*newnode;
@@ -42,6 +46,8 @@ t_ast	*createcmdnode(t_token *cmdstart)
 		return (free(newnode), NULL);
 	return (newnode);
 }
+
+/*Description: Assigns the last command node to the left of the operator node*/
 
 int	lstcmd(t_token *token, t_ast *node, t_ast **branch)
 {
@@ -56,6 +62,9 @@ int	lstcmd(t_token *token, t_ast *node, t_ast **branch)
 		node->left = newnode;
 	return (SUCCESS);
 }
+
+/*Description: Creates and assigns command nodes based on the operator nodes
+in a branch*/
 
 int	assigncmd(t_ast **branch, t_token *token, int grp)
 {
@@ -82,6 +91,8 @@ int	assigncmd(t_ast **branch, t_token *token, int grp)
 		return (lstcmd(token, node, branch));
 	return (SUCCESS);
 }
+
+/*Description: Creates a branch based on a group*/
 
 t_ast	*createbranch(t_token *token, int grp)
 {

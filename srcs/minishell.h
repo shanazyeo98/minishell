@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 17:15:05 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 17:36:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <time.h>
+# include <sys/wait.h>
 
 /* General */
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
+# define HEREDOCFILE "heredoc"
+# define HEREDOCPROMPT "໒(⊙ᴗ⊙)७✎▤ > "
+# define HEREDOCOP "<<"
 
 // /* Signal handling - Global variable to indicate if a signal is recieved*/
 // extern	volatile sig_atomic_t	prompt_again;
@@ -37,9 +41,12 @@
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
 # define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
+# define ERR "ಥ_ಥ"
 
 # define OPEN 0
 # define CLOSED 1
+# define INTERACTIVE 0
+# define NONINTERACTIVE 1
 
 //token data structure
 
@@ -60,11 +67,18 @@ enum	e_character
 	OTHERS
 };
 
+// union	content
+// {
+// 	int		fd;
+// 	char	*str;
+// };
+
 typedef struct s_token
 {
 	int				id;
 	int				type;
 	char			*str;
+	int				fd;
 	int				wordgrp;
 	int				grp;
 	struct s_token	*next;
@@ -142,6 +156,7 @@ enum	e_exitstat
 	SUCCESS,
 	FAIL,
 	ERROR,
+	CANCEL
 };
 
 typedef struct s_minishell
@@ -153,13 +168,11 @@ typedef struct s_minishell
 	char	operator[3];
 	char	redirector[3];
 	char	*validopre[8];
+	int		hdcount;
+	int		pid;
+	char	*delim;
 	t_ast	*ast;
 }	t_minishell;
-
-
-
-
-
 
 /* Initialisation functions */
 void		declarearray(t_minishell *params);
@@ -168,27 +181,30 @@ void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
 int			rl_empty_event(void);
 
-
 /* Signal functions */
-void		init_all_sig_handler(void);
-void		init_signal_handler(int signum);
+void		init_all_sig_handler(int state);
+void		init_signal_handler(int signum, void (*func)(int));
 void		sig_handler(int signum);
-
+void		sig_child(int signum);
 
 //tokens
-t_token	*lsttoken(t_token *token);
-int		assigntoken(int type, t_tokendets *info, t_minishell *params);
-int		newtoken(char a, t_minishell *params, t_tokendets *info, int i);
-int		chartype(char a, t_minishell *params);
-int		readchar(char a, t_minishell *params, t_tokendets *info, int *i);
-int		returntype(char a, t_minishell *params);
-int		closetoken(t_tokendets *info, int i, t_token *open);
-int		chartype(char a, t_minishell *params);
-int		checkend(t_minishell *params, t_tokendets *info);
-void	tokenize(char *prompt, t_minishell *params);
-void	freetokens(t_token **list);
-t_token	*ret_token(int id, t_token *token);
-void	print_token_list(t_minishell ms);
+t_token		*lsttoken(t_token *token);
+int			assigntoken(int type, t_tokendets *info, t_minishell *params);
+int			newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int			chartype(char a, t_minishell *params);
+int			readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int			returntype(char a, t_minishell *params);
+int			closetoken(t_tokendets *info, int i, t_token *open);
+int			chartype(char a, t_minishell *params);
+int			checkend(t_minishell *params, t_tokendets *info);
+void		tokenize(char *prompt, t_minishell *params);
+void		freetokens(t_token **list);
+t_token		*ret_token(int id, t_token *token);
+void		print_token_list(t_minishell ms);
+
+//heredoc
+int			heredoc(t_minishell *params, t_token *token);
+int			heredoccheck(t_minishell *params);
 
 //parsing
 int			ret_op(char *str);
