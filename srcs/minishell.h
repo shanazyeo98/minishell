@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/10 14:00:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 17:36:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@
 
 # define OPEN 0
 # define CLOSED 1
+# define INTERACTIVE 0
+# define NONINTERACTIVE 1
 
 //token data structure
 
@@ -179,31 +181,30 @@ void		getinput(t_minishell *ms);
 t_minishell	init_ms(void);
 int			rl_empty_event(void);
 
-
 /* Signal functions */
-void		init_all_sig_handler(void);
+void		init_all_sig_handler(int state);
 void		init_signal_handler(int signum, void (*func)(int));
 void		sig_handler(int signum);
-
+void		sig_child(int signum);
 
 //tokens
-t_token	*lsttoken(t_token *token);
-int		assigntoken(int type, t_tokendets *info, t_minishell *params);
-int		newtoken(char a, t_minishell *params, t_tokendets *info, int i);
-int		chartype(char a, t_minishell *params);
-int		readchar(char a, t_minishell *params, t_tokendets *info, int *i);
-int		returntype(char a, t_minishell *params);
-int		closetoken(t_tokendets *info, int i, t_token *open);
-int		chartype(char a, t_minishell *params);
-int		checkend(t_minishell *params, t_tokendets *info);
-void	tokenize(char *prompt, t_minishell *params);
-void	freetokens(t_token **list);
-t_token	*ret_token(int id, t_token *token);
-void	print_token_list(t_minishell ms);
+t_token		*lsttoken(t_token *token);
+int			assigntoken(int type, t_tokendets *info, t_minishell *params);
+int			newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int			chartype(char a, t_minishell *params);
+int			readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int			returntype(char a, t_minishell *params);
+int			closetoken(t_tokendets *info, int i, t_token *open);
+int			chartype(char a, t_minishell *params);
+int			checkend(t_minishell *params, t_tokendets *info);
+void		tokenize(char *prompt, t_minishell *params);
+void		freetokens(t_token **list);
+t_token		*ret_token(int id, t_token *token);
+void		print_token_list(t_minishell ms);
 
 //heredoc
-int	heredoc(t_minishell *params, t_token *token);
-int	heredoccheck(t_minishell *params);
+int			heredoc(t_minishell *params, t_token *token);
+int			heredoccheck(t_minishell *params);
 
 //parsing
 int			ret_op(char *str);
@@ -217,9 +218,6 @@ t_ast		*parse(t_token *token, int id);
 int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
-
-//Signals
-void	sig_child(int signum);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

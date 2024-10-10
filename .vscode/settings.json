@@ -4,7 +4,9 @@
 		"readline.h": "c",
 		"stdio.h": "c",
 		"stdlib.h": "c",
-		"history.h": "c"
+		"history.h": "c",
+		"libft.h": "c",
+		"signal.h": "c"
 	},
 	"makefile.configureOnOpen": true
 }

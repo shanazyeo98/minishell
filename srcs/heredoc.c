@@ -6,13 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/10 14:36:12 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 17:33:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//to think: will there be a case where fd = -1
 
 /*Description: Checks if the token is valid to start the heredoc process*/
 
@@ -37,29 +35,19 @@ int	heredoccheck(t_minishell *params)
 void	writeheredoc(int fd, char *delim)
 {
 	char	*input;
-//	char	buffer[1000000];
-//	int	bread;
 
 	while (1)
 	{
-		input = NULL;
-		ft_putstr_fd(HEREDOCPROMPT, 1);
-		input = get_next_line(0);
+		input = readline(HEREDOCPROMPT);
 		if (input == NULL || ft_strcmp(input, delim) == 0)
 		{
-			free(delim);
-			break;
+			free(input);
+			break ;
 		}
 		ft_putstr_fd(input, fd);
+		ft_putstr_fd("\n", fd);
 		free(input);
 	}
-//	testing to see what is in the file
-// 	lseek(fd, 0, SEEK_SET);
-// 	bread = read(fd, buffer, 1000000);
-// 	printf("%d\n", bread);
-// 	fflush(stdout);
-// 	printf("%s", buffer);
-// 	fflush(stdout);
 }
 
 /*Description: Forks the process to initiate retrieval of input for heredoc.
@@ -68,7 +56,6 @@ Main process will wait*/
 int	executedoc(t_minishell *params, int fd, char *delim)
 {
 	int	status;
-
 
 	params->pid = fork();
 	if (params->pid == -1)
@@ -79,6 +66,7 @@ int	executedoc(t_minishell *params, int fd, char *delim)
 	if (params->pid == 0)
 	{
 		init_signal_handler(SIGINT, &sig_child);
+		init_signal_handler(SIGQUIT, &sig_child);
 		writeheredoc(fd, delim);
 		//cleanup function
 		exit(SUCCESS);
@@ -94,7 +82,7 @@ int	executedoc(t_minishell *params, int fd, char *delim)
 
 /*Description: Generates the temporary file to store the heredoc content*/
 
-int herefile(t_minishell *params)
+int	herefile(t_minishell *params)
 {
 	char	*num;
 	char	*name;
@@ -111,6 +99,7 @@ int herefile(t_minishell *params)
 	unlink(name);
 	fd = open(name, O_RDWR | O_CREAT | O_APPEND, 0644);
 	unlink(name);
+	free(name);
 	return (fd);
 }
 
@@ -127,20 +116,10 @@ int	heredoc(t_minishell *params, t_token *token)
 	fd = herefile(params);
 	if (fd == -1)
 		return (FAIL);
-	params->delim = ft_strjoin(token->str, "\n");
-	if (params->delim == NULL)
-	{
-		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
-		exit(FAIL);
-	}
-	status = executedoc(params, fd, params->delim);
+	status = executedoc(params, fd, token->str);
 	if (status == SUCCESS)
 		token->fd = fd;
 	else
-	{
 		close(fd);
-		write(1, "\n", 1);
-//		rl_on_new_line();
-	}
 	return (status);
 }

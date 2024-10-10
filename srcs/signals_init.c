@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/10 14:16:38 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 16:33:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	sig_child(int signum)
 {
 	if (signum == SIGINT)
 	{
+		write(1, "\n", 1);
 		exit(CANCEL);
 	}
 }
@@ -28,6 +29,14 @@ void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
 		rl_done = 1;
+}
+
+void	sig_noninteractive(int signum)
+{
+	if (signum == SIGINT)
+		return ;
+//	if (signum == SIGINT)
+//		kill(0, SIGINT);
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the
@@ -46,7 +55,7 @@ void	init_signal_handler(int signum, void (*func)(int))
 	sigemptyset(&action.sa_mask);
 	//probably need to register more signals here
 	sigaddset(&action.sa_mask, SIGINT);
-	action.sa_flags = 0;
+	action.sa_flags = SA_RESTART;
 	if (sigaction(signum, &action, NULL) == -1)
 	{
 		perror(ERR_SIGACTION_FAIL);
@@ -61,8 +70,16 @@ void	init_signal_handler(int signum, void (*func)(int))
 	- XXXXXX ADD LATER
 */
 
-void	init_all_sig_handler(void)
+void	init_all_sig_handler(int state)
 {
-	init_signal_handler(SIGINT, &sig_handler);
-	init_signal_handler(SIGQUIT, &sig_handler);
+	if (state == INTERACTIVE)
+	{
+		init_signal_handler(SIGINT, &sig_handler);
+		init_signal_handler(SIGQUIT, &sig_handler);
+	}
+	else
+	{
+		init_signal_handler(SIGINT, &sig_noninteractive);
+		init_signal_handler(SIGQUIT, &sig_noninteractive);
+	}
 }
