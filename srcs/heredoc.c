@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 19:37:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 14:36:12 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	writeheredoc(int fd, char *delim)
 
 	while (1)
 	{
+		input = NULL;
 		ft_putstr_fd(HEREDOCPROMPT, 1);
 		input = get_next_line(0);
 		if (input == NULL || ft_strcmp(input, delim) == 0)
@@ -68,6 +69,7 @@ int	executedoc(t_minishell *params, int fd, char *delim)
 {
 	int	status;
 
+
 	params->pid = fork();
 	if (params->pid == -1)
 	{
@@ -76,6 +78,7 @@ int	executedoc(t_minishell *params, int fd, char *delim)
 	}
 	if (params->pid == 0)
 	{
+		init_signal_handler(SIGINT, &sig_child);
 		writeheredoc(fd, delim);
 		//cleanup function
 		exit(SUCCESS);
@@ -83,7 +86,6 @@ int	executedoc(t_minishell *params, int fd, char *delim)
 	else
 	{
 		wait(&status);
-		printf("%d\n", WIFEXITED(status));
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 		return (CANCEL);
@@ -135,6 +137,10 @@ int	heredoc(t_minishell *params, t_token *token)
 	if (status == SUCCESS)
 		token->fd = fd;
 	else
+	{
 		close(fd);
+		write(1, "\n", 1);
+//		rl_on_new_line();
+	}
 	return (status);
 }

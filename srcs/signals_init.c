@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/09 15:54:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/10 14:16:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,18 @@
 	- SIGINT: sets rl_done = 1 to break out of readline
 */
 
-void	sig_handler(int signum)
+void	sig_child(int signum)
 {
 	if (signum == SIGINT)
 	{
-		rl_done = 1;
-		kill(0, SIGINT);
+		exit(CANCEL);
 	}
+}
+
+void	sig_handler(int signum)
+{
+	if (signum == SIGINT)
+		rl_done = 1;
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the
@@ -33,11 +38,11 @@ void	sig_handler(int signum)
    The signal handler is registered using the sigaction()
 */
 
-void	init_signal_handler(int signum)
+void	init_signal_handler(int signum, void (*func)(int))
 {
 	struct sigaction	action;
 
-	action.sa_handler = &sig_handler;
+	action.sa_handler = func;
 	sigemptyset(&action.sa_mask);
 	//probably need to register more signals here
 	sigaddset(&action.sa_mask, SIGINT);
@@ -58,6 +63,6 @@ void	init_signal_handler(int signum)
 
 void	init_all_sig_handler(void)
 {
-	init_signal_handler(SIGINT);
-	init_signal_handler(SIGQUIT);
+	init_signal_handler(SIGINT, &sig_handler);
+	init_signal_handler(SIGQUIT, &sig_handler);
 }
