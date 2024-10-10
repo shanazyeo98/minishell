@@ -83,6 +83,7 @@ int	executedoc(t_minishell *params, int fd, char *delim)
 	else
 	{
 		wait(&status);
+		printf("%d\n", WIFEXITED(status));
 		if (WIFEXITED(status))
 			return (WEXITSTATUS(status));
 		return (CANCEL);
