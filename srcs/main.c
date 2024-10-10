@@ -39,7 +39,8 @@ int	main(void)
 		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
-		ms.ast = parse(*ms.tokenlist, -1);
+		if (ms.tokenlist != NULL)
+			ms.ast = parse(*ms.tokenlist, -1);
 		//testing
 //		printf("%d\n", mst);
 	}
