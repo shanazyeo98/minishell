@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <time.h>
+# include <sys/wait.h>
 
 /* General */
 # define PROMPT "٩(ఠ益ఠ)۶ > "
