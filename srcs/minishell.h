@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/10 17:36:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/11 14:02:41 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,10 @@
 # define CLOSED 1
 # define INTERACTIVE 0
 # define NONINTERACTIVE 1
+
+//global variable
+
+extern int	g_sig_status;
 
 //token data structure
 
@@ -203,8 +207,8 @@ t_token		*ret_token(int id, t_token *token);
 void		print_token_list(t_minishell ms);
 
 //heredoc
-int			heredoc(t_minishell *params, t_token *token);
-int			heredoccheck(t_minishell *params);
+int			heredoc(int hd, t_token *token, t_minishell *params);
+void		heredoccheck(t_token **tokenlist, t_minishell *params);
 
 //parsing
 int			ret_op(char *str);
@@ -221,7 +225,7 @@ void		tree_error(t_ast *node);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
-void		spick_and_span(t_minishell ms);
+void		spick_and_span(t_minishell ms, int status);
 void		break_shell(t_minishell *ms);
 
 #endif

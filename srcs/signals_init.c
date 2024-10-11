@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/10 16:33:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/11 14:14:53 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,17 @@
 	- SIGINT: sets rl_done = 1 to break out of readline
 */
 
+int	g_sig_status = 0;
+
 void	sig_child(int signum)
 {
 	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
-		exit(CANCEL);
+		rl_done = 1;
+		g_sig_status = SIGINT;
 	}
+
 }
 
 void	sig_handler(int signum)

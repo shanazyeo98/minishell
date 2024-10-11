@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 19:31:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/11 13:02:18 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,7 @@ int	endofprompt(t_minishell *params, t_tokendets *info, int i)
 	if (last == NULL)
 		return (SUCCESS);
 	if (last->type == BASIC && info->status == OPEN)
-	{
 		closetoken(info, i, last);
-		if (heredoccheck(params) != SUCCESS)
-			return (CANCEL);
-	}
 	return (checkend(params, info));
 }
 

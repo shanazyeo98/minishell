@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:29:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/11 13:41:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,14 @@ void	free_ft_split(char **arr)
 	- t_minishell -> char * input
 	- TO ADD ON AFTERWARDS
 */
-void	spick_and_span(t_minishell ms)
+void	spick_and_span(t_minishell ms, int status)
 {
-	free (ms.input);
+	free(ms.input);
 	free_ft_split(ms.path);
+	freetokens(ms.tokenlist);
+	if (status == FAIL)
+	{
+		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
+		exit(FAIL);
+	}
 }
