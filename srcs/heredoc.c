@@ -18,22 +18,24 @@ char	*delim(t_token *token)
 {
 	int		word;
 	char	*temp;
-	char	*delim;
+	char	*limiter;
 
 	word = token->wordgrp;
-	delim = ft_strdup(token->str);
-	if (delim == NULL)
+	limiter = ft_strdup(token->str);
+	if (limiter == NULL)
 		return (NULL);
 	token = token->next;
-	while (token != NULL && token->wordgrp == word)
+	while (token != NULL && token->wordgrp == word && token->type != OPERATOR \
+	&& token->type != REDIRECTOR)
 	{
-		temp = delim;
-		delim = ft_strjoin(delim, token->str);
-		if (delim == NULL)
+		temp = limiter;
+		limiter = ft_strjoin(limiter, token->str);
+		if (limiter == NULL)
 			return (free(temp), NULL);
 		free(temp);
+		token = token->next;
 	}
-	return (delim);
+	return (limiter);
 }
 
 void	heredoccheck(t_token **tokenlist, t_minishell *params)
@@ -53,17 +55,17 @@ void	heredoccheck(t_token **tokenlist, t_minishell *params)
 			hd++;
 			limiter = delim(token);
 			if (limiter == NULL)
-				spick_and_span(*params, FAIL);
-			status = heredoc(hd, token, params);
+				spick_and_span(params, FAIL);
+			status = heredoc(hd, token, limiter, params);
 			if (status != SUCCESS)
 				break ;
 		}
 		token = token->next;
 	}
 	if (status == FAIL)
-		spick_and_span(*params, FAIL);
+		spick_and_span(params, FAIL);
 	if (status == ERROR)
-		spick_and_span(*params, ERROR);
+		spick_and_span(params, ERROR);
 }
 
 /*Description: Uses get next line to retrieve the input and write into the fd*/
@@ -77,11 +79,13 @@ void	writeheredoc(int fd, char *delim, t_minishell *params)
 		input = readline(HEREDOCPROMPT);
 		if (g_sig_status == SIGINT)
 		{
-			spick_and_span(*params, ERROR);
+			spick_and_span(params, ERROR);
 			exit(ERROR);
 		}
 		if (input == NULL || ft_strcmp(input, delim) == 0)
 		{
+			if (input == NULL)
+				write(1, "\n", 1);
 			free(input);
 			break ;
 		}
@@ -107,10 +111,9 @@ int	executedoc(int fd, char *delim, t_minishell *params)
 	}
 	if (pid == 0)
 	{
-		init_signal_handler(SIGINT, &sig_child);
-		init_signal_handler(SIGQUIT, &sig_child);
+		init_all_sig_handler(INTERACTIVE);
 		writeheredoc(fd, delim, params);
-		spick_and_span(*params, SUCCESS);
+		spick_and_span(params, SUCCESS);
 		exit(SUCCESS);
 	}
 	else
@@ -150,7 +153,7 @@ Returns: SUCCESS if heredoc is completed
 FAIL if malloc failed
 CANCEL if process was interrupted*/
 
-int	heredoc(int hd, t_token *token, t_minishell *params)
+int	heredoc(int hd, t_token *token, char *delim, t_minishell *params)
 {
 	int		fd;
 	int		status;
@@ -158,7 +161,7 @@ int	heredoc(int hd, t_token *token, t_minishell *params)
 	fd = herefile(hd);
 	if (fd == -1)
 		return (FAIL);
-	status = executedoc(fd, token->str, params);
+	status = executedoc(fd, delim, params);
 	if (status == SUCCESS)
 		token->fd = fd;
 	else

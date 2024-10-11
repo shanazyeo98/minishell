@@ -37,18 +37,11 @@ Error: Free tokenlist and prints error message*/
 void	tokenstatus(t_minishell *params, int status)
 {
 	if (status == FAIL)
-	{
-		//clean up function
-		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
-		exit(FAIL);
-	}
+		spick_and_span(params, FAIL);
 	else if (status == ERROR)
 		ft_putendl_fd(ERR_SYNTAX, 2);
-	if (status == ERROR || status == CANCEL || *(params->tokenlist) == NULL)
-	{
-		freetokens(params->tokenlist);
-		params->tokenlist = NULL;
-	}
+	if (status == ERROR || *(params->tokenlist) == NULL)
+		spick_and_span(params, ERROR);
 }
 
 /*Description: Initialises the token list and the info*/

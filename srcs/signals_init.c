@@ -18,29 +18,23 @@
 
 int	g_sig_status = 0;
 
-void	sig_child(int signum)
-{
-	if (signum == SIGINT)
-	{
-		write(1, "\n", 1);
-		rl_done = 1;
-		g_sig_status = SIGINT;
-	}
-
-}
-
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
+	{
 		rl_done = 1;
+		g_sig_status = SIGINT;
+	}
+	if (signum == SIGQUIT)
+		g_sig_status = SIGQUIT;
 }
 
 void	sig_noninteractive(int signum)
 {
 	if (signum == SIGINT)
 		return ;
-//	if (signum == SIGINT)
-//		kill(0, SIGINT);
+	if (signum == SIGQUIT)
+		return ;
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the

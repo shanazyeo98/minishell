@@ -19,7 +19,7 @@
 void	break_shell(t_minishell *ms)
 {
 	ft_printf(EXIT_MSG);
-	spick_and_span(*ms, SUCCESS);
+	spick_and_span(ms, SUCCESS);
 	exit(EXIT_SUCCESS);
 }
 

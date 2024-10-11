@@ -43,11 +43,15 @@ void	free_ft_split(char **arr)
 	- t_minishell -> char * input
 	- TO ADD ON AFTERWARDS
 */
-void	spick_and_span(t_minishell ms, int status)
+void	spick_and_span(t_minishell *ms, int status)
 {
-	free(ms.input);
-	free_ft_split(ms.path);
-	freetokens(ms.tokenlist);
+	free(ms->input);
+	if (ms->path != NULL)
+		free_ft_split(ms->path);
+	ms->path = NULL;
+	if (ms->tokenlist != NULL)
+		freetokens(ms->tokenlist);
+	ms->tokenlist = NULL;
 	if (status == FAIL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, 2);

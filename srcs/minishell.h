@@ -207,7 +207,7 @@ t_token		*ret_token(int id, t_token *token);
 void		print_token_list(t_minishell ms);
 
 //heredoc
-int			heredoc(int hd, t_token *token, t_minishell *params);
+int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
 
 //parsing
@@ -225,7 +225,7 @@ void		tree_error(t_ast *node);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
-void		spick_and_span(t_minishell ms, int status);
+void		spick_and_span(t_minishell *ms, int status);
 void		break_shell(t_minishell *ms);
 
 #endif

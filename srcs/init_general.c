@@ -65,7 +65,7 @@ void	getinput(t_minishell *ms)
 	if (input == NULL)
 	{
 		ft_printf(EXIT_MSG);
-		spick_and_span(*ms, SUCCESS);
+		spick_and_span(ms, SUCCESS);
 		exit(EXIT_SUCCESS);
 	}
 	add_history(input);
