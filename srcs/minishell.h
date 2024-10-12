@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/11 14:02:41 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/12 03:47:36 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,6 @@ enum	e_character
 	OTHERS
 };
 
-// union	content
-// {
-// 	int		fd;
-// 	char	*str;
-// };
-
 typedef struct s_token
 {
 	int				id;
@@ -128,7 +122,7 @@ struct	s_cmd;
 typedef struct s_redir
 {
 	int		id;
-	char	*file;
+	char	**file;
 }	t_redir;
 
 typedef struct s_ast
