@@ -11,6 +11,7 @@ srcs/token_list.c \
 srcs/token_new.c \
 srcs/token_read.c \
 srcs/tokenize.c \
+srcs/token_expand.c \
 srcs/token_utils.c \
 srcs/parse_branch.c \
 srcs/parse_error.c \

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/11 00:56:03 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/13 04:07:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,10 @@ t_ast		*parse(t_token *token, int id);
 int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
+
+/* Expansion functions*/
+t_list		*find_env_var(char *var, t_list *envp);
+
 
 /* AST utils */
 void		print_ast_node(t_ast *node);
