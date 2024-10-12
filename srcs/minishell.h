@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/12 03:47:36 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/12 11:25:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@
 # define HEREDOCFILE "heredoc"
 # define HEREDOCPROMPT "໒(⊙ᴗ⊙)७✎▤ > "
 # define HEREDOCOP "<<"
+# define APPENDOP ">>"
+# define INPUTOP "<"
+# define OUTPUTOP ">"
 
 // /* Signal handling - Global variable to indicate if a signal is recieved*/
 // extern	volatile sig_atomic_t	prompt_again;
@@ -122,7 +125,8 @@ struct	s_cmd;
 typedef struct s_redir
 {
 	int		id;
-	char	**file;
+	char	*file;
+	int		fd;
 }	t_redir;
 
 typedef struct s_ast
@@ -216,6 +220,9 @@ t_ast		*parse(t_token *token, int id);
 int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
+
+//update tree
+int     countspaces(char *str);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

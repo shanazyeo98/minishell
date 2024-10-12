@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/12 05:09:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/12 11:25:18 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ char    *newstring(char *str, char *addstr)
     return (result);
 }
 
-int	ft_assignstr(char *newstr, char **args, int i)
+int	ft_assignstr(char *newstr, char **args)
 {
-	if (args[i] != NULL)
+	if (*args != NULL)
 	{
-		args[i] = newstring(args[i], newstr);
-		if (args[i] == NULL)
+		*args = newstring(args, newstr);
+		if (*args == NULL)
 			return (FAIL);
 	}
 	else
 	{
-		args[i] = ft_strdup(newstr);
-		if (args[i] == NULL)
+		*args = ft_strdup(newstr);
+		if (*args == NULL)
 			return (FAIL);
 	}
 }
@@ -50,27 +50,71 @@ int	splitbasic(char *str, char **args, int *i)
 	j = 0;
 	while (*split != NULL)
 	{
-		ft_assignstr(*split, args, *i);
+		ft_assignstr(*split, args + *i);
 		(*i)++;
 		split++;
 	}
 }
 
-int	fill(t_cmd *cmd, t_minishell *params)
+int	ret_redirection(char *str)
+{
+	if (ft_strcmp(str, HEREDOCOP))
+		return (HEREDOC);
+	if (ft_strcmp(str, APPENDOP))
+		return (APPEND);
+	if (ft_strcmp(str, INPUTOP))
+		return (INPUT);
+	return (OUTPUT);
+}
+
+int	redirection(t_cmd *cmd, t_token **token, t_redir **redir)
+{
+	static int	i = 0;
+	int			grp;
+
+	(redir[i])->id = ret_redirection((*token)->str);
+	*token = (*token)->next;
+	if ((redir[i])->id == HEREDOC)
+		(redir[i])->fd = (*token)->fd;
+	grp = (*token)->wordgrp;
+	while ((*token) != cmd->end && (*token)->wordgrp == grp)
+	{
+		if ((redir[i])->id != HEREDOC)
+		{
+			if ((*token)->type == BASIC && countspaces((*token)->str) > 0)
+				(redir[i])->file = NULL;
+			else
+			{
+				if (ft_assignstr((*token)->str, &(redir[i])->file) == FAIL)
+					return (FAIL);
+			}
+		}
+		*token = (*token)->next;
+	}
+	return (SUCCESS);
+}
+
+int	fill(t_cmd *cmd)
 {
 	int		i_arg;
-	int		i_redir;
 	t_token	*token;
 	int		grp;
 
 	i_arg = 0;
-	i_redir = 0;
 	token = cmd->start;
 	grp = 0;
 	while (token != cmd->end)
 	{
+		if (token->type == REDIRECTOR)
+		{
+			if (redirection(cmd, &token, cmd->redir) == FAIL)
+				return (FAIL);
+			if (token == cmd->end)
+				break ;
+		}
 		if (token->wordgrp != grp)
 			i_arg++;
+		grp = token->wordgrp;
 		if (token->type == BASIC)
 		{
 			if (splitbasic(token->str, cmd->args, &i_arg))
@@ -78,7 +122,7 @@ int	fill(t_cmd *cmd, t_minishell *params)
 			i_arg--;
 		}
 		else
-			ft_assignstr(token->str, cmd->args, i_arg);
+			ft_assignstr(token->str, cmd->args + i_arg);
 		token = token->next;
 	}
 }
@@ -116,7 +160,7 @@ int main(void)
     cmd.start = &a;
     cmd.end = NULL;
 	cmd.args = array;
-	fill(&cmd, NULL);
+	fill(&cmd);
 	i = 0;
 	while (i < 4)
 	{
