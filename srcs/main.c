@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/13 04:10:21 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/13 08:08:11 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,19 @@ void	break_shell(t_minishell *ms)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
-	t_list		*curr;
-	t_list		*match;
+	// t_list		*curr;
+	// t_list		*match;
 
 	ms = init_ms(argc, argv, envp);
 
-	curr = ms.envp;
-	while (curr != NULL)
-	{
-		printf("envp: %s\n", (char *)curr->content);
-		curr = curr->next;
-	}
-	match = find_env_var("v1", ms.envp);
-	printf("match address: %p | content: %s\n", match, (char *)match->content);
+	// curr = ms.envp;
+	// while (curr != NULL)
+	// {
+	// 	printf("envp: %s\n", (char *)curr->content);
+	// 	curr = curr->next;
+	// }
+	// match = find_env_var("v1", ms.envp);
+	// printf("match address: %p | content: %s\n", match, (char *)match->content);
 
 
 	init_all_sig_handler();

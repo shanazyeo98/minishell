@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_expand.c                                     :+:      :+:    :+:   */
+/*   token_expand_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/13 04:56:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/13 09:56:30 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ t_list	*find_env_var(char *var, t_list *envp)
 /* Description: takes in an input string and a char. Finds the substring after
    the first instance of the char in the input string. This function should
    only be used when it is confirmed that the char exists within the input
-   string.
+   string. This function is mainly used to
 */
 char	*substring_after_char(char *input, char delim)
 {
@@ -73,12 +73,20 @@ char	*substring_after_char(char *input, char delim)
 	return (ret);
 }
 
-int	main(void)
-{
-	char	*test;
 
-	test = substring_after_char("USER=this is a test", '=');
-	printf("Check result: %s\n", test);
-}
+/* Description: Takes in a token and scans through the content for parameters
+   denoted by $ at the start and delimited by 
+*/
+
+
+
+// int	main(void)
+// {
+// 	char	*test;
+
+// 	test = substring_after_char("USER=this is a test", '=');
+// 	printf("Check result: %s\n", test);
+// }
+
 
 
