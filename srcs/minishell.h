@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/13 04:07:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/13 17:25:33 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <time.h>
 
 /* General */
+# define DELIMITER " '\"$"
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
@@ -214,6 +215,8 @@ void		tree_error(t_ast *node);
 
 /* Expansion functions*/
 t_list		*find_env_var(char *var, t_list *envp);
+void		token_parameter_expansion(t_token *token, t_list *envp);
+
 
 
 /* AST utils */

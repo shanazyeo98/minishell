@@ -6,12 +6,13 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/13 13:23:19 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/13 17:09:07 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "libft.h"
+#include "../srcs/minishell.h"
 
 /* Description: Checks if a character, "c" is contained within a set of
    characters, "str". Returns 1 if "c" is found within "str" and 0 if not.
@@ -42,7 +43,6 @@ static	int	char_str(char c, char *str)
 	e.g -left-or-right- --> left-rep-right
 */
 
-
 char	*combine_string(char *in, char *or, char *rep, char *found)
 {
 	char	*left;
@@ -67,6 +67,7 @@ char	*combine_string(char *in, char *or, char *rep, char *found)
 	res = ft_strjoin(temp, right);
 	free (right);
 	free (temp);
+	free (in);
 	return (res);
 }
 
@@ -74,43 +75,47 @@ char	*combine_string(char *in, char *or, char *rep, char *found)
    found within the "in", and "rep", the string to replace "or" and a string
    containing all the delimiters for "or", "delim". "or" is only valid for
    replacement if it is delimited by a character found within the set. The
-   function frees the pointer to "in" and returns a new string with its own
-   memory allocated.
+   function calls the combine_string function iteratively until all the "or"
+   are replaced. The function also frees the pointer to "in" and returns a new
+   string with its own memory allocated.
 */
 
 char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
 {
 	char	*res;
 	char	*found;
+	char	*temp;
 	size_t	or_len;
 
+	temp = in;
 	or_len = ft_strlen(or);
 	found = ft_strnstr(in, or, ft_strlen(in));
 	while (found != NULL)
 	{
 		if (char_str(found[or_len], delim) == 1)
 		{
-			res = combine_string(in, or, rep, found);
+			res = combine_string(temp, or, rep, found);
 			if (res == NULL)
 				return (NULL);
-			in = res;
-			found = ft_strnstr(in, or, ft_strlen(in));
+			temp = res;
+			found = ft_strnstr(temp, or, ft_strlen(temp));
 		}
 	}
 	return (res);
 }
 
+// int	main(void)
+// {
+// 	char	*in;
+// 	char	*or = "$v1";
+// 	char	*rep = "replace";
+// 	char	*delim = DELIMITER;
+// 	char	*res;
 
-int	main(void)
-{
-	char	*in = "$v1 '$v1' \"$v1\" $v1$v2";
-	char	*or = "$v1";
-	char	*rep = "rep";
-	char	*delim = " '\"$";
-	char	*res;
-
-	printf("Test input: %s\n", in);
-	res = ft_strreplace(in, or, rep, delim);
-	printf("Results: %s\n", res);
-
-}
+// 	printf("1st index of delimiter: %c\n", DELIMITER[1]);
+// 	in = ft_strdup("$v1 '$v1' \"$v1\" $v1$v2");
+// 	printf("Test input: %s\n", in);
+// 	res = ft_strreplace(in, or, rep, delim);
+// 	printf("Results: %s\n", res);
+// 	free (res);
+// }

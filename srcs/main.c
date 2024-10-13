@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/13 08:08:11 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/13 18:10:50 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,17 @@ void	break_shell(t_minishell *ms)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
-	// t_list		*curr;
+	t_list		*curr;
 	// t_list		*match;
 
 	ms = init_ms(argc, argv, envp);
 
-	// curr = ms.envp;
-	// while (curr != NULL)
-	// {
-	// 	printf("envp: %s\n", (char *)curr->content);
-	// 	curr = curr->next;
-	// }
+	curr = ms.envp;
+	while (curr != NULL)
+	{
+		printf("envp: %s\n", (char *)curr->content);
+		curr = curr->next;
+	}
 	// match = find_env_var("v1", ms.envp);
 	// printf("match address: %p | content: %s\n", match, (char *)match->content);
 
@@ -52,8 +52,12 @@ int	main(int argc, char *argv[], char *envp[])
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
 		print_token_list(ms);
-		ms.ast = parse(*ms.tokenlist, -1);
-		print_ast(ms.ast, 0);
+		printf("After expansion\n");
+		token_parameter_expansion(*(ms.tokenlist), ms.envp);
+		print_token_list(ms);
+
+		// ms.ast = parse(*ms.tokenlist, -1);
+		// print_ast(ms.ast, 0);
 
 	}
 	return (EXIT_SUCCESS);
