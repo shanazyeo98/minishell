@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/12 11:25:18 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/13 17:47:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_assignstr(char *newstr, char **args)
 {
 	if (*args != NULL)
 	{
-		*args = newstring(args, newstr);
+		*args = newstring(*args, newstr);
 		if (*args == NULL)
 			return (FAIL);
 	}
@@ -37,32 +37,33 @@ int	ft_assignstr(char *newstr, char **args)
 		if (*args == NULL)
 			return (FAIL);
 	}
+	return (SUCCESS);
 }
 
 int	splitbasic(char *str, char **args, int *i)
 {
 	char	**split;
-	int		j;
 
 	split = ft_split(str, ' ');
 	if (split == NULL)
 		return (FAIL);
-	j = 0;
 	while (*split != NULL)
 	{
-		ft_assignstr(*split, args + *i);
+		if (ft_assignstr(*split, args + *i) == FAIL)
+			return (FAIL);
 		(*i)++;
 		split++;
 	}
+	return (SUCCESS);
 }
 
 int	ret_redirection(char *str)
 {
-	if (ft_strcmp(str, HEREDOCOP))
+	if (ft_strcmp(str, HEREDOCOP) == 0)
 		return (HEREDOC);
-	if (ft_strcmp(str, APPENDOP))
+	if (ft_strcmp(str, APPENDOP) == 0)
 		return (APPEND);
-	if (ft_strcmp(str, INPUTOP))
+	if (ft_strcmp(str, INPUTOP) == 0)
 		return (INPUT);
 	return (OUTPUT);
 }
@@ -71,19 +72,27 @@ int	redirection(t_cmd *cmd, t_token **token, t_redir **redir)
 {
 	static int	i = 0;
 	int			grp;
+	int			null;
 
+	redir[i] = malloc(sizeof(t_redir));
+	if (redir[i] == NULL)
+		return (FAIL);
 	(redir[i])->id = ret_redirection((*token)->str);
 	*token = (*token)->next;
 	if ((redir[i])->id == HEREDOC)
 		(redir[i])->fd = (*token)->fd;
 	grp = (*token)->wordgrp;
-	while ((*token) != cmd->end && (*token)->wordgrp == grp)
+	null = 0;
+	while ((*token) != cmd->end && (*token)->wordgrp == grp && (*token)->type != REDIRECTOR)
 	{
 		if ((redir[i])->id != HEREDOC)
 		{
 			if ((*token)->type == BASIC && countspaces((*token)->str) > 0)
+			{
+				null = 1;
 				(redir[i])->file = NULL;
-			else
+			}
+			else if (null == 0)
 			{
 				if (ft_assignstr((*token)->str, &(redir[i])->file) == FAIL)
 					return (FAIL);
@@ -102,7 +111,6 @@ int	fill(t_cmd *cmd)
 
 	i_arg = 0;
 	token = cmd->start;
-	grp = 0;
 	while (token != cmd->end)
 	{
 		if (token->type == REDIRECTOR)
@@ -111,6 +119,7 @@ int	fill(t_cmd *cmd)
 				return (FAIL);
 			if (token == cmd->end)
 				break ;
+			grp = token->wordgrp;
 		}
 		if (token->wordgrp != grp)
 			i_arg++;
@@ -125,6 +134,7 @@ int	fill(t_cmd *cmd)
 			ft_assignstr(token->str, cmd->args + i_arg);
 		token = token->next;
 	}
+	return (SUCCESS);
 }
 
 int main(void)
@@ -134,14 +144,15 @@ int main(void)
     t_token c;
     t_token d;
     t_cmd   cmd;
-	char	*array[4];
+	t_redir	*redir[2];
+	char	*array[3];
 	int		i;
 
-    a.str = "echo hi";
-    a.type = BASIC;
+    a.str = "<";
+    a.type = REDIRECTOR;
     a.wordgrp = 0;
     b.str = "hello test";
-    b.type = DOUBLE;
+    b.type = BASIC;
     b.wordgrp = 0;
     a.next = &b;
     b.next = &c;
@@ -156,13 +167,16 @@ int main(void)
 	array[0] = NULL;
 	array[1] = NULL;
 	array[2] = NULL;
-	array[3] = NULL;
+//	array[3] = NULL;
     cmd.start = &a;
     cmd.end = NULL;
 	cmd.args = array;
+	redir[0] = NULL;
+	redir[1] = NULL;
+	cmd.redir = redir;
 	fill(&cmd);
 	i = 0;
-	while (i < 4)
+	while (i < 3)
 	{
 		printf("%s\n", array[i]);
 		i++;
