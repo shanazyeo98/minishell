@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/12 11:25:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/14 10:45:13 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,11 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 //update tree
-int     countspaces(char *str);
+void    	count(int *args, int *redir, t_cmd *cmd);
+int     	countargs(char *str, t_token *token, t_cmd *cmd);
+int			redirection(t_cmd *cmd, t_token **token, t_redir **redir);
+int			ft_assignstr(char *newstr, char **args);
+int			fill(t_cmd *cmd);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

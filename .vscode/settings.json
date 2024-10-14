@@ -14,7 +14,9 @@
 		"vector": "c",
 		"string_view": "c",
 		"initializer_list": "c",
-		"sstream": "c"
+		"sstream": "c",
+		"thread": "c",
+		"*.tcc": "c"
 	},
 	"makefile.configureOnOpen": true
 }

@@ -6,9 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 02:28:48 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/14 10:44:42 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+//to consider the case where space is in front. for quotes, it will be taken as it is
+//for basic tokens, it will spaces in the front will be removed and if there is
+//a preceding token, the space indicates a new word
 
 #include "minishell.h"
 
@@ -40,19 +44,51 @@ int	ft_assignstr(char *newstr, char **args)
 	return (SUCCESS);
 }
 
-int	splitbasic(char *str, char **args, int *i)
+int	splitbasic(t_token *token, char **args, int *i, t_cmd *cmd)
 {
 	char	**split;
+	int		j;
+	int		k;
 
-	split = ft_split(str, ' ');
+	if ((token->str)[0] == ' ' && args[*i] != NULL)
+		(*i)++;
+	split = ft_split(token->str, ' ');
 	if (split == NULL)
 		return (FAIL);
-	while (*split != NULL)
+	k = 0;
+	while (split[k] != NULL)
 	{
-		if (ft_assignstr(*split, args + *i) == FAIL)
-			return (FAIL);
+		if (ft_assignstr(split[k], args + *i) == FAIL)
+			return (ft_freearray(split), FAIL);
+		k++;
+		if (split[k] != NULL)
+			(*i)++;
+	}
+	j = 0;
+	while ((token->str)[j + 1] != '\0')
+		j++;
+	if ((token->str)[j] == ' ' && token->next != cmd->end && \
+	token->wordgrp == (token->next)->wordgrp)
 		(*i)++;
-		split++;
+	return (ft_freearray(split), SUCCESS);
+}
+
+int	det_action(t_cmd *cmd, t_token **token, int *i_arg)
+{
+	if ((*token)->type == REDIRECTOR)
+	{
+		if (redirection(cmd, token, cmd->redir) == FAIL)
+			return (FAIL);
+	}
+	else if ((*token)->type == BASIC)
+	{
+		if (splitbasic(*token, cmd->args, i_arg, cmd) == FAIL)
+			return (FAIL);
+	}
+	else if ((*token)->type == SINGLE || (*token)->type == DOUBLE)
+	{
+		if (ft_assignstr((*token)->str, cmd->args + *i_arg) == FAIL)
+			return (FAIL);
 	}
 	return (SUCCESS);
 }
@@ -65,27 +101,14 @@ int	fill(t_cmd *cmd)
 
 	i_arg = 0;
 	token = cmd->start;
+	grp = token->wordgrp;
 	while (token != cmd->end)
 	{
-		if (token->type == REDIRECTOR)
-		{
-			if (redirection(cmd, &token, cmd->redir) == FAIL)
-				return (FAIL);
-			if (token == cmd->end)
-				break ;
-			grp = token->wordgrp;
-		}
 		if (token->wordgrp != grp)
 			i_arg++;
 		grp = token->wordgrp;
-		if (token->type == BASIC)
-		{
-			if (splitbasic(token->str, cmd->args, &i_arg))
-				return (FAIL);
-			i_arg--;
-		}
-		else
-			ft_assignstr(token->str, cmd->args + i_arg);
+		if (det_action(cmd, &token, &i_arg) == FAIL)
+			return (FAIL);
 		token = token->next;
 	}
 	return (SUCCESS);
@@ -97,31 +120,40 @@ int main(void)
     t_token b;
     t_token c;
     t_token d;
+	t_token e;
     t_cmd   cmd;
 	t_redir	*redir[2];
-	char	*array[3];
+	char	*array[6];
 	int		i;
 
-    a.str = "<";
-    a.type = REDIRECTOR;
+    a.str = "echo hi ";
+    a.type = BASIC;
     a.wordgrp = 0;
-    b.str = "hello test";
+    b.str = " hello test ";
     b.type = BASIC;
     b.wordgrp = 0;
     a.next = &b;
     b.next = &c;
-    c.str = "SINGLE";
-    c.type = SINGLE;
+    c.str = "<";
+    c.type = REDIRECTOR;
     c.wordgrp = 0;
     c.next = &d;
-    d.str = "file hi";
+    d.str = " file hi ";
     d.type = SINGLE;
-    d.wordgrp = 1;
-    d.next = NULL;
+    d.wordgrp = 0;
+    d.next = &e;
+	e.str = " file hi ";
+    e.type = SINGLE;
+    e.wordgrp = 0;
+    e.next = NULL;
+	e.prev = &d;
 	array[0] = NULL;
 	array[1] = NULL;
 	array[2] = NULL;
-//	array[3] = NULL;
+	array[3] = NULL;
+//	array[4] = NULL;
+//	array[5] = NULL;
+//	array[6] = NULL;
     cmd.start = &a;
     cmd.end = NULL;
 	cmd.args = array;
@@ -130,7 +162,7 @@ int main(void)
 	cmd.redir = redir;
 	fill(&cmd);
 	i = 0;
-	while (i < 3)
+	while (i < 4)
 	{
 		printf("%s\n", array[i]);
 		i++;
