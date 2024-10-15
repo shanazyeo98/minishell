@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 08:31:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/15 08:59:51 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	token_parameter_expansion(t_token *token, t_list *envp)
 			token->str = ft_strreplace(token->str, par_dollar, "", DELIMITER);	//probably need to malloc check here to
 		else
 		{
-			rep = substring_after_char(token->str, '=');
+			rep = substring_after_char(found_node->content, '=');
 			if (rep == NULL)
 			{
 				//Logic to free all the allocated memory before exiting //probably need to malloc check here to
