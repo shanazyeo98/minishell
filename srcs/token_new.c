@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 16:02:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:04:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int	checkend(t_minishell *params, t_tokendets *info)
 	if (info->status == OPEN && (last->type == DOUBLE || last->type == SINGLE))
 		return (ERROR);
 	if (last->type == OPERATOR || last->type == REDIRECTOR)
+		return (ERROR);
+	if (last->prev != NULL && last->grp < last->prev->grp)
 		return (ERROR);
 	return (SUCCESS);
 }

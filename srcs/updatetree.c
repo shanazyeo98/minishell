@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 10:46:02 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:11:57 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	initarray(void *array, int type, int n)
 {
-	int	i;
+	int		i;
 	char	*chararray;
 	t_redir	*redirarray;
 
@@ -41,16 +41,16 @@ void	initarray(void *array, int type, int n)
 	}
 }
 
-int     countargs(char *str, t_token *token, t_cmd *cmd)
+int	countargs(char *str, t_token *token, t_cmd *cmd)
 {
-    int i;
+	int	i;
 	int	j;
 
-    i = 0;
+	i = 0;
 	j = 0;
-    while (str[j] != '\0')
-    {
-        if (j == 0 && str[j] == ' ')
+	while (str[j] != '\0')
+	{
+		if (j == 0 && str[j] == ' ')
 		{
 			if (token != cmd->start && token->wordgrp == (token->prev)->wordgrp)
 				i++;
@@ -63,56 +63,54 @@ int     countargs(char *str, t_token *token, t_cmd *cmd)
 		}
 		else if (j != 0 && str[j] != ' ' && str[j - 1] == ' ')
 			i++;
-        j++;
-    }
-    return (i);
+		j++;
+	}
+	return (i);
 }
 
-void    skipredir(t_token **token, t_cmd *cmd)
+void	skipredir(t_token **token, t_cmd *cmd)
 {
-    int grp;
+	int	grp;
 
-    *token = (*token)->next;
-    grp = (*token)->wordgrp;
-    while ((*token) != cmd->end && (*token)->wordgrp == grp)
-        *token = (*token)->next;
+	*token = (*token)->next;
+	grp = (*token)->wordgrp;
+	while ((*token) != cmd->end && (*token)->wordgrp == grp)
+		*token = (*token)->next;
 }
 
-void    count(int *args, int *redir, t_cmd *cmd)
+void	count(int *args, int *redir, t_cmd *cmd)
 {
-    t_token *token;
-    int     grp;
+	t_token	*token;
+	int		grp;
 
-    token = cmd->start;
-    grp = -1;
-    while (token != cmd->end)
-    {
-        if (token->type == REDIRECTOR)
-        {
-            (*redir)++;
+	token = cmd->start;
+	grp = -1;
+	while (token != cmd->end)
+	{
+		if (token->type == REDIRECTOR)
+		{
+			(*redir)++;
 			skipredir(&token, cmd);
-            if (token == cmd->end)
-                break ;
-        }
-        if (token->wordgrp != grp)
-            (*args)++;
-        grp = token->wordgrp;
-        if (token->type == BASIC)
-            *args += countargs(token->str, token, cmd);
-        token = token->next;
-    }
+			if (token == cmd->end)
+				break ;
+		}
+		if (token->wordgrp != grp)
+			(*args)++;
+		grp = token->wordgrp;
+		if (token->type == BASIC)
+			*args += countargs(token->str, token, cmd);
+		token = token->next;
+	}
 }
 
-void    updatetree(t_cmd *cmd), t_minishell *params)
+void	updatetree(t_cmd *cmd, t_minishell *params)
 {
-    int args;
-    int redir;
+	int	args;
+	int	redir;
 
-    args = 0;
-    redir = 0;
-    count(&args, &redir, cmd);
-    // printf("args: %d\n", args);
-    // printf("redir: %d\n", redir);
+	args = 0;
+	redir = 0;
+	ount(&args, &redir, cmd);
 	cmd->args = malloc(sizeof(char *) * (args + 1));
 	if (cmd->args == NULL)
 		spick_and_span(params, FAIL);
@@ -122,7 +120,7 @@ void    updatetree(t_cmd *cmd), t_minishell *params)
 		spick_and_span(params, FAIL);
 	initarray(*cmd->redir, 1, redir);
 	if (fill(cmd) == FAIL)
-		spick_and_span(params, FAIL)
+		spick_and_span(params, FAIL);
 }
 
 // int main(void)

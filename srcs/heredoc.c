@@ -6,37 +6,13 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/11 14:11:55 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:14:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*Description: Checks if the token is valid to start the heredoc process*/
-
-char	*delim(t_token *token)
-{
-	int		word;
-	char	*temp;
-	char	*limiter;
-
-	word = token->wordgrp;
-	limiter = ft_strdup(token->str);
-	if (limiter == NULL)
-		return (NULL);
-	token = token->next;
-	while (token != NULL && token->wordgrp == word && token->type != OPERATOR \
-	&& token->type != REDIRECTOR)
-	{
-		temp = limiter;
-		limiter = ft_strjoin(limiter, token->str);
-		if (limiter == NULL)
-			return (free(temp), NULL);
-		free(temp);
-		token = token->next;
-	}
-	return (limiter);
-}
 
 void	heredoccheck(t_token **tokenlist, t_minishell *params)
 {
@@ -62,10 +38,8 @@ void	heredoccheck(t_token **tokenlist, t_minishell *params)
 		}
 		token = token->next;
 	}
-	if (status == FAIL)
-		spick_and_span(params, FAIL);
-	if (status == ERROR)
-		spick_and_span(params, ERROR);
+	if (status == FAIL || status == ERROR)
+		spick_and_span(params, status);
 }
 
 /*Description: Uses get next line to retrieve the input and write into the fd*/
@@ -123,29 +97,6 @@ int	executedoc(int fd, char *delim, t_minishell *params)
 			return (WEXITSTATUS(status));
 		return (ERROR);
 	}
-}
-
-/*Description: Generates the temporary file to store the heredoc content*/
-
-int	herefile(int hd)
-{
-	char	*num;
-	char	*name;
-	int		fd;
-
-	num = ft_itoa(hd);
-	if (num == NULL)
-	{
-		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
-		return (-1);
-	}
-	name = ft_strjoin(HEREDOCFILE, num);
-	free(num);
-	unlink(name);
-	fd = open(name, O_RDWR | O_CREAT | O_APPEND, 0644);
-	unlink(name);
-	free(name);
-	return (fd);
 }
 
 /*Description: Overall process for the heredoc.

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 14:14:53 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:16:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ void	init_signal_handler(int signum, void (*func)(int))
 
 	action.sa_handler = func;
 	sigemptyset(&action.sa_mask);
-	//probably need to register more signals here
-	sigaddset(&action.sa_mask, SIGINT);
+	sigaddset(&action.sa_mask, signum);
 	action.sa_flags = SA_RESTART;
 	if (sigaction(signum, &action, NULL) == -1)
 	{

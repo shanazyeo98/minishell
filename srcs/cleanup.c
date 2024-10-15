@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 13:41:30 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 14:15:51 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	spick_and_span(t_minishell *ms, int status)
 	if (ms->tokenlist != NULL)
 		freetokens(ms->tokenlist);
 	ms->tokenlist = NULL;
+	if (ms->ast != NULL)
+		free_tree(ms->ast);
+	ms->ast = NULL;
 	if (status == FAIL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, 2);

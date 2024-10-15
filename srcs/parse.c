@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 15:28:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 19:32:31 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 14:16:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ t_ast	*parse(t_token *token, int grp)
 		if (cpy->right == NULL)
 			cpy->right = parse(ret_token(cpy->id, token), cpy->grp);
 		if (cpy->right == NULL)
-			return (tree_error(branch), NULL);
+			return (free_tree(branch), NULL);
 		if (cpy->left == NULL)
 			break ;
 		cpy = cpy->left;
@@ -56,7 +56,7 @@ t_ast	*parse(t_token *token, int grp)
 	{
 		cpy->left = parse(token, cpy->grp);
 		if (cpy->left == NULL)
-			return (tree_error(branch), NULL);
+			return (free_tree(branch), NULL);
 	}
 	return (branch);
 }

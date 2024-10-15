@@ -6,12 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/11 13:02:18 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:18:33 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-//#include <stdio.h>
 
 /*Description: To handle the end of prompt.
 If status is open and last token is a basic token, to close the token
@@ -55,11 +54,7 @@ void	inittokenlist(t_minishell *params, t_tokendets *info, char *prompt)
 	params->hdcount = 0;
 	params->tokenlist = malloc(sizeof(t_token *));
 	if (params->tokenlist == NULL)
-	{
-		//clean up function
-		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
-		exit(FAIL);
-	}
+		spick_and_span(params, FAIL);
 	*(params->tokenlist) = NULL;
 }
 

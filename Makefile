@@ -7,6 +7,7 @@ srcs/signals_init.c \
 srcs/cleanup.c \
 srcs/declarechar.c \
 srcs/heredoc.c \
+srcs/heredoc_utils.c \
 srcs/token_checktype.c \
 srcs/token_list.c \
 srcs/token_new.c \
@@ -14,7 +15,7 @@ srcs/token_read.c \
 srcs/tokenize.c \
 srcs/token_utils.c \
 srcs/parse_branch.c \
-srcs/parse_error.c \
+srcs/parse_free.c \
 srcs/parse_fillcmd.c \
 srcs/parse_ops.c \
 srcs/parse_retrievetype.c \

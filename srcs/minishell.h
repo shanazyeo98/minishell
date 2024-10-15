@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 10:45:13 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:15:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ enum	e_redirectors
 	HEREDOC
 };
 
-struct	s_cmd;
+struct		s_cmd;
 
 typedef struct s_redir
 {
@@ -146,9 +146,7 @@ typedef struct s_cmd
 	t_token	*start;
 	t_token	*end;
 	char	**args;
-	int		n_redir;
 	t_redir	**redir;
-	t_ast	*up;
 }	t_cmd;
 
 //overall data structure
@@ -207,6 +205,8 @@ void		print_token_list(t_minishell ms);
 //heredoc
 int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
+char		*delim(t_token *token);
+int			herefile(int hd);
 
 //parsing
 int			ret_op(char *str);
@@ -222,11 +222,12 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 //update tree
-void    	count(int *args, int *redir, t_cmd *cmd);
-int     	countargs(char *str, t_token *token, t_cmd *cmd);
+void		count(int *args, int *redir, t_cmd *cmd);
+int			countargs(char *str, t_token *token, t_cmd *cmd);
 int			redirection(t_cmd *cmd, t_token **token, t_redir **redir);
 int			ft_assignstr(char *newstr, char **args);
 int			fill(t_cmd *cmd);
+void		free_tree(t_ast *node);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
