@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/13 18:11:13 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/15 08:31:20 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ char	*substring_after_char(char *input, char delim)
    the first $. Finds the closest delimiter, space, single quote, double quotes
    or $ and returns a substring of the param name:
    E.g. {$param_name}{delimiter}{remaining}
+   E.g. {$param_name}\0
 */
 
 char	*retrieve_param_name(char *str)
@@ -102,7 +103,10 @@ char	*retrieve_param_name(char *str)
 			return (param_name);
 		}
 	}
-	return (NULL);
+	param_name = ft_substr(str, 1, i - 1);
+	if (param_name == NULL)
+		return (NULL);
+	return (param_name);
 }
 
 
@@ -157,10 +161,14 @@ void	token_parameter_expansion(t_token *token, t_list *envp)
 // 	char	*input2;
 // 	char	*input3;
 // 	char	*input4;
+// 	char	*input5;
+
 // 	char	*param_name1;
 // 	char	*param_name2;
 // 	char	*param_name3;
 // 	char	*param_name4;
+// 	char	*param_name5;
+
 
 // 	test = substring_after_char("USER=this is a test", '=');
 // 	printf("Check result: %s\n", test);
@@ -168,6 +176,8 @@ void	token_parameter_expansion(t_token *token, t_list *envp)
 // 	input2 = ft_strdup("$VAR1'hi'");
 // 	input3 = ft_strdup("$VAR1\"hi");
 // 	input4 = ft_strdup("$VAR1$VAR2");
+// 	input5 = ft_strdup("$VAR1");
+
 
 // 	param_name1 = retrieve_param_name(input1);
 // 	printf("Input: %s | Param name: %s\n", input1, param_name1);
@@ -177,7 +187,7 @@ void	token_parameter_expansion(t_token *token, t_list *envp)
 // 	printf("Input: %s | Param name: %s\n", input3, param_name3);
 // 	param_name4 = retrieve_param_name(input4);
 // 	printf("Input: %s | Param name: %s\n", input4, param_name4);
+// 	param_name5 = retrieve_param_name(input5);
+// 	printf("Input: %s | Param name: %s\n", input5, param_name5);
+
 // }
-
-
-
