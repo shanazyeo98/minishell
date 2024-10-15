@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/13 17:09:07 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/15 17:42:19 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
 	found = ft_strnstr(in, or, ft_strlen(in));
 	while (found != NULL)
 	{
-		if (char_str(found[or_len], delim) == 1)
+		if (char_str(found[or_len], delim) == 1 || ft_strcmp(found, or) == 0)
 		{
 			res = combine_string(temp, or, rep, found);
 			if (res == NULL)
@@ -107,15 +107,23 @@ char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
 // int	main(void)
 // {
 // 	char	*in;
+// 	char	*in2;
 // 	char	*or = "$v1";
 // 	char	*rep = "replace";
 // 	char	*delim = DELIMITER;
 // 	char	*res;
 
-// 	printf("1st index of delimiter: %c\n", DELIMITER[1]);
 // 	in = ft_strdup("$v1 '$v1' \"$v1\" $v1$v2");
 // 	printf("Test input: %s\n", in);
 // 	res = ft_strreplace(in, or, rep, delim);
 // 	printf("Results: %s\n", res);
 // 	free (res);
+// 	res = NULL;
+
+// 	in2 = ft_strdup("$v1");
+// 	printf("Test input: %s\n", in2);
+// 	res = ft_strreplace(in2, or, rep, delim);
+// 	printf("Results: %s\n", res);
+// 	free (res);
+// 	res = NULL;
 // }

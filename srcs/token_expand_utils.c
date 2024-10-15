@@ -6,30 +6,15 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 08:59:51 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/15 18:04:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Description: Checks if a token requires expansion given a token. A token is
-   eligible for expansion under the following conditions:
-	1. Token contents start with '$' AND
-	2. Token type is BASIC or DOUBLE
-   Returns a TRUE or FALSE
-*/
-
-int	token_expand_eligibiility(t_token *tkn)
-{
-	if (tkn->str[0] == '$' && (tkn->type == BASIC || tkn->type == DOUBLE))
-		return (TRUE);
-	else
-		return (FALSE);
-}
-
 /* Description: Takes in a variable name and the envp linked list. Checks if
    the variable exists within the list and returns the address of the node in
-   the linked list. If the variable does not exits, then this function returns
+   the linked list. If the variable does not exist, then this function returns
    a NULL.
 */
 
@@ -69,7 +54,6 @@ char	*substring_after_char(char *input, char delim)
 	len = ft_strlen(input);
 	while (input[i] != delim)
 		i++;
-	printf("i: %d | len: %ld\n", i, len);
 	ret = ft_substr(input, i + 1, len - (i + 1));
 	return (ret);
 }
@@ -113,7 +97,11 @@ char	*retrieve_param_name(char *str)
 
 /* Description: Takes in a token and scans through the content for parameters
    denoted by $ at the start and delimited by a space, double quotes, single
-   quotes and a dollar sign. Checks through theReplaces the content inside content
+   quotes and a dollar sign. The parameter can also be a null-terminated word.
+   Replaces the content inside the token with the expanded content.
+   Return:
+	- SUCCESS: if there are no malloc errors
+	- ERROR: if there are malloc errors
 */
 
 void	token_parameter_expansion(t_token *token, t_list *envp)
@@ -125,15 +113,14 @@ void	token_parameter_expansion(t_token *token, t_list *envp)
 
 	while (ft_strchr(token->str, '$') != NULL)
 	{
-		par_name = retrieve_param_name(token->str);
+		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
 		if (par_name == NULL)
-		{
-			//Logic to free all the allocated memory before exiting
-		}
+			return (ERROR);
 		found_node = find_env_var(par_name, envp);
 		par_dollar = ft_strjoin("$", par_name);
 		free (par_name);
-		// need to do malloc check here
+		if (par_dollar == NULL)
+			
 		if (found_node == NULL)
 			token->str = ft_strreplace(token->str, par_dollar, "", DELIMITER);	//probably need to malloc check here to
 		else
