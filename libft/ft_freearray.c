@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 10:37:38 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 10:40:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:37:27 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,15 @@
 
 void	ft_freearray(char **array)
 {
+	int	i;
+
 	if (array == NULL)
 		return ;
-	while (*array != NULL)
+	i = 0;
+	while (array[i] != NULL)
 	{
-		free(*array);
-		array++;
+		free(array[i]);
+		i++;
 	}
 	free(array);
 }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 02:22:38 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 10:11:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 17:06:07 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ int	redirection(t_cmd *cmd, t_token **token, t_redir **redir)
 			break ;
 		*token = (*token)->next;
 	}
+	i++;
 	return (SUCCESS);
 }

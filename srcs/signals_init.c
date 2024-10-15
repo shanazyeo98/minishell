@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 15:16:50 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:25:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,11 @@ void	sig_handler(int signum)
 		rl_done = 1;
 		g_sig_status = SIGINT;
 	}
-	if (signum == SIGQUIT)
-		g_sig_status = SIGQUIT;
 }
 
 void	sig_noninteractive(int signum)
 {
 	if (signum == SIGINT)
-		return ;
-	if (signum == SIGQUIT)
 		return ;
 }
 
@@ -72,11 +68,11 @@ void	init_all_sig_handler(int state)
 	if (state == INTERACTIVE)
 	{
 		init_signal_handler(SIGINT, &sig_handler);
-		init_signal_handler(SIGQUIT, &sig_handler);
+		init_signal_handler(SIGQUIT, SIG_IGN);
 	}
 	else
 	{
 		init_signal_handler(SIGINT, &sig_noninteractive);
-		init_signal_handler(SIGQUIT, &sig_noninteractive);
+		init_signal_handler(SIGQUIT, SIG_IGN);
 	}
 }

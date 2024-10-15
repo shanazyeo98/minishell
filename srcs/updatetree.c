@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:11:57 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 18:04:22 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,25 +57,31 @@ int	countargs(char *str, t_token *token, t_cmd *cmd)
 		}
 		else if (str[j + 1] == '\0' && str[j] == ' ')
 		{
-			if (token->next != cmd->end && \
+			if (token->next != cmd->end && (token->next)->type != REDIRECTOR && \
 			token->wordgrp == (token->next)->wordgrp)
 				i++;
 		}
-		else if (j != 0 && str[j] != ' ' && str[j - 1] == ' ')
-			i++;
 		j++;
 	}
+	i = ft_countstr(str, ' ');
+	if (token->wordgrp == (token->prev)->wordgrp)
+		i--;
 	return (i);
 }
 
 void	skipredir(t_token **token, t_cmd *cmd)
 {
-	int	grp;
+	int		grp;
+	t_token	*next;
 
 	*token = (*token)->next;
 	grp = (*token)->wordgrp;
-	while ((*token) != cmd->end && (*token)->wordgrp == grp)
+	next = (*token)->next;
+	while (next != cmd->end && next->wordgrp == grp && next->type != REDIRECTOR)
+	{
 		*token = (*token)->next;
+		next = (*token)->next;
+	}
 }
 
 void	count(int *args, int *redir, t_cmd *cmd)
@@ -84,9 +90,13 @@ void	count(int *args, int *redir, t_cmd *cmd)
 	int		grp;
 
 	token = cmd->start;
-	grp = -1;
+	grp = token->wordgrp;
 	while (token != cmd->end)
 	{
+		if (token->wordgrp != grp && (token->type == SINGLE || \
+		token->type == DOUBLE))
+			(*args)++;
+		grp = token->wordgrp;
 		if (token->type == REDIRECTOR)
 		{
 			(*redir)++;
@@ -94,10 +104,7 @@ void	count(int *args, int *redir, t_cmd *cmd)
 			if (token == cmd->end)
 				break ;
 		}
-		if (token->wordgrp != grp)
-			(*args)++;
-		grp = token->wordgrp;
-		if (token->type == BASIC)
+		else if (token->type == BASIC)
 			*args += countargs(token->str, token, cmd);
 		token = token->next;
 	}
@@ -110,18 +117,39 @@ void	updatetree(t_cmd *cmd, t_minishell *params)
 
 	args = 0;
 	redir = 0;
-	ount(&args, &redir, cmd);
-	cmd->args = malloc(sizeof(char *) * (args + 1));
-	if (cmd->args == NULL)
-		spick_and_span(params, FAIL);
-	initarray(*cmd->args, 0, args);
-	cmd->redir = malloc(sizeof(t_redir) * (redir + 1));
-	if (cmd->redir == NULL)
-		spick_and_span(params, FAIL);
-	initarray(*cmd->redir, 1, redir);
+	count(&args, &redir, cmd);
+	if (args > 0)
+	{
+		cmd->args = malloc(sizeof(char *) * (args + 1));
+		if (cmd->args == NULL && args > 0)
+			spick_and_span(params, FAIL);
+		initarray(*cmd->args, 0, args);
+	}
+	if (redir > 0)
+	{
+		cmd->redir = malloc(sizeof(t_redir) * (redir + 1));
+		if (cmd->redir == NULL)
+			spick_and_span(params, FAIL);
+		initarray(*cmd->redir, 1, redir);
+	}
 	if (fill(cmd) == FAIL)
 		spick_and_span(params, FAIL);
 }
+
+	// //testing:
+	// int	i;
+	// i = 0;
+	// while (i < args)
+	// {
+	// 	printf("ARG: %s\n", cmd->args[i]);
+	// 	i++;
+	// }
+	// i = 0;
+	// while (i < redir)
+	// {
+	// 	printf("FILE: %s\n", cmd->redir[i]->file);
+	// 	i++;
+	// }
 
 // int main(void)
 // {
@@ -129,28 +157,40 @@ void	updatetree(t_cmd *cmd, t_minishell *params)
 //     t_token b;
 //     t_token c;
 //     t_token d;
+// 	t_token e;
+// 	t_token f;
 //     t_cmd   cmd;
 
-//     a.str = "echo hi";
-//     a.type = BASIC;
+//     a.str = ">";
+//     a.type = REDIRECTOR;
 //     a.wordgrp = 0;
-//     b.str = "hello ";
+//     b.str = "hello";
 //     b.type = BASIC;
 //     b.wordgrp = 0;
 //     a.next = &b;
 // 	b.prev = &a;
 //     b.next = &c;
-//     c.str = "file";
+//     c.str = "heyy";
 //     c.type = BASIC;
-//     c.wordgrp = 0;
+//     c.wordgrp = 1;
 //     c.next = &d;
 // 	c.prev = &b;
 //     d.str = "file hi";
-//     d.type = BASIC;
+//     d.type = SINGLE;
 //     d.wordgrp = 1;
-//     d.next = NULL;
+//     d.next = &e;
 // 	d.prev = &c;
+// 	e.str = "hellooo hi hi";
+//     e.type = DOUBLE;
+//     e.wordgrp = 2;
+//     e.next = &f;
+// 	e.prev = &d;
+// 	f.str = "hi";
+//     f.type = BASIC;
+//     f.wordgrp = 3;
+//     f.next = NULL;
+// 	f.prev = &e;
 //     cmd.start = &a;
 //     cmd.end = NULL;
-//     updatetree(&cmd);
+//     updatetree(&cmd, NULL);
 // }
