@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:04:59 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 19:34:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 13:41:14 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_ast	*createnode(int id, int type, int op, int grp)
 	node->type = type;
 	node->op = op;
 	node->grp = grp;
+	node->left = NULL;
+	node->right = NULL;
 	return (node);
 }
 
