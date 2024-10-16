@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:15:46 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/16 10:43:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <sys/stat.h>
 # include <time.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 /* General */
 # define PROMPT "٩(ఠ益ఠ)۶ > "
@@ -50,6 +52,11 @@
 # define CLOSED 1
 # define INTERACTIVE 0
 # define NONINTERACTIVE 1
+# define TRUE 1
+# define FALSE 0
+# define CDPATH "CDPATH"
+# define HOME "HOME"
+# define PWD "PWD"
 
 //global variable
 
@@ -169,8 +176,9 @@ typedef struct s_minishell
 	char	redirector[3];
 	char	*validopre[8];
 	int		hdcount;
-	int		pid;
-	char	*delim;
+	int		hd_expand;
+//	int		pid;
+//	char	*delim;
 	t_ast	*ast;
 }	t_minishell;
 
@@ -205,7 +213,7 @@ void		print_token_list(t_minishell ms);
 //heredoc
 int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
-char		*delim(t_token *token);
+char		*delim(t_token *token, t_minishell *params);
 int			herefile(int hd);
 
 //parsing

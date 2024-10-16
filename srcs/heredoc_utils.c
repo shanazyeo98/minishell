@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:13:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:17:41 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/16 10:44:08 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /*Description: Retrieves delimiter*/
 
-char	*delim(t_token *token)
+char	*delim(t_token *token, t_minishell *params)
 {
 	int		word;
 	char	*temp;
@@ -28,6 +28,8 @@ char	*delim(t_token *token)
 	while (token != NULL && token->wordgrp == word && token->type != OPERATOR \
 	&& token->type != REDIRECTOR)
 	{
+		if (token->type == SINGLE || token->type == DOUBLE)
+			params->hd_expand = FALSE;
 		temp = limiter;
 		limiter = ft_strjoin(limiter, token->str);
 		if (limiter == NULL)
