@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 09:06:04 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/17 03:05:13 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
 	t_list		*curr;
-	// t_list		*match;
+	char		*value;
+	int			status;
 
+	status = SUCCESS;
 	ms = init_ms(argc, argv, envp);
 
 	curr = ms.envp;
@@ -40,8 +42,8 @@ int	main(int argc, char *argv[], char *envp[])
 		printf("envp: %s\n", (char *)curr->content);
 		curr = curr->next;
 	}
-	// match = find_env_var("v1", ms.envp);
-	// printf("match address: %p | content: %s\n", match, (char *)match->content);
+	value = retrieve_env_var("PWD", ms.envp, &status);
+	printf("found value: %s | status: %d\n", value, status);
 
 
 	init_all_sig_handler();

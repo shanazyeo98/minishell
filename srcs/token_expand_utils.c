@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 18:04:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/16 08:57:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,6 @@ char	*retrieve_param_name(char *str)
 	return (param_name);
 }
 
-
-
 /* Description: Takes in a token and scans through the content for parameters
    denoted by $ at the start and delimited by a space, double quotes, single
    quotes and a dollar sign. The parameter can also be a null-terminated word.
@@ -104,7 +102,7 @@ char	*retrieve_param_name(char *str)
 	- ERROR: if there are malloc errors
 */
 
-void	token_parameter_expansion(t_token *token, t_list *envp)
+int	token_parameter_expansion(t_token *token, t_list *envp)
 {
 	char	*par_name;
 	char	*par_dollar;
@@ -120,23 +118,29 @@ void	token_parameter_expansion(t_token *token, t_list *envp)
 		par_dollar = ft_strjoin("$", par_name);
 		free (par_name);
 		if (par_dollar == NULL)
-			
+			return (ERROR);
 		if (found_node == NULL)
+		{
 			token->str = ft_strreplace(token->str, par_dollar, "", DELIMITER);	//probably need to malloc check here to
+			if (token->str == NULL)
+				return (free(par_dollar), ERROR);
+		}
 		else
 		{
 			rep = substring_after_char(found_node->content, '=');
 			if (rep == NULL)
-			{
-				//Logic to free all the allocated memory before exiting //probably need to malloc check here to
-			}
+				return (free(par_dollar), ERROR);
 			else
 			{
 				token->str = ft_strreplace(token->str, par_dollar, rep, DELIMITER);
+				if (token->str == NULL)
+					return (free(par_dollar), free (rep), ERROR);
+				free (par_dollar);
 				free (rep);
 			}
 		}
 	}
+	return (SUCCESS);
 }
 
 

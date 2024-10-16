@@ -20,6 +20,7 @@ srcs/parse_ops.c \
 srcs/parse_retrievetype.c \
 srcs/parse.c \
 srcs/env_init.c \
+srcs/env_retrieve.c \
 srcs/ast_utils.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
