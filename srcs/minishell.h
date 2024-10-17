@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 03:01:41 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:22:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,6 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <stdio.h>
-
-
-
-
-
-
-
-
-
-
 # include <sys/stat.h>
 # include <time.h>
 
@@ -41,12 +31,10 @@
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
 
-// /* Signal handling - Global variable to indicate if a signal is recieved*/
-// extern	volatile sig_atomic_t	prompt_again;
-
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
-# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the programme now. Goodbye."
+# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the \
+							programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 
 # define OPEN 0
@@ -170,45 +158,39 @@ typedef struct s_minishell
 	t_ast	*ast;
 }	t_minishell;
 
-
-
-
-
-
 /* Initialisation functions */
 void		declarearray(t_minishell *params);
 char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(int argc, char *argv[], char *envp[]);
-// t_minishell	init_ms(void);
 int			rl_empty_event(void);
 
-
 /* Environment funtions */
-t_list	*stray_to_llist(char **str);
-char	**llist_to_stray(t_list *llist);
-
+t_list		*stray_to_llist(char **str);
+char		**llist_to_stray(t_list *llist);
+t_list		*find_env_var(char *var, t_list *envp);
+char		*retrieve_env_var(char *var, t_list *envp, int *status);
+char		*substring_after_char(char *input, char delim);
 
 /* Signal functions */
 void		init_all_sig_handler(void);
 void		init_signal_handler(int signum);
 void		sig_handler(int signum);
 
-
 //tokens
-t_token	*lsttoken(t_token *token);
-int		assigntoken(int type, t_tokendets *info, t_minishell *params);
-int		newtoken(char a, t_minishell *params, t_tokendets *info, int i);
-int		chartype(char a, t_minishell *params);
-int		readchar(char a, t_minishell *params, t_tokendets *info, int *i);
-int		returntype(char a, t_minishell *params);
-int		closetoken(t_tokendets *info, int i, t_token *open);
-int		chartype(char a, t_minishell *params);
-int		checkend(t_minishell *params, t_tokendets *info);
-void	tokenize(char *prompt, t_minishell *params);
-void	freetokens(t_token **list);
-t_token	*ret_token(int id, t_token *token);
-void	print_token_list(t_minishell ms);
+t_token		*lsttoken(t_token *token);
+int			assigntoken(int type, t_tokendets *info, t_minishell *params);
+int			newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int			chartype(char a, t_minishell *params);
+int			readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int			returntype(char a, t_minishell *params);
+int			closetoken(t_tokendets *info, int i, t_token *open);
+int			chartype(char a, t_minishell *params);
+int			checkend(t_minishell *params, t_tokendets *info);
+void		tokenize(char *prompt, t_minishell *params);
+void		freetokens(t_token **list);
+t_token		*ret_token(int id, t_token *token);
+void		print_token_list(t_minishell ms);
 
 //parsing
 int			ret_op(char *str);
@@ -224,13 +206,9 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 /* Expansion functions*/
-t_list		*find_env_var(char *var, t_list *envp);
 int			token_parameter_expansion(t_token *token, t_list *envp);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
-
-
-
 
 /* AST utils */
 void		print_ast_node(t_ast *node);

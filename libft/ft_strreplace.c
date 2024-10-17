@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 17:42:19 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:20:54 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,27 +103,3 @@ char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
 	}
 	return (res);
 }
-
-// int	main(void)
-// {
-// 	char	*in;
-// 	char	*in2;
-// 	char	*or = "$v1";
-// 	char	*rep = "replace";
-// 	char	*delim = DELIMITER;
-// 	char	*res;
-
-// 	in = ft_strdup("$v1 '$v1' \"$v1\" $v1$v2");
-// 	printf("Test input: %s\n", in);
-// 	res = ft_strreplace(in, or, rep, delim);
-// 	printf("Results: %s\n", res);
-// 	free (res);
-// 	res = NULL;
-
-// 	in2 = ft_strdup("$v1");
-// 	printf("Test input: %s\n", in2);
-// 	res = ft_strreplace(in2, or, rep, delim);
-// 	printf("Results: %s\n", res);
-// 	free (res);
-// 	res = NULL;
-// }

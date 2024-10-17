@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 00:46:47 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:00:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,22 @@ t_list	*stray_to_llist(char **str)
 	return (llist);
 }
 
+/* Description: frees the memory allocated for strings in an array of strings.
+   Also frees the memory allocated for the array of strings. Takes in an array
+   of strings and the last index of the array where memory was allocated for
+   strings.
+*/
+
+void	free_stray(char **stray, int i)
+{
+	while (i > 0)
+	{
+		i--;
+		free(stray[i]);
+	}
+	free(stray);
+}
+
 /* Description: takes in a linked list, where the content of each node is a
    string. Converts the contents of the linked list into an array of strings.
    The string array is NULL terminated. llist must not be a NULL. Check if
@@ -66,12 +82,8 @@ char	**llist_to_stray(t_list *llist)
 		stray[i] = ft_strdup((char *)curr->content);
 		if (stray[i] == NULL)
 		{
-			while (i > 0)
-			{
-				i--;
-				free(stray[i]);
-			}
-			return (free(stray), NULL);
+			free_stray(stray, i);
+			return (NULL);
 		}
 		curr = curr->next;
 		i++;
