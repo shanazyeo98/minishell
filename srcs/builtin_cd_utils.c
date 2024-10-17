@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 05:50:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:27:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,44 @@ char	*genpath(char *currdir, char *relpath)
 	return (combine);
 }
 
-int	changedir(char *path, t_minishell *params)
+void	checkmatchingpath(char *path, char *cwd)
+{
+	int	i;
+	int	a;
+
+	i = ft_strlen(path);
+	a = i;
+	while (i >= 0)
+	{
+		if (i != a && path[i] == '/')
+			break;
+		i--;
+	}
+	if (strncmp(path, cwd, i) != 0)
+		ft_putendl_fd(path, 1);
+}
+
+int	changedir(char *dir, char *path, t_minishell *params, int clear)
 {
 	int	status;
 
 	if (chdir(path) == -1)
 	{
 		status = ERROR;
-		perror(ERR);
-		free(path);
+		cderrormsg(dir);
+		perror("");
+		if (clear == TRUE)
+			free(path);
 	}
 	else
 	{
 		status = SUCCESS;
-		params->cwd = path;
+		checkmatchingpath(path, params->cwd);
+		params->cwd = strdup(path);
+		if (clear == TRUE)
+			free(path);
+		if (params->cwd == NULL)
+			return (FAIL);
 	}
 	return (status);
 }
@@ -68,7 +92,8 @@ int	checkdirexists(char *path)
 {
 	struct stat	dirstat;
 
-	if (stat(path, &dirstat) == 0 && S_ISDIR(dirstat.st_mode) != 0)
+	stat(path, &dirstat);
+	if (S_ISDIR(dirstat.st_mode) != 0)
 		return (TRUE);
 	return (FALSE);
 }
@@ -78,5 +103,5 @@ void	cderrormsg(char *dir)
 	ft_putstr_fd(ERR, 2);
 	ft_putstr_fd(": cd: ", 2);
 	ft_putstr_fd(dir, 2);
-	ft_putendl_fd(": No such directory", 2);
+	ft_putstr_fd(": ", 2);
 }

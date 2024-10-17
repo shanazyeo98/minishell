@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 06:09:30 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:15:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,64 +30,53 @@ int	retcdpath(char ***cdpath, int *checkwd)
 //stat is used to check if it is a directory as it resolves the symbolic link
 //symbolic link could be used to point to things other than a directory
 
-int	checkcdpath(char **cdpath, char *dir, char **result)
+int	execdpath(t_cd cd, char *dir, int checkwd, t_minishell *params)
 {
 	char		*combine;
-	struct stat	dirstat;
 
-	while (*cdpath != NULL)
+	if (checkwd == TRUE && checkdirexists(cd.path) == TRUE)
+		return (changedir(dir, cd.path, params, TRUE));
+	while (*(cd.cdpath) != NULL)
 	{
-		combine = genpath(*cdpath, dir);
+		combine = genpath(*(cd.cdpath), dir);
 		if (combine == NULL)
 			return (FAIL);
-		if (stat(combine, &dirstat) == 0 && S_ISDIR(dirstat.st_mode) != 0)
-		{
-			*result = combine;
-			return (SUCCESS);
-		}
-		cdpath++;
+		if (checkdirexists(combine) == TRUE)
+			return (free(cd.path), changedir(dir, combine, params, FALSE));
+		else
+			free(combine);
+		cd.cdpath++;
 	}
-	return (ERROR);
+	return (changedir(dir, cd.path, params, TRUE));
 }
 
-int	checkcwd(char *dir, t_minishell *params, int last)
-{
-	char *path;
+// int	checkcwd(char *dir, t_minishell *params, int last)
+// {
+// 	char *path;
 
-	path = genpath(params->cwd, dir);
-	if (path == NULL)
-		return (FAIL);
-	if (checkdirexists(path) == TRUE)
-		return (changedir(path, params));
-}
+// 	path = genpath(params->cwd, dir);
+// 	if (path == NULL)
+// 		return (FAIL);
+// 	if (checkdirexists(path) == TRUE)
+// 		return (changedir(path, params));
+// }
 
 int	gotorelative(char *dir, t_minishell *params)
 {
-	char	**cdpath;
+	t_cd	cd;
 	int		checkwd;
 	int		status_cdpath;
-	char	*path;
+	int		status;
 
+	cd.path = genpath(params->cwd, dir);
+	if (cd.path == NULL)
+		return (FAIL);
 	checkwd = FALSE;
-	status_cdpath = retcdpath(&cdpath, &checkwd);
+	status_cdpath = retcdpath(&cd.cdpath, &checkwd);
 	if (status_cdpath == FAIL)
 		return (FAIL);
-	if (status_cdpath == SUCCESS && checkwd == FALSE)
-	{
-		if (checkcdpath(cdpath, dir, &path) == SUCCESS)
-			return (ft_freearray(cdpath), changedir(path, params));
-		else
-			//check cwd
-	}
-	path = genpath(params->cwd, dir);
-	if (path == NULL)
-		return (ft_freearray(cdpath), FAIL);
-	if (checkdirexists(path) == TRUE)
-		return (ft_freearray(cdpath), changedir(path, params));
-	if (status_cdpath == SUCCESS && checkwd == TRUE)
-	{
-		if (checkcdpath(cdpath, dir, &path) == SUCCESS)
-			return (ft_freearray(cdpath), changedir(path, params));
-	}
-	return (cderrormsg(dir), ft_freearray(cdpath), ERROR);
+	if (status_cdpath == ERROR)
+		return (changedir(dir, cd.path, params, TRUE));
+	status = execdpath(cd, dir, checkwd, params);
+	return (ft_freearray(cd.cdpath), status);
 }

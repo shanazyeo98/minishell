@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 05:55:55 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:15:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,15 @@ typedef struct s_cmd
 	t_redir	**redir;
 }	t_cmd;
 
+//file type
+
+typedef struct s_cd
+{
+	char	*path;
+	char	**cdpath;
+}	t_cd;
+
+
 //overall data structure
 
 enum	e_exitstat
@@ -240,9 +249,11 @@ void		free_tree(t_ast *node);
 //cd
 int			checkslash(char *str);
 char		*genpath(char *currdir, char *relpath);
-int			changedir(char *path, t_minishell *params);
+int			changedir(char *dir, char *path, t_minishell *params, int clear);
 int			checkdirexists(char *path);
 int			gotorelative(char *dir, t_minishell *params);
+int			checkfileexists(char *path);
+void		cderrormsg(char *dir);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

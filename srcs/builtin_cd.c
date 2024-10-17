@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 05:57:14 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 18:37:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,8 @@ int	gotodir(char *dir, t_minishell *params)
 	{
 		if (chdir(dir) == -1)
 		{
-			ft_putstr_fd(ERR, 2);
-			ft_putstr_fd(": cd: ", 2);
-			perror(dir);
+			cderrormsg(dir);
+			perror("");
 			return (ERROR);
 		}
 		return (SUCCESS);
@@ -82,9 +81,12 @@ int	cd(char **args, char **env, t_minishell *params)
 	return (status);
 }
 
-// int	main(void)
-// {
-// 	char	*test[4] = {"cd", "test", "test", NULL};
+int	main(void)
+{
+	char	*test[4] = {"cd", "testsym", NULL};
+	t_minishell	params;
 
-// 	cd(test);
-// }
+	params.cwd = getcwd(NULL, 0);
+	cd(test, NULL, &params);
+	printf("new cwd: %s\n", params.cwd);
+}
