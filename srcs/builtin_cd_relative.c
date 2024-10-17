@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 05:50:01 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 06:09:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,17 @@ int	checkcdpath(char **cdpath, char *dir, char **result)
 	return (ERROR);
 }
 
+int	checkcwd(char *dir, t_minishell *params, int last)
+{
+	char *path;
+
+	path = genpath(params->cwd, dir);
+	if (path == NULL)
+		return (FAIL);
+	if (checkdirexists(path) == TRUE)
+		return (changedir(path, params));
+}
+
 int	gotorelative(char *dir, t_minishell *params)
 {
 	char	**cdpath;
@@ -65,6 +76,8 @@ int	gotorelative(char *dir, t_minishell *params)
 	{
 		if (checkcdpath(cdpath, dir, &path) == SUCCESS)
 			return (ft_freearray(cdpath), changedir(path, params));
+		else
+			//check cwd
 	}
 	path = genpath(params->cwd, dir);
 	if (path == NULL)
