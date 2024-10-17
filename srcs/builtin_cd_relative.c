@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 10:39:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 05:50:01 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,35 @@ int	retcdpath(char ***cdpath, int *checkwd)
 	return (SUCCESS);
 }
 
-int	gotorelative(char *dir)
+//stat is used to check if it is a directory as it resolves the symbolic link
+//symbolic link could be used to point to things other than a directory
+
+int	checkcdpath(char **cdpath, char *dir, char **result)
+{
+	char		*combine;
+	struct stat	dirstat;
+
+	while (*cdpath != NULL)
+	{
+		combine = genpath(*cdpath, dir);
+		if (combine == NULL)
+			return (FAIL);
+		if (stat(combine, &dirstat) == 0 && S_ISDIR(dirstat.st_mode) != 0)
+		{
+			*result = combine;
+			return (SUCCESS);
+		}
+		cdpath++;
+	}
+	return (ERROR);
+}
+
+int	gotorelative(char *dir, t_minishell *params)
 {
 	char	**cdpath;
 	int		checkwd;
 	int		status_cdpath;
+	char	*path;
 
 	checkwd = FALSE;
 	status_cdpath = retcdpath(&cdpath, &checkwd);
@@ -39,6 +63,18 @@ int	gotorelative(char *dir)
 		return (FAIL);
 	if (status_cdpath == SUCCESS && checkwd == FALSE)
 	{
-		//check the cdpath directories first
+		if (checkcdpath(cdpath, dir, &path) == SUCCESS)
+			return (ft_freearray(cdpath), changedir(path, params));
 	}
+	path = genpath(params->cwd, dir);
+	if (path == NULL)
+		return (ft_freearray(cdpath), FAIL);
+	if (checkdirexists(path) == TRUE)
+		return (ft_freearray(cdpath), changedir(path, params));
+	if (status_cdpath == SUCCESS && checkwd == TRUE)
+	{
+		if (checkcdpath(cdpath, dir, &path) == SUCCESS)
+			return (ft_freearray(cdpath), changedir(path, params));
+	}
+	return (cderrormsg(dir), ft_freearray(cdpath), ERROR);
 }

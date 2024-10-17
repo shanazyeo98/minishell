@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 10:39:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 05:57:14 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	gotohome(void)
 	return (SUCCESS);
 }
 
-int	gotodir(char *dir)
+int	gotodir(char *dir, t_minishell *params)
 {
 	if (ft_strcmp(dir, "") == 0)
 		return (SUCCESS);
@@ -52,16 +52,18 @@ int	gotodir(char *dir)
 	{
 		if (chdir(dir) == -1)
 		{
-			perror(ERR);
+			ft_putstr_fd(ERR, 2);
+			ft_putstr_fd(": cd: ", 2);
+			perror(dir);
 			return (ERROR);
 		}
 		return (SUCCESS);
 	}
-
-
+	else
+		return (gotorelative(dir, params));
 }
 
-int	cd(char **args, char **env)
+int	cd(char **args, char **env, t_minishell *params)
 {
 	int	argcount;
 	int	status;
@@ -76,7 +78,7 @@ int	cd(char **args, char **env)
 	if (argcount == 1)
 		status = gotohome();
 	else
-		gotodir(args[1]);
+		status = gotodir(args[1], params);
 	return (status);
 }
 

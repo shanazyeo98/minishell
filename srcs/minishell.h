@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 10:43:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/17 05:55:55 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,8 @@ typedef struct s_cmd
 enum	e_exitstat
 {
 	SUCCESS,
-	FAIL,
 	ERROR,
-	CANCEL
+	FAIL,
 };
 
 typedef struct s_minishell
@@ -177,6 +176,7 @@ typedef struct s_minishell
 	char	*validopre[8];
 	int		hdcount;
 	int		hd_expand;
+	char	*cwd;
 //	int		pid;
 //	char	*delim;
 	t_ast	*ast;
@@ -236,6 +236,13 @@ int			redirection(t_cmd *cmd, t_token **token, t_redir **redir);
 int			ft_assignstr(char *newstr, char **args);
 int			fill(t_cmd *cmd);
 void		free_tree(t_ast *node);
+
+//cd
+int			checkslash(char *str);
+char		*genpath(char *currdir, char *relpath);
+int			changedir(char *path, t_minishell *params);
+int			checkdirexists(char *path);
+int			gotorelative(char *dir, t_minishell *params);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
