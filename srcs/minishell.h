@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 18:15:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:13:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,7 +249,7 @@ void		free_tree(t_ast *node);
 //cd
 int			checkslash(char *str);
 char		*genpath(char *currdir, char *relpath);
-int			changedir(char *dir, char *path, t_minishell *params, int clear);
+int			changedir(char *dir, char *path, t_minishell *params, int rel);
 int			checkdirexists(char *path);
 int			gotorelative(char *dir, t_minishell *params);
 int			checkfileexists(char *path);

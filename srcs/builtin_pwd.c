@@ -6,36 +6,28 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 06:34:35 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 10:40:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:18:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-//wip - mainly to see how it works for symlinks
-
-int	pwd(void)
+int	pwd(t_minishell params)
 {
-	char		*dir;
-	struct stat	buf;
+	char	*dir;
 
-	chdir("/home/codespace");
-	dir = getcwd(NULL, 0);
+	dir = getenv("PWD");
 	if (dir == NULL)
-	{
-		perror("");
-		return (ERROR);
-	}
-	printf("dir: %s\n", dir);
-	lstat(dir, &buf);
-	printf("%ld\n", buf.st_ino);
-	// printf("%s\n", dir);
-	// free(dir);
+		dir = params.cwd;
+	ft_putendl_fd(dir, 1);
 	return (SUCCESS);
 }
 
 //testing
-int	main(void)
-{
-	pwd();
-}
+// int	main(void)
+// {
+// 	t_minishell params;
+
+// 	params.cwd = "test";
+// 	pwd(params);
+// }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 15:22:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:06:57 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	execdpath(t_cd cd, char *dir, int checkwd, t_minishell *params)
 		if (combine == NULL)
 			return (FAIL);
 		if (checkdirexists(combine) == TRUE)
-			return (free(cd.path), changedir(dir, combine, params, FALSE));
+			return (free(cd.path), changedir(dir, combine, params, TRUE));
 		else
 			free(combine);
 		cd.cdpath++;

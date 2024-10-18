@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 15:33:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:07:22 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,20 @@ char	*genpath(char *currdir, char *relpath)
 	return (combine);
 }
 
-void	checkmatchingpath(char *path, char *cwd)
+int	checkmatchingpath(char *dir, char *path, char *cwd)
 {
-	int		i;
-	int		a;
 	char	*subpath;
 
-	i = ft_strlen(path);
-	a = i;
-	while (i >= 0)
-	{
-		if (i != a && path[i] == '/')
-			break;
-		i--;
-	}
-	subpath = ft_substr(path, 0, i);
+	subpath = ft_substr(path, 0, ft_strlen(path) - ft_strlen(dir) - 1);
+	if (subpath == NULL)
+		return (FAIL);
 	if (ft_strcmp(subpath, cwd) != 0)
 		ft_putendl_fd(path, 1);
 	free(subpath);
+	return (SUCCESS);
 }
 
-int	changedir(char *dir, char *path, t_minishell *params, int clear)
+int	changedir(char *dir, char *path, t_minishell *params, int rel)
 {
 	int	status;
 
@@ -75,16 +68,16 @@ int	changedir(char *dir, char *path, t_minishell *params, int clear)
 		status = ERROR;
 		cderrormsg(dir);
 		perror("");
-		if (clear == TRUE)
+		if (rel == TRUE)
 			free(path);
 	}
 	else
 	{
 		status = SUCCESS;
-		if (clear == FALSE)
-			checkmatchingpath(path, params->cwd);
+		if (rel == TRUE && checkmatchingpath(dir, path, params->cwd) == FAIL)
+			return (FAIL);
 		params->cwd = ft_strdup(path);
-		if (clear == TRUE)
+		if (rel == TRUE)
 			free(path);
 		if (params->cwd == NULL)
 			return (FAIL);
@@ -97,8 +90,7 @@ int	checkdirexists(char *path)
 {
 	struct stat	dirstat;
 
-	stat(path, &dirstat);
-	if (S_ISDIR(dirstat.st_mode) != 0)
+	if (stat(path, &dirstat) == 0 && S_ISDIR(dirstat.st_mode) != 0)
 		return (TRUE);
 	return (FALSE);
 }
