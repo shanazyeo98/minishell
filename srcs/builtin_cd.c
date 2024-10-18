@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 18:37:23 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 15:33:44 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	countcdargs(char **args)
 	return (i);
 }
 
-int	gotohome(void)
+int	gotohome(t_minishell *params)
 {
 	char	*home;
 
@@ -36,12 +36,7 @@ int	gotohome(void)
 		ft_putendl_fd(": cd: HOME not set", 2);
 		return (ERROR);
 	}
-	if (chdir(home) == -1)
-	{
-		perror(ERR);
-		return (ERROR);
-	}
-	return (SUCCESS);
+	return (changedir(NULL, home, params, TRUE));
 }
 
 int	gotodir(char *dir, t_minishell *params)
@@ -62,7 +57,7 @@ int	gotodir(char *dir, t_minishell *params)
 		return (gotorelative(dir, params));
 }
 
-int	cd(char **args, char **env, t_minishell *params)
+int	cd(char **args, t_minishell *params)//, char **env)
 {
 	int	argcount;
 	int	status;
@@ -75,7 +70,7 @@ int	cd(char **args, char **env, t_minishell *params)
 		return (1);
 	}
 	if (argcount == 1)
-		status = gotohome();
+		status = gotohome(params);
 	else
 		status = gotodir(args[1], params);
 	return (status);
@@ -83,10 +78,10 @@ int	cd(char **args, char **env, t_minishell *params)
 
 int	main(void)
 {
-	char	*test[4] = {"cd", "testsym", NULL};
+	char	*test[4] = {"cd", "42core", "hi", NULL};
 	t_minishell	params;
 
 	params.cwd = getcwd(NULL, 0);
-	cd(test, NULL, &params);
+	cd(test, &params);
 	printf("new cwd: %s\n", params.cwd);
 }

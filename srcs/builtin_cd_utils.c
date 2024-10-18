@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 18:27:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 15:33:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,9 @@ char	*genpath(char *currdir, char *relpath)
 
 void	checkmatchingpath(char *path, char *cwd)
 {
-	int	i;
-	int	a;
+	int		i;
+	int		a;
+	char	*subpath;
 
 	i = ft_strlen(path);
 	a = i;
@@ -59,8 +60,10 @@ void	checkmatchingpath(char *path, char *cwd)
 			break;
 		i--;
 	}
-	if (strncmp(path, cwd, i) != 0)
+	subpath = ft_substr(path, 0, i);
+	if (ft_strcmp(subpath, cwd) != 0)
 		ft_putendl_fd(path, 1);
+	free(subpath);
 }
 
 int	changedir(char *dir, char *path, t_minishell *params, int clear)
@@ -78,12 +81,14 @@ int	changedir(char *dir, char *path, t_minishell *params, int clear)
 	else
 	{
 		status = SUCCESS;
-		checkmatchingpath(path, params->cwd);
-		params->cwd = strdup(path);
+		if (clear == FALSE)
+			checkmatchingpath(path, params->cwd);
+		params->cwd = ft_strdup(path);
 		if (clear == TRUE)
 			free(path);
 		if (params->cwd == NULL)
 			return (FAIL);
+		//set pwd variable
 	}
 	return (status);
 }
