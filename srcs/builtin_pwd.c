@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 06:34:35 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:18:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:39:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,12 @@
 int	pwd(t_minishell params)
 {
 	char	*dir;
+	int		status;
 
-	dir = getenv("PWD");
+	status == SUCCESS;
+	dir = retrieve_env_var(PWD, params.envp, &status);
+	if (status == FAIL)
+		return (FAIL);
 	if (dir == NULL)
 		dir = params.cwd;
 	ft_putendl_fd(dir, 1);

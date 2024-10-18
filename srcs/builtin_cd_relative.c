@@ -6,17 +6,21 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:06:57 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:36:34 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	retcdpath(char ***cdpath, int *checkwd)
+int	retcdpath(char ***cdpath, int *checkwd, t_minishell params)
 {
 	char	*path;
+	int		status;
 
-	path = getenv(CDPATH); //ret cd path; to replace
+	status = SUCCESS;
+	path = retrieve_env_var(CDPATH, params.envp, &status);
+	if (status == FAIL)
+		return (FAIL);
 	if (path == NULL)
 		return (ERROR);
 	*cdpath = ft_split(path, ':');
@@ -61,7 +65,7 @@ int	gotorelative(char *dir, t_minishell *params)
 	if (cd.path == NULL)
 		return (FAIL);
 	checkwd = FALSE;
-	status_cdpath = retcdpath(&cd.cdpath, &checkwd);
+	status_cdpath = retcdpath(&cd.cdpath, &checkwd, *params);
 	if (status_cdpath == FAIL)
 		return (FAIL);
 	if (status_cdpath == ERROR)

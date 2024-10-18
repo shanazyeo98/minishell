@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:18:55 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:38:51 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ int	countcdargs(char **args)
 int	gotohome(t_minishell *params)
 {
 	char	*home;
+	int		status;
 
-	home = getenv("HOME"); //to change to own retrieval function
+	status == SUCCESS;
+	home = retrieve_env_var(HOME, params->envp, &status);
+	if (status == FAIL)
+		return (FAIL);
 	if (home == NULL)
 	{
 		ft_putstr_fd(ERR, 2);
