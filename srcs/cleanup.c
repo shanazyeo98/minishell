@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 01:03:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:40:45 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,23 @@ void	free_ft_split(char **arr)
 	- t_minishell -> t_list *envp
 	- TO ADD ON AFTERWARDS
 */
-void	spick_and_span(t_minishell ms)
+void	spick_and_span(t_minishell *ms, int status)
 {
-	free (ms.input);
-	free_ft_split(ms.path);
-	if (ms.envp != NULL)
-		ft_lstclear(&(ms.envp), ft_lst_freecntnt);
+	free(ms->input);
+	if (ms->path != NULL)
+		free_ft_split(ms->path);
+	if (ms->envp != NULL)
+		ft_lstclear(&(ms->envp), ft_lst_freecntnt);
+	ms->path = NULL;
+	if (ms->tokenlist != NULL)
+		freetokens(ms->tokenlist);
+	ms->tokenlist = NULL;
+	if (ms->ast != NULL)
+		free_tree(ms->ast);
+	ms->ast = NULL;
+	if (status == FAIL)
+	{
+		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
+		exit(FAIL);
+	}
 }

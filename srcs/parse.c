@@ -6,11 +6,14 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 15:28:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/08 15:59:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 14:16:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Description: Retrieves the smallest group relative to the basegrp in
+a set of tokens*/
 
 int	ret_grp(t_token *token, int basegrp)
 {
@@ -26,6 +29,10 @@ int	ret_grp(t_token *token, int basegrp)
 	return (grp);
 }
 
+/*Description: Start of parsing module.
+Creates branch based on the group and loops through node to build other
+branches accordingly*/
+
 t_ast	*parse(t_token *token, int grp)
 {
 	t_ast	*branch;
@@ -40,7 +47,7 @@ t_ast	*parse(t_token *token, int grp)
 		if (cpy->right == NULL)
 			cpy->right = parse(ret_token(cpy->id, token), cpy->grp);
 		if (cpy->right == NULL)
-			return (tree_error(branch), NULL);
+			return (free_tree(branch), NULL);
 		if (cpy->left == NULL)
 			break ;
 		cpy = cpy->left;
@@ -49,7 +56,7 @@ t_ast	*parse(t_token *token, int grp)
 	{
 		cpy->left = parse(token, cpy->grp);
 		if (cpy->left == NULL)
-			return (tree_error(branch), NULL);
+			return (free_tree(branch), NULL);
 	}
 	return (branch);
 }

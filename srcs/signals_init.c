@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/08 17:28:44 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 15:25:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,21 @@
 	- SIGINT: sets rl_done = 1 to break out of readline
 */
 
+int	g_sig_status = 0;
+
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
+	{
 		rl_done = 1;
+		g_sig_status = SIGINT;
+	}
+}
+
+void	sig_noninteractive(int signum)
+{
+	if (signum == SIGINT)
+		return ;
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the
@@ -30,15 +41,14 @@ void	sig_handler(int signum)
    The signal handler is registered using the sigaction()
 */
 
-void	init_signal_handler(int signum)
+void	init_signal_handler(int signum, void (*func)(int))
 {
 	struct sigaction	action;
 
-	action.sa_handler = &sig_handler;
+	action.sa_handler = func;
 	sigemptyset(&action.sa_mask);
-	//probably need to register more signals here
-	sigaddset(&action.sa_mask, SIGINT);
-	action.sa_flags = 0;
+	sigaddset(&action.sa_mask, signum);
+	action.sa_flags = SA_RESTART;
 	if (sigaction(signum, &action, NULL) == -1)
 	{
 		perror(ERR_SIGACTION_FAIL);
@@ -53,8 +63,16 @@ void	init_signal_handler(int signum)
 	- XXXXXX ADD LATER
 */
 
-void	init_all_sig_handler(void)
+void	init_all_sig_handler(int state)
 {
-	init_signal_handler(SIGINT);
-	init_signal_handler(SIGQUIT);
+	if (state == INTERACTIVE)
+	{
+		init_signal_handler(SIGINT, &sig_handler);
+		init_signal_handler(SIGQUIT, SIG_IGN);
+	}
+	else
+	{
+		init_signal_handler(SIGINT, &sig_noninteractive);
+		init_signal_handler(SIGQUIT, SIG_IGN);
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/17 18:22:34 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:37:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,23 +24,37 @@
 # include <stdio.h>
 # include <sys/stat.h>
 # include <time.h>
+# include <sys/wait.h>
 
 /* General */
 # define DELIMITER " '\"$"
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
+# define HEREDOCFILE "heredoc"
+# define HEREDOCPROMPT "໒(⊙ᴗ⊙)७✎▤ > "
+# define HEREDOCOP "<<"
+# define APPENDOP ">>"
+# define INPUTOP "<"
+# define OUTPUTOP ">"
 
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
 # define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the \
 							programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
+# define ERR "ಥ_ಥ"
 
 # define OPEN 0
 # define CLOSED 1
 # define TRUE 1
 # define FALSE 0
+# define INTERACTIVE 0
+# define NONINTERACTIVE 1
+
+//global variable
+
+extern int	g_sig_status;
 
 //token data structure
 
@@ -66,6 +80,7 @@ typedef struct s_token
 	int				id;
 	int				type;
 	char			*str;
+	int				fd;
 	int				wordgrp;
 	int				grp;
 	struct s_token	*next;
@@ -106,12 +121,13 @@ enum	e_redirectors
 	HEREDOC
 };
 
-struct	s_cmd;
+struct		s_cmd;
 
 typedef struct s_redir
 {
 	int		id;
 	char	*file;
+	int		fd;
 }	t_redir;
 
 typedef struct s_ast
@@ -131,9 +147,7 @@ typedef struct s_cmd
 	t_token	*start;
 	t_token	*end;
 	char	**args;
-	int		n_redir;
 	t_redir	**redir;
-	t_ast	*up;
 }	t_cmd;
 
 //overall data structure
@@ -143,6 +157,7 @@ enum	e_exitstat
 	SUCCESS,
 	FAIL,
 	ERROR,
+	CANCEL
 };
 
 typedef struct s_minishell
@@ -155,6 +170,9 @@ typedef struct s_minishell
 	char	operator[3];
 	char	redirector[3];
 	char	*validopre[8];
+	int		hdcount;
+	int		pid;
+	char	*delim;
 	t_ast	*ast;
 }	t_minishell;
 
@@ -164,7 +182,6 @@ char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(int argc, char *argv[], char *envp[]);
 int			rl_empty_event(void);
-
 /* Environment funtions */
 t_list		*stray_to_llist(char **str);
 char		**llist_to_stray(t_list *llist);
@@ -173,24 +190,30 @@ char		*retrieve_env_var(char *var, t_list *envp, int *status);
 char		*substring_after_char(char *input, char delim);
 
 /* Signal functions */
-void		init_all_sig_handler(void);
-void		init_signal_handler(int signum);
+void		init_all_sig_handler(int state);
+void		init_signal_handler(int signum, void (*func)(int));
 void		sig_handler(int signum);
 
 //tokens
-t_token		*lsttoken(t_token *token);
-int			assigntoken(int type, t_tokendets *info, t_minishell *params);
-int			newtoken(char a, t_minishell *params, t_tokendets *info, int i);
-int			chartype(char a, t_minishell *params);
-int			readchar(char a, t_minishell *params, t_tokendets *info, int *i);
-int			returntype(char a, t_minishell *params);
-int			closetoken(t_tokendets *info, int i, t_token *open);
-int			chartype(char a, t_minishell *params);
-int			checkend(t_minishell *params, t_tokendets *info);
-void		tokenize(char *prompt, t_minishell *params);
-void		freetokens(t_token **list);
-t_token		*ret_token(int id, t_token *token);
-void		print_token_list(t_minishell ms);
+t_token			*lsttoken(t_token *token);
+int				assigntoken(int type, t_tokendets *info, t_minishell *params);
+int				newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int				chartype(char a, t_minishell *params);
+int				readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int				returntype(char a, t_minishell *params);
+int				closetoken(t_tokendets *info, int i, t_token *open);
+int				chartype(char a, t_minishell *params);
+int				checkend(t_minishell *params, t_tokendets *info);
+void			tokenize(char *prompt, t_minishell *params);
+void			freetokens(t_token **list);
+t_token			*ret_token(int id, t_token *token);
+void			print_token_list(t_minishell ms);
+
+//heredoc
+int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
+void		heredoccheck(t_token **tokenlist, t_minishell *params);
+char		*delim(t_token *token);
+int			herefile(int hd);
 
 //parsing
 int			ret_op(char *str);
@@ -216,9 +239,17 @@ void		print_ast_cmd(t_token *start, t_token *end);
 void		print_ast(t_ast *node, int ctr);
 void		traverse_ast_first_last(t_ast *node);
 
+//update tree
+void		count(int *args, int *redir, t_cmd *cmd);
+int			countargs(char *str, t_token *token, t_cmd *cmd);
+int			redirection(t_cmd *cmd, t_token **token, t_redir **redir);
+int			ft_assignstr(char *newstr, char **args);
+int			fill(t_cmd *cmd);
+void		free_tree(t_ast *node);
+
 /* Clean up functions */
 void		free_ft_split(char **arr);
-void		spick_and_span(t_minishell ms);
+void		spick_and_span(t_minishell *ms, int status);
 void		break_shell(t_minishell *ms);
 
 #endif

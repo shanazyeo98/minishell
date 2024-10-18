@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:23:10 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 13:47:05 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/15 13:36:06 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int	readchar(char a, t_minishell *params, t_tokendets *info, int *i)
 			if (checkvalidopre(open->str, params) == ERROR)
 				return (ERROR);
 		}
+		if (!(ret_op(open->str) == AND || ret_op(open->str) == OR) && \
+		open->prev != NULL && open->grp < open->prev->grp)
+			return (ERROR);
 		if (open->type == SINGLE || open->type == DOUBLE)
 			(*i)++;
 	}

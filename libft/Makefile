@@ -7,7 +7,7 @@ ft_strchr.c ft_strdup.c ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlcpy.c ft_
 ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_strreplace.c \
 ft_printf_char.c ft_printf_format.c ft_printf_helper.c ft_printf_hexa.c ft_printf_inputcheck.c \
 ft_printf_int.c ft_printf_percentage.c ft_printf_pointer.c ft_printf_specs.c ft_printf_str.c ft_printf_uint.c ft_printf.c \
-ft_atoi_check.c ft_lstsearchprev.c get_next_line_bonus.c get_next_line_utils_bonus.c ft_strcmp.c
+ft_atoi_check.c ft_lstsearchprev.c get_next_line_bonus.c get_next_line_utils_bonus.c ft_strcmp.c ft_freearray.c
 OBJS = $(SRCS:.c=.o)
 BONUS_SRCS = ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c \
 ft_lstsize.c ft_lst_freecntnt.c

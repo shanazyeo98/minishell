@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 00:58:27 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:40:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,11 @@ void	getinput(t_minishell *ms)
 {
 	char	*input;
 
-	rl_event_hook = rl_empty_event;
 	input = readline(PROMPT);
 	if (input == NULL)
 	{
 		ft_printf(EXIT_MSG);
-		spick_and_span(*ms);
+		spick_and_span(ms, SUCCESS);
 		exit(EXIT_SUCCESS);
 	}
 	add_history(input);
@@ -98,6 +97,9 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	ms.input = NULL;
 	ms.tokenlist = NULL;
 	ms.ast = NULL;
+	ms.pid = 0;
 	declarearray(&ms);
+	rl_event_hook = rl_empty_event;
+	rl_signal_event_hook = rl_empty_event;
 	return (ms);
 }

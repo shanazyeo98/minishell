@@ -1,7 +1,23 @@
 {
 	"files.associations": {
 		"minishell.h": "c",
-		"libft.h": "c"
+		"libft.h": "c",
+		"readline.h": "c",
+		"stdio.h": "c",
+		"stdlib.h": "c",
+		"history.h": "c",
+		"libft.h": "c",
+		"signal.h": "c",
+		"array": "c",
+		"deque": "c",
+		"string": "c",
+		"unordered_map": "c",
+		"vector": "c",
+		"string_view": "c",
+		"initializer_list": "c",
+		"sstream": "c",
+		"thread": "c",
+		"*.tcc": "c"
 	},
 	"makefile.configureOnOpen": true
 }

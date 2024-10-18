@@ -6,6 +6,8 @@ srcs/init_general.c \
 srcs/signals_init.c \
 srcs/cleanup.c \
 srcs/declarechar.c \
+srcs/heredoc.c \
+srcs/heredoc_utils.c \
 srcs/token_checktype.c \
 srcs/token_list.c \
 srcs/token_new.c \
@@ -14,7 +16,7 @@ srcs/tokenize.c \
 srcs/token_expand.c \
 srcs/token_utils.c \
 srcs/parse_branch.c \
-srcs/parse_error.c \
+srcs/parse_free.c \
 srcs/parse_fillcmd.c \
 srcs/parse_ops.c \
 srcs/parse_retrievetype.c \
@@ -27,6 +29,8 @@ LIBFTDIR = libft
 LIBFT = libft.a
 LIB = -lreadline
 HEADERS = srcs/minishell.h
+MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
+MAC_LIB = -L/opt/homebrew/opt/readline/lib
 
 all: $(NAME)
 
