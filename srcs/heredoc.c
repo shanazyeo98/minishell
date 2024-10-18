@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:14:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/16 10:43:29 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	heredoccheck(t_token **tokenlist, t_minishell *params)
 		ft_strcmp("<<", (token->prev)->str) == 0)
 		{
 			hd++;
-			limiter = delim(token);
+			limiter = delim(token, params);
 			if (limiter == NULL)
 				spick_and_span(params, FAIL);
 			status = heredoc(hd, token, limiter, params);

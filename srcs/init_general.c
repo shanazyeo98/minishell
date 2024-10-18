@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 13:40:57 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:21:36 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,8 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	ms.input = NULL;
 	ms.tokenlist = NULL;
 	ms.ast = NULL;
-	ms.pid = 0;
+//	ms.pid = 0;
+	ms.hd_expand = TRUE;
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;

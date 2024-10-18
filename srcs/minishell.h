@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 13:37:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:23:32 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 # include <sys/stat.h>
 # include <time.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 /* General */
 # define DELIMITER " '\"$"
@@ -51,6 +53,11 @@
 # define FALSE 0
 # define INTERACTIVE 0
 # define NONINTERACTIVE 1
+# define TRUE 1
+# define FALSE 0
+# define CDPATH "CDPATH"
+# define HOME "HOME"
+# define PWD "PWD"
 
 //global variable
 
@@ -150,14 +157,22 @@ typedef struct s_cmd
 	t_redir	**redir;
 }	t_cmd;
 
+//file type
+
+typedef struct s_cd
+{
+	char	*path;
+	char	**cdpath;
+}	t_cd;
+
+
 //overall data structure
 
 enum	e_exitstat
 {
 	SUCCESS,
-	FAIL,
 	ERROR,
-	CANCEL
+	FAIL,
 };
 
 typedef struct s_minishell
@@ -171,8 +186,10 @@ typedef struct s_minishell
 	char	redirector[3];
 	char	*validopre[8];
 	int		hdcount;
-	int		pid;
-	char	*delim;
+	int		hd_expand;
+	char	*cwd;
+//	int		pid;
+//	char	*delim;
 	t_ast	*ast;
 }	t_minishell;
 
@@ -212,7 +229,7 @@ void			print_token_list(t_minishell ms);
 //heredoc
 int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
-char		*delim(t_token *token);
+char		*delim(t_token *token, t_minishell *params);
 int			herefile(int hd);
 
 //parsing
@@ -246,6 +263,15 @@ int			redirection(t_cmd *cmd, t_token **token, t_redir **redir);
 int			ft_assignstr(char *newstr, char **args);
 int			fill(t_cmd *cmd);
 void		free_tree(t_ast *node);
+
+//cd
+int			checkslash(char *str);
+char		*genpath(char *currdir, char *relpath);
+int			changedir(char *dir, char *path, t_minishell *params, int rel);
+int			checkdirexists(char *path);
+int			gotorelative(char *dir, t_minishell *params);
+int			checkfileexists(char *path);
+void		cderrormsg(char *dir);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

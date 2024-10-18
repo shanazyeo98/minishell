@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_error.c                                      :+:      :+:    :+:   */
+/*   parse_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:20:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 14:16:23 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 15:23:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	freecmdnode(t_ast *node)
 
 	if (node->cmd->args != NULL)
 		ft_freearray(node->cmd->args);
+	i = 0;
 	if (node->cmd->redir != NULL)
 	{
 		while ((node->cmd->redir)[i] != NULL)
