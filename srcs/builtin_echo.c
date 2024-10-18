@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 05:20:13 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 07:01:01 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 10:21:43 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	echo(char **args)
 		if (i == 1 && ft_strcmp(args[i], "-n") == 0)
 			newline = FALSE;
 		else
-			ft_putstr_fd(args[i], 1);
+			ft_putstr_fd(args[i], STDOUT_FILENO);
 		i++;
 		if (args[i] != NULL)
-			ft_putstr_fd(" ", 1);
+			ft_putstr_fd(" ", STDOUT_FILENO);
 	}
 	if (newline == TRUE)
-		ft_putendl_fd("", 1);
+		ft_putendl_fd("", STDOUT_FILENO);
 	return (SUCCESS);
 }
 

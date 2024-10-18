@@ -23,7 +23,13 @@ srcs/parse_retrievetype.c \
 srcs/parse.c \
 srcs/env_init.c \
 srcs/env_retrieve.c \
-srcs/ast_utils.c
+srcs/ast_utils.c \
+srcs/builtin_cd.c \
+srcs/builtin_cd_relative.c \
+srcs/builtin_cd_utils.c \
+srcs/builtin_echo.c \
+srcs/builtin_pwd.c \
+srcs/builtin_exit.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a

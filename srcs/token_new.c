@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:04:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 11:19:09 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,15 @@ If open parenthesis is called without a preceding operator, error
 If group goes negative (i.e. close bracket without corresponding open), error*/
 int	editgrps(char a, t_tokendets *tokeninfo, t_minishell *params)
 {
+	t_token	*lst;
+
+	lst = lsttoken(*(params->tokenlist));
 	if (a == ' ')
 		tokeninfo->wordgrp++;
 	else if (a == '(')
 	{
-		if (*(params->tokenlist) == NULL || \
-		(lsttoken(*(params->tokenlist)))->type == OPERATOR)
+		if (*(params->tokenlist) == NULL || ret_op(lst->str) == OR || \
+		ret_op(lst->str) == AND)
 			tokeninfo->grp++;
 		else
 			return (ERROR);

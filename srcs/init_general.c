@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 08:42:54 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 11:22:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	ms.ast = NULL;
 	ms.hd_expand = TRUE;
 	ms.cwd = getcwd(NULL, 0);
+	ms.exitstatus = 0;
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;

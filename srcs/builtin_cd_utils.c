@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:07:22 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 10:21:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	checkmatchingpath(char *dir, char *path, char *cwd)
 	if (subpath == NULL)
 		return (FAIL);
 	if (ft_strcmp(subpath, cwd) != 0)
-		ft_putendl_fd(path, 1);
+		ft_putendl_fd(path, STDOUT_FILENO);
 	free(subpath);
 	return (SUCCESS);
 }
@@ -97,8 +97,8 @@ int	checkdirexists(char *path)
 
 void	cderrormsg(char *dir)
 {
-	ft_putstr_fd(ERR, 2);
-	ft_putstr_fd(": cd: ", 2);
-	ft_putstr_fd(dir, 2);
-	ft_putstr_fd(": ", 2);
+	ft_putstr_fd(ERR, STDERR_FILENO);
+	ft_putstr_fd(": cd: ", STDERR_FILENO);
+	ft_putstr_fd(dir, STDERR_FILENO);
+	ft_putstr_fd(": ", STDERR_FILENO);
 }

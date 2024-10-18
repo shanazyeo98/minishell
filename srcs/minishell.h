@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:24:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 09:33:25 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,9 +168,12 @@ typedef struct s_cd
 
 enum	e_exitstat
 {
-	SUCCESS,
-	ERROR,
-	FAIL,
+	SUCCESS = 0,
+	ERROR = 1,
+	INVALIDUSAGE = 2,
+	PERMISSIONERR = 126,
+	CMDNOTFOUND = 127,
+	FAIL = 256,
 };
 
 typedef struct s_minishell
@@ -186,6 +189,7 @@ typedef struct s_minishell
 	int		hdcount;
 	int		hd_expand;
 	char	*cwd;
+	int		exitstatus;
 //	int		pid;
 //	char	*delim;
 	t_ast	*ast;
@@ -270,6 +274,10 @@ int			checkdirexists(char *path);
 int			gotorelative(char *dir, t_minishell *params);
 int			checkfileexists(char *path);
 void		cderrormsg(char *dir);
+int			cd(char **args, t_minishell *params);
+
+//builtin general
+int			countexeargs(char **args);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

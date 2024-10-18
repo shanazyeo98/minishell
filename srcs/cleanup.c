@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 13:40:45 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 11:17:10 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	spick_and_span(t_minishell *ms, int status)
 	ms->ast = NULL;
 	if (status == FAIL)
 	{
-		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
+		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
 		exit(FAIL);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:38:51 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 10:23:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 //to retrieve HOME, CDPATH, PWD from the envp list. and set PWD to the new one
 //test the behaviour in symlinks
 
-int	countcdargs(char **args)
+int	countexeargs(char **args)
 {
 	int	i;
 
@@ -30,14 +30,14 @@ int	gotohome(t_minishell *params)
 	char	*home;
 	int		status;
 
-	status == SUCCESS;
+	status = SUCCESS;
 	home = retrieve_env_var(HOME, params->envp, &status);
 	if (status == FAIL)
 		return (FAIL);
 	if (home == NULL)
 	{
-		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd(": cd: HOME not set", 2);
+		ft_putstr_fd(ERR, STDERR_FILENO);
+		ft_putendl_fd(": cd: HOME not set", STDERR_FILENO);
 		return (ERROR);
 	}
 	return (changedir(NULL, home, params, TRUE));
@@ -53,17 +53,17 @@ int	gotodir(char *dir, t_minishell *params)
 		return (gotorelative(dir, params));
 }
 
-int	cd(char **args, t_minishell *params, char **env)
+int	cd(char **args, t_minishell *params)
 {
 	int	argcount;
 	int	status;
 
-	argcount = countcdargs(args);
+	argcount = countexeargs(args);
 	if (argcount > 2)
 	{
-		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd(": cd: too many arguments", 2);
-		return (1);
+		ft_putstr_fd(ERR, STDERR_FILENO);
+		ft_putendl_fd(": cd: too many arguments", STDERR_FILENO);
+		return (ERROR);
 	}
 	if (argcount == 1)
 		status = gotohome(params);
