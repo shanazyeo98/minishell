@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 08:43:40 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 00:17:16 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,14 @@ int	main(int argc, char *argv[], char *envp[])
 		print_token_list(ms);
 		if (ms.tokenlist != NULL)
 			heredoccheck(ms.tokenlist, &ms);
+
+		printf("===============After token expansion===============\n");
+		token_parameter_expansion(*ms.tokenlist, ms.envp);
+		print_token_list(ms);
+
+
+
+
 		if (ms.tokenlist != NULL)
 			ms.ast = parse(*ms.tokenlist, -1);
 		print_ast(ms.ast, 0);

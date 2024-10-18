@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/17 18:20:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/19 01:06:16 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,11 @@ char	*combine_string(char *in, char *or, char *rep, char *found)
 /* Description: Takes in an input string "in", and "or", a substring to be
    found within the "in", and "rep", the string to replace "or" and a string
    containing all the delimiters for "or", "delim". "or" is only valid for
-   replacement if it is delimited by a character found within the set. The
-   function calls the combine_string function iteratively until all the "or"
-   are replaced. The function also frees the pointer to "in" and returns a new
-   string with its own memory allocated.
+   replacement if it is delimited by a character found within the set, "delim".
+   If "delim", is "", this function replaces all instances "or" regardless of
+   delimiters. The function calls the combine_string function iteratively
+   until all the "or" are replaced. The function also frees the pointer to
+   "in" and returns a new string with its own memory allocated.
 */
 
 char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
@@ -92,7 +93,8 @@ char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
 	found = ft_strnstr(in, or, ft_strlen(in));
 	while (found != NULL)
 	{
-		if (char_str(found[or_len], delim) == 1 || ft_strcmp(found, or) == 0)
+		if (char_str(found[or_len], delim) == 1 || ft_strcmp(found, or) == 0 \
+		|| ft_strcmp(delim, "") == 0)
 		{
 			res = combine_string(temp, or, rep, found);
 			if (res == NULL)
@@ -102,4 +104,28 @@ char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
 		}
 	}
 	return (res);
+}
+
+int	main(void)
+{
+	char	*in1;
+	char	*in2;
+	char	*in3;
+	char	*out1;
+	char	*out2;
+	char	*out3;
+
+
+	in1 = ft_strdup("$?test");
+	in2 = ft_strdup("$?test$?");
+	in3 = ft_strdup("$v1? $v1\" '$v1' $v1$v2 $v1");
+
+	out1 = ft_strreplace(in1, "$?", "rep", "");
+	out2 = ft_strreplace(in2, "$?", "rep", "");
+	out3 = ft_strreplace(in3, "$v1", "rep", DELIMITER);
+
+
+
+	printf("o1: %s | o2: %s | o3: %s\n", out1, out2, out3);
+
 }

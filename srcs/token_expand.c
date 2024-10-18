@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/17 18:26:39 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/19 01:06:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
 	{
 		token->str = ft_strreplace(token->str, par_dollar, "", DELIMITER);
 		if (token->str == NULL)
-			return (free(par_dollar), ERROR);
+			return (free(par_dollar), FAIL);
 	}
 	else
 	{
 		token->str = ft_strreplace(token->str, par_dollar, rep, DELIMITER);
 		if (token->str == NULL)
-			return (free(par_dollar), free (rep), ERROR);
+			return (free(par_dollar), free (rep), FAIL);
 		free (par_dollar);
 		free (rep);
 	}
@@ -95,16 +95,16 @@ int	token_parameter_expansion(t_token *token, t_list *envp)
 	{
 		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
 		if (par_name == NULL)
-			return (ERROR);
+			return (FAIL);
 		rep = retrieve_env_var(par_name, envp, &status);
-		if (status == ERROR)
-			return (free(par_dollar), ERROR);
+		if (status == FAIL)
+			return (free(par_dollar), FAIL);
 		par_dollar = ft_strjoin("$", par_name);
 		free (par_name);
 		if (par_dollar == NULL)
-			return (ERROR);
-		if (replace_param(token, par_dollar, rep) == ERROR)
-			return (ERROR);
+			return (FAIL);
+		if (replace_param(token, par_dollar, rep) == FAIL)
+			return (FAIL);
 	}
 	return (SUCCESS);
 }
