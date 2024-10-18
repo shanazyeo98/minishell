@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/17 18:31:45 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:22:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,6 @@ int	main(int argc, char *argv[], char *envp[])
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
 		print_token_list(ms);
-		// printf("After expansion\n");
-		// token_parameter_expansion(*(ms.tokenlist), ms.envp);
-		// print_token_list(ms);
 		ms.ast = parse(*ms.tokenlist, -1);
 		print_ast(ms.ast, 0);
 	}
