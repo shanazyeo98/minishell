@@ -13,13 +13,17 @@ srcs/token_list.c \
 srcs/token_new.c \
 srcs/token_read.c \
 srcs/tokenize.c \
+srcs/token_expand.c \
 srcs/token_utils.c \
 srcs/parse_branch.c \
 srcs/parse_free.c \
 srcs/parse_fillcmd.c \
 srcs/parse_ops.c \
 srcs/parse_retrievetype.c \
-srcs/parse.c
+srcs/parse.c \
+srcs/env_init.c \
+srcs/env_retrieve.c \
+srcs/ast_utils.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a

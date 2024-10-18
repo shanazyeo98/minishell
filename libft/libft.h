@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 10:39:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:38:47 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 t_list	*ft_lstnew(void *content);
 t_list	*ft_lstsearchprev(t_list *first, t_list *node);
 int		ft_lstsize(t_list *lst);
+void	ft_lst_freecntnt(void *ptr);
+
 
 //normal functions
 int		ft_atoi(const char *nptr);
@@ -72,6 +74,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
+char	*ft_strreplace(char *in, char *or, char *rep, char *delim);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	ft_freearray(char **array);

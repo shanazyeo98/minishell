@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 13:44:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:40:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,25 @@ void	getinput(t_minishell *ms)
 
 /* Description: Initialises the t_minishell structure.
    Members:
+	- casts int arc and char *argv[] as void to "use" them
+	- envp: linked list of environment variables
 	- paths: an array of strings containing the environment paths
 	- input: user input from the command line
 	- TO ADD ON AS WE ADD MORE MEMBERS IN THE STRUCT
 */
 
-t_minishell	init_ms(void)
+t_minishell	init_ms(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
 
+	(void)argc;
+	(void)argv;
+	ms.envp = stray_to_llist(envp);
+	if (ms.envp == NULL)
+	{
+		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
+		exit (ERROR);
+	}
 	ms.path = getpaths();
 	ms.input = NULL;
 	ms.tokenlist = NULL;

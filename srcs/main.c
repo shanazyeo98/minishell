@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/11 14:05:17 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 13:41:49 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ void	break_shell(t_minishell *ms)
 /* Description: main programme for minishell
 */
 
-int	main(void)
+int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
 
-	ms = init_ms();
+	ms = init_ms(argc, argv, envp);
+	init_all_sig_handler();
 	while (1)
 	{
 		init_all_sig_handler(INTERACTIVE);
@@ -39,16 +40,12 @@ int	main(void)
 		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
+		print_token_list(ms);
 		if (ms.tokenlist != NULL)
 			heredoccheck(ms.tokenlist, &ms);
 		if (ms.tokenlist != NULL)
 			ms.ast = parse(*ms.tokenlist, -1);
-		//testing
-//		printf("%d\n", mst);
+		print_ast(ms.ast, 0);
 	}
 	return (EXIT_SUCCESS);
-	//Logic
-	//Might want to print smth to indicate the start of minishell
-	//Init struct
-	//Clean up
 }
