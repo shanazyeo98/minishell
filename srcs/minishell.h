@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:23:32 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/18 08:24:52 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@
 # define FALSE 0
 # define INTERACTIVE 0
 # define NONINTERACTIVE 1
-# define TRUE 1
-# define FALSE 0
 # define CDPATH "CDPATH"
 # define HOME "HOME"
 # define PWD "PWD"
