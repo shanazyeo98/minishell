@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 23:12:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/19 10:08:08 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ t_list	*stray_to_llist(char **str)
 	content = ft_strdup(str[0]);
 	if (content == NULL)
 		return (NULL);
-	llist = ft_lstnew(str[0]);
+	llist = ft_lstnew(content);
 	if (llist == NULL)
 		return (NULL);
 	while (str[i] != NULL)
 	{
-		content = ft_strdup(str[0]);
+		content = ft_strdup(str[i]);
 		if (content == NULL)
 		{
-			ft_lstclear(&llist, ft_lst_freecntnt);
+			ft_lstclear(&llist, free);
 			return (NULL);
 		}
-		ft_lstadd_back(&(llist), ft_lstnew(str[i]));
+		ft_lstadd_back(&(llist), ft_lstnew(content));
 		i++;
 	}
 	return (llist);

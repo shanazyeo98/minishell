@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 00:17:16 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/19 10:26:26 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,18 @@ void	break_shell(t_minishell *ms)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
+	// t_list		*curr;
 
+
+	// printf("Printing envp llist\n");
+	// curr = ms.envp;
+	// while (curr != NULL)
+	// {
+	// 	printf("content: %s\n", (char *)curr->content);
+	// 	curr = curr->next;
+	// }
+	// ft_lstclear(ms.envp, free);
 	ms = init_ms(argc, argv, envp);
-//	init_all_sig_handler();
 	while (1)
 	{
 		init_all_sig_handler(INTERACTIVE);
@@ -40,20 +49,20 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
-		print_token_list(ms);
+		// print_token_list(ms);
 		if (ms.tokenlist != NULL)
 			heredoccheck(ms.tokenlist, &ms);
 
-		printf("===============After token expansion===============\n");
-		token_parameter_expansion(*ms.tokenlist, ms.envp);
-		print_token_list(ms);
+		// printf("===============After token expansion===============\n");
+		// token_parameter_expansion(*ms.tokenlist, ms.envp, ms.exitstatus);
+		// print_token_list(ms);
 
 
 
 
 		if (ms.tokenlist != NULL)
 			ms.ast = parse(*ms.tokenlist, -1);
-		print_ast(ms.ast, 0);
+		// print_ast(ms.ast, 0);
 	}
 	return (EXIT_SUCCESS);
 }

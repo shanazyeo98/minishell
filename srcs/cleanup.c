@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 11:17:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 10:09:19 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	spick_and_span(t_minishell *ms, int status)
 	if (ms->path != NULL)
 		free_ft_split(ms->path);
 	if (ms->envp != NULL)
-		ft_lstclear(&(ms->envp), ft_lst_freecntnt);
+		ft_lstclear(&(ms->envp), free);
 	ms->path = NULL;
 	if (ms->tokenlist != NULL)
 		freetokens(ms->tokenlist);
