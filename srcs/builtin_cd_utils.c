@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 10:21:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 14:18:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ int	changedir(char *dir, char *path, t_minishell *params, int rel)
 		status = SUCCESS;
 		if (rel == TRUE && checkmatchingpath(dir, path, params->cwd) == FAIL)
 			return (FAIL);
-		params->cwd = ft_strdup(path);
+		params->cwd = getcwd(NULL, 0);
 		if (rel == TRUE)
 			free(path);
 		if (params->cwd == NULL)
