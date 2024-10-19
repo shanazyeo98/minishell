@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 05:37:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 18:05:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	ft_assignstr(char *newstr, char **args)
 	return (SUCCESS);
 }
 
-int	splitbasic(t_token *token, char **args, int *i, t_cmd *cmd)
+int	splitbasic(t_token *token, char **args, int *i, t_token *end)
 {
 	char	**split;
 	int		j;
@@ -63,22 +63,22 @@ int	splitbasic(t_token *token, char **args, int *i, t_cmd *cmd)
 	j = 0;
 	while ((token->str)[j + 1] != '\0')
 		j++;
-	if ((token->str)[j] == ' ' && token->next != cmd->end && \
+	if ((token->str)[j] == ' ' && token->next != end && \
 	token->wordgrp == (token->next)->wordgrp)
 		(*i)++;
 	return (ft_freearray(split), SUCCESS);
 }
 
-int	det_action(t_cmd *cmd, t_token **token, int *i_arg)
+int	det_action(t_cmd *cmd, t_token **token, int *i_arg, t_token *end)
 {
 	if ((*token)->type == REDIRECTOR)
 	{
-		if (redirection(cmd, token, cmd->redir) == FAIL)
+		if (redirection(end, token, cmd->redir) == FAIL)
 			return (FAIL);
 	}
 	else if ((*token)->type == BASIC)
 	{
-		if (splitbasic(*token, cmd->args, i_arg, cmd) == FAIL)
+		if (splitbasic(*token, cmd->args, i_arg, end) == FAIL)
 			return (FAIL);
 	}
 	else if ((*token)->type == SINGLE || (*token)->type == DOUBLE)
@@ -89,18 +89,18 @@ int	det_action(t_cmd *cmd, t_token **token, int *i_arg)
 	return (SUCCESS);
 }
 
-int	fill(t_cmd *cmd)
+int	fill(t_cmd *cmd, t_token *start, t_token *end)
 {
 	int		i_arg;
 	t_token	*token;
 	int		grp;
 
 	i_arg = 0;
-	token = cmd->start;
+	token = start;
 	grp = token->wordgrp;
-	while (token != cmd->end)
+	while (token != end)
 	{
-		if (det_action(cmd, &token, &i_arg) == FAIL)
+		if (det_action(cmd, &token, &i_arg, end) == FAIL)
 			return (FAIL);
 		token = token->next;
 		if (token != NULL && token->wordgrp != grp)

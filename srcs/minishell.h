@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 09:33:25 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 19:10:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_token
 	int				fd;
 	int				wordgrp;
 	int				grp;
+	int				hd_expand;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -126,14 +127,7 @@ enum	e_redirectors
 	HEREDOC
 };
 
-struct		s_cmd;
-
-typedef struct s_redir
-{
-	int		id;
-	char	*file;
-	int		fd;
-}	t_redir;
+struct		s_cmdnode;
 
 typedef struct s_ast
 {
@@ -144,16 +138,29 @@ typedef struct s_ast
 	struct s_ast	*up;
 	struct s_ast	*left;
 	struct s_ast	*right;
-	struct s_cmd	*cmd;
+	struct s_cmdnode	*cmdnode;
 }	t_ast;
+
+typedef struct s_redir
+{
+	int		id;
+	char	*file;
+	int		fd;
+	int		hd_expand;
+}	t_redir;
 
 typedef struct s_cmd
 {
+	t_redir	**redir;
+	char	**args;
+}	t_cmd;
+
+typedef struct s_cmdnode
+{
 	t_token	*start;
 	t_token	*end;
-	char	**args;
-	t_redir	**redir;
-}	t_cmd;
+	t_list	*cmds;
+}	t_cmdnode;
 
 //file type
 
@@ -187,9 +194,9 @@ typedef struct s_minishell
 	char	redirector[3];
 	char	*validopre[8];
 	int		hdcount;
-	int		hd_expand;
 	char	*cwd;
 	int		exitstatus;
+	int		hd_expand;
 //	int		pid;
 //	char	*delim;
 	t_ast	*ast;
@@ -241,7 +248,7 @@ t_ast		*createnode(int id, int type, int op, int grp);
 void		addleftnode(t_ast **branch, t_ast *new);
 void		adduppernode(t_ast **branch, t_ast *new);
 t_ast		*createbranch(t_token *token, int grp);
-t_cmd		*createcmd(t_token *token);
+t_cmdnode	*createcmd(t_token *token);
 t_ast		*parse(t_token *token, int id);
 int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
@@ -259,12 +266,16 @@ void		print_ast(t_ast *node, int ctr);
 void		traverse_ast_first_last(t_ast *node);
 
 //update tree
-void		count(int *args, int *redir, t_cmd *cmd);
-int			countargs(char *str, t_token *token, t_cmd *cmd);
-int			redirection(t_cmd *cmd, t_token **token, t_redir **redir);
+void		count(int *args, int *redir, t_token *start, t_token *end);
+int			countargs(char *str, t_token *token, t_token *start, t_token *end);
+int			redirection(t_token *end, t_token **token, t_redir **redir);
 int			ft_assignstr(char *newstr, char **args);
-int			fill(t_cmd *cmd);
+int			fill(t_cmd *cmd, t_token *start, t_token *end);
 void		free_tree(t_ast *node);
+int			initcmd(t_cmd *cmd, t_token *start, t_token *end);
+void		initredirarray(t_redir **array, int count);
+void		initchararray(char **array, int count);
+void		updatetree(t_cmdnode *cmdnode, t_minishell *params);
 
 //cd
 int			checkslash(char *str);

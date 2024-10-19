@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 10:43:29 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 16:38:01 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,16 @@ int	heredoc(int hd, t_token *token, char *delim, t_minishell *params)
 	int		fd;
 	int		status;
 
+	params->hd_expand = TRUE;
 	fd = herefile(hd);
 	if (fd == -1)
 		return (FAIL);
 	status = executedoc(fd, delim, params);
 	if (status == SUCCESS)
+	{
 		token->fd = fd;
+		token->hd_expand = params->hd_expand;
+	}
 	else
 		close(fd);
 	return (status);

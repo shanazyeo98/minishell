@@ -6,33 +6,42 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:20:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 15:23:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 19:54:04 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Function to clear redirect list*/
+
+void	clearcmd(void *content)
+{
+	t_cmd	*cmd;
+	int		i;
+
+	cmd = (t_cmd *) content;
+	ft_freearray(cmd->args);
+	i = 0;
+	if (cmd->redir != NULL)
+	{
+		while ((cmd->redir)[i] != NULL)
+		{
+			if (((cmd->redir)[i])->file != NULL)
+				free(((cmd->redir)[i])->file);
+			free((cmd->redir)[i]);
+			i++;
+		}
+		free(cmd->redir);
+	}
+}
+
 /*Description: Frees cmd node and its ast node*/
 
 void	freecmdnode(t_ast *node)
 {
-	int	i;
-
-	if (node->cmd->args != NULL)
-		ft_freearray(node->cmd->args);
-	i = 0;
-	if (node->cmd->redir != NULL)
-	{
-		while ((node->cmd->redir)[i] != NULL)
-		{
-			if (((node->cmd->redir)[i])->file != NULL)
-				free(((node->cmd->redir)[i])->file);
-			free((node->cmd->redir)[i]);
-			i++;
-		}
-		free(node->cmd->redir);
-	}
-	free(node->cmd);
+	if (node->cmdnode->cmds != NULL)
+		ft_lstclear(&node->cmdnode->cmds, &clearcmd);
+	free(node->cmdnode);
 	free(node);
 }
 

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/18 19:27:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 17:55:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	print_ast(t_ast *node, int ctr)
 			printf("--");
 			in_ctr--;
 		}
-		print_ast_cmd(node->cmd->start, node->cmd->end);
+		print_ast_cmd(node->cmdnode->start, node->cmdnode->end);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 23:32:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:09:37 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 17:05:29 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,17 @@
 
 /*Description: Initializes a command node and stores the starting token
 and ending token of the command*/
-t_cmd	*createcmd(t_token *token)
+t_cmdnode	*createcmd(t_token *token)
 {
-	t_cmd	*cmd;
+	t_cmdnode	*node;
 
-	cmd = malloc(sizeof(t_cmd));
-	if (cmd == NULL)
+	node = malloc(sizeof(t_cmdnode));
+	if (node == NULL)
 		return (NULL);
-	cmd->start = token;
-	while (token != NULL && token->type != OPERATOR)
+	node->start = token;
+	while (token != NULL && !(token->type == OPERATOR && ret_op(token->str) != PIPE))
 		token = token->next;
-	cmd->end = token;
-	cmd->args = NULL;
-	cmd->redir = NULL;
-	return (cmd);
+	node->end = token;
+	node->cmds = NULL;
+	return (node);
 }

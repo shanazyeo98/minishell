@@ -5,192 +5,106 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 18:04:22 by shayeo           ###   ########.fr       */
+/*   Created: 2024/10/19 17:02:29 by shayeo            #+#    #+#             */
+/*   Updated: 2024/10/19 19:43:14 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	initarray(void *array, int type, int n)
+//To comment out
+void	printcmdlist(t_list *node)
 {
+	t_cmd	*cmd;
 	int		i;
-	char	*chararray;
-	t_redir	*redirarray;
 
-	i = 0;
-	if (type == 0)
+	while (node != NULL)
 	{
-		chararray = (char *) array;
-		while (i < n)
+		printf("NODE:\n");
+		printf("args: \n");
+		cmd = (t_cmd *) node->content;
+		i = 0;
+		while (cmd->args != NULL && cmd->args[i] != NULL)
 		{
-			chararray = NULL;
+			printf("%s\n", cmd->args[i]);
 			i++;
-			chararray++;
 		}
-	}
-	else
-	{
-		redirarray = (t_redir *) array;
-		while (i < n)
+		printf("redirections: \n");
+		i = 0;
+		while (cmd->redir != NULL && cmd->redir[i] != NULL)
 		{
-			redirarray = NULL;
+			printf("file: %s\n", cmd->redir[i]->file);
+			printf("fd: %d\n", cmd->redir[i]->fd);
+			printf("hd expand: %d\n", cmd->redir[i]->hd_expand);
+			printf("id: %d\n", cmd->redir[i]->id);
 			i++;
-			redirarray++;
 		}
+		node = node->next;
 	}
 }
 
-int	countargs(char *str, t_token *token, t_cmd *cmd)
+void	initchararray(char **array, int count)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
-	while (str[j] != '\0')
+	while (i < count)
 	{
-		if (j == 0 && str[j] == ' ')
-		{
-			if (token != cmd->start && token->wordgrp == (token->prev)->wordgrp)
-				i++;
-		}
-		else if (str[j + 1] == '\0' && str[j] == ' ')
-		{
-			if (token->next != cmd->end && (token->next)->type != REDIRECTOR && \
-			token->wordgrp == (token->next)->wordgrp)
-				i++;
-		}
-		j++;
+		array[i] = NULL;
+		i++;
 	}
-	i = ft_countstr(str, ' ');
-	if (token->wordgrp == (token->prev)->wordgrp)
-		i--;
-	return (i);
 }
 
-void	skipredir(t_token **token, t_cmd *cmd)
+void	initredirarray(t_redir **array, int count)
 {
-	int		grp;
-	t_token	*next;
+	int	i;
 
-	*token = (*token)->next;
-	grp = (*token)->wordgrp;
-	next = (*token)->next;
-	while (next != cmd->end && next->wordgrp == grp && next->type != REDIRECTOR)
+	i = 0;
+	while (i < count)
 	{
-		*token = (*token)->next;
-		next = (*token)->next;
+		array[i] = NULL;
+		i++;
 	}
 }
 
-void	count(int *args, int *redir, t_cmd *cmd)
+int		createcmdlist(t_token *start, t_token *end, t_cmdnode *cmdnode)
+{
+	t_cmd	*cmd;
+	t_list	*lst;
+
+	cmd = malloc(sizeof(t_cmd));
+	if (cmd == NULL)
+		return (FAIL);
+	if (initcmd(cmd, start, end) == FAIL)
+		return (FAIL);
+	lst = ft_lstnew(cmd);
+	if (cmdnode->cmds == NULL)
+		cmdnode->cmds = lst;
+	else
+		ft_lstadd_back(&cmdnode->cmds, lst);
+	return (SUCCESS);
+}
+
+void	updatetree(t_cmdnode *cmdnode, t_minishell *params)
 {
 	t_token	*token;
-	int		grp;
+	t_token	*start;
 
-	token = cmd->start;
-	grp = token->wordgrp;
-	while (token != cmd->end)
+	token = cmdnode->start;
+	start = token;
+	while (token != cmdnode->end)
 	{
-		if (token->wordgrp != grp && (token->type == SINGLE || \
-		token->type == DOUBLE))
-			(*args)++;
-		grp = token->wordgrp;
-		if (token->type == REDIRECTOR)
+		if (token->type == OPERATOR)
 		{
-			(*redir)++;
-			skipredir(&token, cmd);
-			if (token == cmd->end)
-				break ;
+			if (createcmdlist(start, token, cmdnode) == FAIL)
+				spick_and_span(params, FAIL);
+			token = token->next;
+			start = token;
 		}
-		else if (token->type == BASIC)
-			*args += countargs(token->str, token, cmd);
-		token = token->next;
+		else
+			token = token->next;
 	}
-}
-
-void	updatetree(t_cmd *cmd, t_minishell *params)
-{
-	int	args;
-	int	redir;
-
-	args = 0;
-	redir = 0;
-	count(&args, &redir, cmd);
-	if (args > 0)
-	{
-		cmd->args = malloc(sizeof(char *) * (args + 1));
-		if (cmd->args == NULL && args > 0)
-			spick_and_span(params, FAIL);
-		initarray(*cmd->args, 0, args);
-	}
-	if (redir > 0)
-	{
-		cmd->redir = malloc(sizeof(t_redir) * (redir + 1));
-		if (cmd->redir == NULL)
-			spick_and_span(params, FAIL);
-		initarray(*cmd->redir, 1, redir);
-	}
-	if (fill(cmd) == FAIL)
+	if (createcmdlist(start, cmdnode->end, cmdnode) == FAIL)
 		spick_and_span(params, FAIL);
+//	printcmdlist(cmdnode->cmds);
 }
-
-	// //testing:
-	// int	i;
-	// i = 0;
-	// while (i < args)
-	// {
-	// 	printf("ARG: %s\n", cmd->args[i]);
-	// 	i++;
-	// }
-	// i = 0;
-	// while (i < redir)
-	// {
-	// 	printf("FILE: %s\n", cmd->redir[i]->file);
-	// 	i++;
-	// }
-
-// int main(void)
-// {
-//     t_token a;
-//     t_token b;
-//     t_token c;
-//     t_token d;
-// 	t_token e;
-// 	t_token f;
-//     t_cmd   cmd;
-
-//     a.str = ">";
-//     a.type = REDIRECTOR;
-//     a.wordgrp = 0;
-//     b.str = "hello";
-//     b.type = BASIC;
-//     b.wordgrp = 0;
-//     a.next = &b;
-// 	b.prev = &a;
-//     b.next = &c;
-//     c.str = "heyy";
-//     c.type = BASIC;
-//     c.wordgrp = 1;
-//     c.next = &d;
-// 	c.prev = &b;
-//     d.str = "file hi";
-//     d.type = SINGLE;
-//     d.wordgrp = 1;
-//     d.next = &e;
-// 	d.prev = &c;
-// 	e.str = "hellooo hi hi";
-//     e.type = DOUBLE;
-//     e.wordgrp = 2;
-//     e.next = &f;
-// 	e.prev = &d;
-// 	f.str = "hi";
-//     f.type = BASIC;
-//     f.wordgrp = 3;
-//     f.next = NULL;
-// 	f.prev = &e;
-//     cmd.start = &a;
-//     cmd.end = NULL;
-//     updatetree(&cmd, NULL);
-// }

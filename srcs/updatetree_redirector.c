@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 02:22:38 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 17:06:07 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 19:45:27 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,16 @@ int	initredir(t_redir **redir, t_token **token, int *grp, int *null)
 	(*redir)->file = NULL;
 	*token = (*token)->next;
 	if ((*redir)->id == HEREDOC)
+	{
 		(*redir)->fd = (*token)->fd;
+		(*redir)->hd_expand = (*token)->hd_expand;
+	}
 	*grp = (*token)->wordgrp;
 	*null = 0;
 	return (SUCCESS);
 }
 
-int	redirection(t_cmd *cmd, t_token **token, t_redir **redir)
+int	redirection(t_token *end, t_token **token, t_redir **redir)
 {
 	static int	i = 0;
 	int			grp;
@@ -86,7 +89,7 @@ int	redirection(t_cmd *cmd, t_token **token, t_redir **redir)
 		if ((redir[i])->id != HEREDOC && null == 0 \
 		&& assignfilename(*token, redir[i]) == FAIL)
 			return (FAIL);
-		if ((*token)->next == cmd->end || (*token)->next->wordgrp != grp || \
+		if ((*token)->next == end || (*token)->next->wordgrp != grp || \
 		(*token)->next->type == REDIRECTOR)
 			break ;
 		*token = (*token)->next;

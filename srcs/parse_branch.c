@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:57:18 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 19:37:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/19 16:59:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	assignops(t_ast **branch, t_token *token, int grp)
 
 	while (token != NULL && token->grp >= grp)
 	{
-		if (token->type == OPERATOR && token->grp == grp)
+		if (token->type == OPERATOR && ret_op(token->str) != PIPE && \
+		token->grp == grp)
 		{
 			newnode = createnode(token->id, OP, ret_op(token->str), grp);
 			if (newnode == NULL)
@@ -41,8 +42,8 @@ t_ast	*createcmdnode(t_token *cmdstart)
 	newnode = createnode(cmdstart->id, CMD, NIL, cmdstart->grp);
 	if (newnode == NULL)
 		return (NULL);
-	newnode->cmd = createcmd(cmdstart);
-	if (newnode->cmd == NULL)
+	newnode->cmdnode = createcmd(cmdstart);
+	if (newnode->cmdnode == NULL)
 		return (free(newnode), NULL);
 	return (newnode);
 }
