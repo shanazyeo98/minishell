@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:16:19 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/20 17:47:47 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/20 19:05:21 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,18 @@ void	ft_lstrm_node(t_list **lst, t_list	*rm_node)
 {
 	t_list	*start;
 
-	if(*lst == rm_node)
+	if (*lst == rm_node)
 	{
 		start = rm_node->next;
 		ft_lstdelone(rm_node, free);
 		*lst = start;
 	}
-	else if (rm_node->next == NULL)
+	else
 	{
 		start = *lst;
-		while (start != rm_node)
-		{
-			start = start->next
-		}
+		while (start->next != rm_node)
+			start = start->next;
+		start->next = start->next->next;
 		ft_lstdelone(rm_node, free);
 	}
 }
