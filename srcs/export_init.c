@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   export_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/23 18:18:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 04:54:30 by mintan           ###   ########.fr       */
+/*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
+/*   Updated: 2024/10/22 05:24:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strcmp(const char *s1, const char *s2)
+/* Description: Takes in the envp list and clones a new linked list with only
+   the variable name as the content. Returns a new linked list
+*/
+
+t_list	**clone_envp(t_list **envp)
 {
-	size_t	a;
-	int		result;
+	t_list	**exp;
+	int		i;
+	char	*content;
 
-	a = 0;
-	while ((s1[a] == s2[a]) && s1[a] != '\0')
-	{
-		a++;
-	}
-	result = (unsigned char) s1[a] - (unsigned char) s2[a];
-	return (result);
+
 }
+
