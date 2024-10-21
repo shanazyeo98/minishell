@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:20:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 19:54:04 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 12:59:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	clearcmd(void *content)
 		{
 			if (((cmd->redir)[i])->file != NULL)
 				free(((cmd->redir)[i])->file);
+			if ((cmd->redir)[i]->fd != -1)
+				close((cmd->redir)[i]->fd);
 			free((cmd->redir)[i]);
 			i++;
 		}

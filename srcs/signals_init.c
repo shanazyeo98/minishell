@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/15 15:25:40 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:05:06 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	sig_handler(int signum)
 void	sig_noninteractive(int signum)
 {
 	if (signum == SIGINT)
+		return ;
+	if (signum == SIGQUIT)
 		return ;
 }
 
@@ -60,7 +62,6 @@ void	init_signal_handler(int signum, void (*func)(int))
    different types of signals:
    	- SIGINT
 	- SIGQUIT
-	- XXXXXX ADD LATER
 */
 
 void	init_all_sig_handler(int state)
@@ -73,6 +74,6 @@ void	init_all_sig_handler(int state)
 	else
 	{
 		init_signal_handler(SIGINT, &sig_noninteractive);
-		init_signal_handler(SIGQUIT, SIG_IGN);
+		init_signal_handler(SIGQUIT, &sig_noninteractive);
 	}
 }

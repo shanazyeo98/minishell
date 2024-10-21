@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 06:34:35 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 10:22:12 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 10:35:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	pwd(char **args, t_minishell params)
 		return (INVALIDUSAGE);
 	}
 	status = SUCCESS;
-	dir = retrieve_env_var(PWD, params.envp, &status);
+	dir = retrieve_env_var(PWDVAR, params.envp, &status);
 	if (status == FAIL)
 		return (FAIL);
 	if (dir == NULL)

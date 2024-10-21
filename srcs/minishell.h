@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 19:10:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 15:46:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,12 @@
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
 # define HEREDOCFILE "heredoc"
+# define HEREDOCFINAL "heredocfinal"
 # define HEREDOCPROMPT "໒(⊙ᴗ⊙)७✎▤ > "
 # define HEREDOCOP "<<"
 # define APPENDOP ">>"
 # define INPUTOP "<"
 # define OUTPUTOP ">"
-
-/* Error messages */
-# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
-# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the \
-							programme now. Goodbye."
-# define ERR_SYNTAX "ಥ_ಥ : Syntax error"
-# define ERR "ಥ_ಥ"
-
 # define OPEN 0
 # define CLOSED 1
 # define TRUE 1
@@ -55,7 +48,23 @@
 # define NONINTERACTIVE 1
 # define CDPATH "CDPATH"
 # define HOME "HOME"
-# define PWD "PWD"
+# define PWDVAR "PWD"
+# define EXPORTCMD "export"
+# define ENVCMD "env"
+# define EXITCMD "exit"
+# define CDCMD "cd"
+# define PWDCMD "pwd"
+# define UNSETCMD "unset"
+# define ECHOCMD "echo"
+
+/* Error messages */
+# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
+# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the \
+							programme now. Goodbye."
+# define ERR_SYNTAX "ಥ_ಥ : Syntax error"
+# define ERR "ಥ_ಥ :"
+
+
 
 //global variable
 
@@ -171,6 +180,18 @@ typedef struct s_cd
 }	t_cd;
 
 
+//builtins
+enum	e_builtin
+{
+	ECHO,
+	PWD,
+	EXPORT,
+	EXIT,
+	ENV,
+	CD,
+	UNSET
+};
+
 //overall data structure
 
 enum	e_exitstat
@@ -178,8 +199,9 @@ enum	e_exitstat
 	SUCCESS = 0,
 	ERROR = 1,
 	INVALIDUSAGE = 2,
-	PERMISSIONERR = 126,
+	NOTEXECUTABLE = 126,
 	CMDNOTFOUND = 127,
+	FATALSIGNAL = 128,
 	FAIL = 256,
 };
 
@@ -197,8 +219,10 @@ typedef struct s_minishell
 	char	*cwd;
 	int		exitstatus;
 	int		hd_expand;
-//	int		pid;
-//	char	*delim;
+	int		*pid;
+	int		fd1[2];
+	int		fd2[2];
+	int		exe_index;
 	t_ast	*ast;
 }	t_minishell;
 
@@ -277,6 +301,18 @@ void		initredirarray(t_redir **array, int count);
 void		initchararray(char **array, int count);
 void		updatetree(t_cmdnode *cmdnode, t_minishell *params);
 
+//redirections
+int			expandheredoc(t_redir *redir, t_minishell *params);
+int			writeheredoc(int newfd, int oldfd, t_minishell *params);
+int			exe_redirection(t_redir **redir, t_minishell *params);
+void		closeredirfds(t_redir **redir);
+
+//execution
+void		closepipe(int fd[2]);
+int			openpipe(int fd[2]);
+int			builtin(char *str);
+int			exebuiltin(int func, char **args, t_minishell *params);
+
 //cd
 int			checkslash(char *str);
 char		*genpath(char *currdir, char *relpath);
@@ -285,10 +321,13 @@ int			checkdirexists(char *path);
 int			gotorelative(char *dir, t_minishell *params);
 int			checkfileexists(char *path);
 void		cderrormsg(char *dir);
-int			cd(char **args, t_minishell *params);
 
 //builtin general
 int			countexeargs(char **args);
+int			cd(char **args, t_minishell *params);
+int			echo(char **args);
+int			pwd(char **args, t_minishell params);
+int			builtin_exit(char **arg, t_minishell *params);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

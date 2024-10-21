@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 02:22:38 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 19:45:27 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:07:56 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	initredir(t_redir **redir, t_token **token, int *grp, int *null)
 	(*redir)->id = ret_redirection((*token)->str);
 	(*redir)->file = NULL;
 	*token = (*token)->next;
+	(*redir)->fd = -1;
 	if ((*redir)->id == HEREDOC)
 	{
 		(*redir)->fd = (*token)->fd;
