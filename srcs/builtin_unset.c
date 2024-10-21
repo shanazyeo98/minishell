@@ -6,29 +6,37 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/20 16:11:59 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/21 13:59:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	builtin_unset(char **arg, t_list *envp)
-{
-	int 	argcount;
-	t_list	*curr;
+/* Description: removes environment variables in the envp linked list. Behaves
+   in the following manner depending on the input arguments:
+	- no arguments following the "unset" command: nothing happens. Return
+	SUCCESS
+	- variable does not exist within the envp list: nothing happens. Return
+	SUCCESS
+	- variable exists within the envp list: node containing the variable is
+	removed. Return SUCCESS
+*/
 
-	argcount = countexeargs(arg);
-	curr = envp;
-	if (argcount > 1)
+int	builtin_unset(char **arg, t_list **envp)
+{
+	int 	i;
+	t_list	*found;
+
+	if (countexeargs(arg) > 1)
 	{
-		ft_putstr_fd(ERR, STDERR_FILENO);
-		ft_putendl_fd(": env: too many arguments", STDERR_FILENO);
-		return (ERROR);
-	}
-	while (curr != NULL)
-	{
-		printf("%s\n", (char *)curr->content);
-		curr = curr->next;
+		i = 1;
+		while (arg[i] != NULL)
+		{
+			found = find_env_var(arg[i], *envp);
+			if (found != NULL)
+				ft_lstrm_node(envp, found);
+			i++;
+		}
 	}
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/20 15:40:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/21 14:00:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,7 +278,9 @@ int			cd(char **args, t_minishell *params);
 
 //builtin general
 int			countexeargs(char **args);
-int			builtin_env(char **arg, t_list *envp);
+int			builtin_env(char **arg, t_list **envp);
+int			builtin_unset(char **arg, t_list **envp);
+
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

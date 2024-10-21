@@ -30,7 +30,8 @@ srcs/builtin_cd_utils.c \
 srcs/builtin_echo.c \
 srcs/builtin_pwd.c \
 srcs/builtin_exit.c \
-srcs/builtin_env.c
+srcs/builtin_env.c \
+srcs/builtin_unset.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
