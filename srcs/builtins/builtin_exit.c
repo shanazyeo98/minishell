@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:55:06 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 10:52:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:32 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	builtin_exit(char **arg, t_minishell *params)
 {

@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 23:32:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 17:05:29 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:22 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Initializes a command node and stores the starting token
 and ending token of the command*/

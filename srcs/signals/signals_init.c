@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/21 16:05:06 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:43 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: handler function when signals are received:
 	- SIGINT: sets rl_done = 1 to break out of readline

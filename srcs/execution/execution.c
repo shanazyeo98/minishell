@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:32:37 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	nonchildexe(t_cmd *cmd, t_minishell *params)
 {

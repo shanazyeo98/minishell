@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 15:28:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 16:23:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:37 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Retrieves the smallest group relative to the basegrp in
 a set of tokens*/

@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 17:58:28 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:54 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Retrieves the last token in the token list.
 NULL if it is empty*/

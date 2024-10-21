@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:34:56 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //to retrieve HOME, CDPATH, PWD from the envp list. and set PWD to the new one
 //test the behaviour in symlinks

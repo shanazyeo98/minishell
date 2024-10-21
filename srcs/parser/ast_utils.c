@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 17:55:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:17 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Desription: Prints out a node as well as the members of the AST structure
    given an AST node as input. This function is used for general debugging.

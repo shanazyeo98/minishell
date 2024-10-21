@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 16:57:18 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 16:59:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Creates the operator nodes in a branch*/
 

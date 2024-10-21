@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 14:18:38 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	checkslash(char *str)
 {
@@ -93,12 +93,4 @@ int	checkdirexists(char *path)
 	if (stat(path, &dirstat) == 0 && S_ISDIR(dirstat.st_mode) != 0)
 		return (TRUE);
 	return (FALSE);
-}
-
-void	cderrormsg(char *dir)
-{
-	ft_putstr_fd(ERR, STDERR_FILENO);
-	ft_putstr_fd(": cd: ", STDERR_FILENO);
-	ft_putstr_fd(dir, STDERR_FILENO);
-	ft_putstr_fd(": ", STDERR_FILENO);
 }

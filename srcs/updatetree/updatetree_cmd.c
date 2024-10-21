@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 19:14:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:38:10 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	countargs(char *str, t_token *token, t_token *start, t_token *end)
 {

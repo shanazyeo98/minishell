@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 23:23:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/09 19:33:03 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Returns the type of operator*/
 

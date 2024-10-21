@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 18:05:46 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:38:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 char	*newstring(char *str, char *addstr)
 {

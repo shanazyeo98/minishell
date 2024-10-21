@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/04 19:04:59 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 13:41:14 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:28 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Creates a AST node*/
 

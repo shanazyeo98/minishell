@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/19 16:38:01 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Checks if the token is valid to start the heredoc process*/
 

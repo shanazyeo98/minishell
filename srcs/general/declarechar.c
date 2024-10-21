@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:03:54 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 10:21:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: The below is to initialize the different arrays to store
 the different characters belonging to the different types*/

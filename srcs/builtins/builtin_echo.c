@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 05:20:13 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 10:21:43 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	echo(char **args)
 {

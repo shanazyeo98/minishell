@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:48:48 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:33:31 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:44 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	openinput(t_redir *redir)
 {

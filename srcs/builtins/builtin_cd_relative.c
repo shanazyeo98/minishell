@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 08:36:34 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:26 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	retcdpath(char ***cdpath, int *checkwd, t_minishell params)
 {

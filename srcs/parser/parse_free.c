@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:20:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 12:59:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:25 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Function to clear redirect list*/
 

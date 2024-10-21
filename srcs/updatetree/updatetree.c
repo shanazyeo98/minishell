@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:02:29 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:07:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:38:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //To comment out
 void	printcmdlist(t_list *node)

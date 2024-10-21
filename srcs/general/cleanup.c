@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 19:59:23 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:55 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //Items to free so far
 // **paths from get paths

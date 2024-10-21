@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 06:34:35 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 10:35:38 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 int	pwd(char **args, t_minishell params)
 {

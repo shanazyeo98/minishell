@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:28:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:39:25 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -303,7 +303,7 @@ void		updatetree(t_cmdnode *cmdnode, t_minishell *params);
 
 //redirections
 int			expandheredoc(t_redir *redir, t_minishell *params);
-int			writeheredoc(int newfd, int oldfd, t_minishell *params);
+int			amendheredoc(int newfd, int oldfd, t_minishell *params);
 int			exe_redirection(t_redir **redir, t_minishell *params);
 void		closeredirfds(t_redir **redir);
 

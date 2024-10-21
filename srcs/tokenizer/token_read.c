@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:23:10 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 13:36:06 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:59 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Checks if character is a closing character for the open token*/
 int	checkifending(char a, t_minishell *params, t_token *opentoken)

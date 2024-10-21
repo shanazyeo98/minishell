@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 13:48:55 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/01 13:51:29 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:49 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //character matching functions
 

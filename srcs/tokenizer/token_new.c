@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 12:17:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 11:19:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:56 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //functions for when there is no open token
 

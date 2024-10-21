@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/15 15:18:33 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:38:05 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: To handle the end of prompt.
 If status is open and last token is a basic token, to close the token

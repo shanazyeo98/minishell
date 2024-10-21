@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:13:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/16 10:44:08 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:37:07 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /*Description: Retrieves delimiter*/
 

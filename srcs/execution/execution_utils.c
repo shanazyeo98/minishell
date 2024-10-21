@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:07:51 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:36:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 void	closepipe(int fd[2])
 {
