@@ -2,38 +2,38 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 SRCS = srcs/main.c \
-srcs/init_general.c \
-srcs/signals_init.c \
-srcs/cleanup.c \
-srcs/declarechar.c \
-srcs/heredoc.c \
-srcs/heredoc_utils.c \
-srcs/token_checktype.c \
-srcs/token_list.c \
-srcs/token_new.c \
-srcs/token_read.c \
-srcs/tokenize.c \
-srcs/token_expand.c \
-srcs/token_utils.c \
-srcs/parse_branch.c \
-srcs/parse_free.c \
-srcs/parse_fillcmd.c \
-srcs/parse_ops.c \
-srcs/parse_retrievetype.c \
-srcs/parse.c \
+srcs/general/init_general.c \
+srcs/signals/signals_init.c \
+srcs/general/cleanup.c \
+srcs/general/declarechar.c \
+srcs/heredoc/heredoc.c \
+srcs/heredoc/heredoc_utils.c \
+srcs/tokenizer/token_checktype.c \
+srcs/tokenizer/token_list.c \
+srcs/tokenizer/token_new.c \
+srcs/tokenizer/token_read.c \
+srcs/tokenizer/tokenize.c \
+srcs/tokenizer/token_expand.c \
+srcs/tokenizer/token_utils.c \
+srcs/parser/parse_branch.c \
+srcs/parser/parse_free.c \
+srcs/parser/parse_fillcmd.c \
+srcs/parser/parse_ops.c \
+srcs/parser/parse_retrievetype.c \
+srcs/parser/parse.c \
 srcs/env_init.c \
 srcs/env_retrieve.c \
-srcs/ast_utils.c \
-srcs/updatetree.c \
-srcs/updatetree_cmd.c \
-srcs/updatetree_fill.c \
-srcs/updatetree_redirector.c \
-srcs/builtin_cd.c \
-srcs/builtin_cd_relative.c \
-srcs/builtin_cd_utils.c \
-srcs/builtin_echo.c \
-srcs/builtin_pwd.c \
-srcs/builtin_exit.c
+srcs/parser/ast_utils.c \
+srcs/updatetree/updatetree.c \
+srcs/updatetree/updatetree_cmd.c \
+srcs/updatetree/updatetree_fill.c \
+srcs/updatetree/updatetree_redirector.c \
+srcs/builtins/builtin_cd.c \
+srcs/builtins/builtin_cd_relative.c \
+srcs/builtins/builtin_cd_utils.c \
+srcs/builtins/builtin_echo.c \
+srcs/builtins/builtin_pwd.c \
+srcs/builtins/builtin_exit.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
