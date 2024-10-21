@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 11:48:16 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:30:53 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ int	expandheredoc(t_redir *redir, t_minishell *params)
 	free(name);
 	if (fd == -1)
 	{
-		ft_putstr_fd(ERR, 2);
-		perror(": ");
+		perror(ERR);
 		return (FAIL);
 	}
 	if (writeheredoc(fd, redir->fd, params) == FAIL)

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:05:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:32:37 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 {
 	t_cmd	*cmd;
 	int		count;
-	int		status;
 
 	//expansion function
 	updatetree(node, params);

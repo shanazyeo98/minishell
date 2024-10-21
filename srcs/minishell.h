@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 15:46:50 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:28:10 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@
 # define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the \
 							programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
-# define ERR "ಥ_ಥ :"
+# define ERR "ಥ_ಥ "
 
 
 

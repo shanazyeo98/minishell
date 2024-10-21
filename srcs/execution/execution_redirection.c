@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:48:48 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 13:03:57 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/21 16:33:31 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,13 @@ int	openinput(t_redir *redir)
 	if (redir->file == NULL)
 	{
 		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd(": ambiguous redirect" , 2);
+		ft_putendl_fd("ambiguous redirect" , STDERR_FILENO);
 			return (ERROR);
 	}
 	fd = open(redir->file, O_RDONLY);
 	if (fd == -1)
 	{
-		ft_putstr_fd(ERR, 2);
-		perror(": ");
+		perror(ERR);
 		return (ERROR);
 	}
 	redir->fd = fd;
@@ -40,7 +39,7 @@ int	openoutput(t_redir *redir)
 	if (redir->file == NULL)
 	{
 		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd(": ambiguous redirect" , 2);
+		ft_putendl_fd(": ambiguous redirect" , STDERR_FILENO);
 			return (ERROR);
 	}
 	if (redir->id == OUTPUT)
@@ -49,8 +48,7 @@ int	openoutput(t_redir *redir)
 		fd = open(redir->file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 	{
-		ft_putstr_fd(ERR, 2);
-		perror(": ");
+		perror(ERR);
 		return (ERROR);
 	}
 	redir->fd = fd;
