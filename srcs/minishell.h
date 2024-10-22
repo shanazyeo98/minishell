@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:39:25 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:11:54 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@
 # define PWDCMD "pwd"
 # define UNSETCMD "unset"
 # define ECHOCMD "echo"
+# define EXITCMDMSG "(´• ω •`)ﾉ	bye"
 
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
@@ -63,8 +64,6 @@
 							programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 # define ERR "ಥ_ಥ "
-
-
 
 //global variable
 
@@ -140,13 +139,13 @@ struct		s_cmdnode;
 
 typedef struct s_ast
 {
-	int				id;
-	int				type;
-	int				op;
-	int				grp;
-	struct s_ast	*up;
-	struct s_ast	*left;
-	struct s_ast	*right;
+	int					id;
+	int					type;
+	int					op;
+	int					grp;
+	struct s_ast		*up;
+	struct s_ast		*left;
+	struct s_ast		*right;
 	struct s_cmdnode	*cmdnode;
 }	t_ast;
 
@@ -178,7 +177,6 @@ typedef struct s_cd
 	char	*path;
 	char	**cdpath;
 }	t_cd;
-
 
 //builtins
 enum	e_builtin
@@ -245,19 +243,19 @@ void		init_signal_handler(int signum, void (*func)(int));
 void		sig_handler(int signum);
 
 //tokens
-t_token			*lsttoken(t_token *token);
-int				assigntoken(int type, t_tokendets *info, t_minishell *params);
-int				newtoken(char a, t_minishell *params, t_tokendets *info, int i);
-int				chartype(char a, t_minishell *params);
-int				readchar(char a, t_minishell *params, t_tokendets *info, int *i);
-int				returntype(char a, t_minishell *params);
-int				closetoken(t_tokendets *info, int i, t_token *open);
-int				chartype(char a, t_minishell *params);
-int				checkend(t_minishell *params, t_tokendets *info);
-void			tokenize(char *prompt, t_minishell *params);
-void			freetokens(t_token **list);
-t_token			*ret_token(int id, t_token *token);
-void			print_token_list(t_minishell ms);
+t_token		*lsttoken(t_token *token);
+int			assigntoken(int type, t_tokendets *info, t_minishell *params);
+int			newtoken(char a, t_minishell *params, t_tokendets *info, int i);
+int			chartype(char a, t_minishell *params);
+int			readchar(char a, t_minishell *params, t_tokendets *info, int *i);
+int			returntype(char a, t_minishell *params);
+int			closetoken(t_tokendets *info, int i, t_token *open);
+int			chartype(char a, t_minishell *params);
+int			checkend(t_minishell *params, t_tokendets *info);
+void		tokenize(char *prompt, t_minishell *params);
+void		freetokens(t_token **list);
+t_token		*ret_token(int id, t_token *token);
+void		print_token_list(t_minishell ms);
 
 //heredoc
 int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
@@ -312,6 +310,7 @@ void		closepipe(int fd[2]);
 int			openpipe(int fd[2]);
 int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
+int			execute(t_cmdnode *node, t_minishell *params);
 
 //cd
 int			checkslash(char *str);

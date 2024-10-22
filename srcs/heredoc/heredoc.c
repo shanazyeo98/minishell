@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:37:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 17:10:03 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	heredoccheck(t_token **tokenlist, t_minishell *params)
 
 	token = *tokenlist;
 	hd = 0;
+	status = SUCCESS;
 	while (token != NULL)
 	{
 		if ((token->prev) != NULL && (token->prev)->type == REDIRECTOR && \

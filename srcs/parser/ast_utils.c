@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/21 16:37:17 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:14:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	print_ast_cmd(t_token *start, t_token *end)
 		curr = curr->next;
 	}
 	printf("\n");
-
 }
 
 /* Description: Prints the AST starting from the highest level. Levels are

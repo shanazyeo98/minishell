@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:48:48 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:44 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:14:26 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int	openinput(t_redir *redir)
 	if (redir->file == NULL)
 	{
 		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd("ambiguous redirect" , STDERR_FILENO);
-			return (ERROR);
+		ft_putendl_fd("ambiguous redirect", STDERR_FILENO);
+		return (ERROR);
 	}
 	fd = open(redir->file, O_RDONLY);
 	if (fd == -1)
@@ -39,8 +39,8 @@ int	openoutput(t_redir *redir)
 	if (redir->file == NULL)
 	{
 		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd(": ambiguous redirect" , STDERR_FILENO);
-			return (ERROR);
+		ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
+		return (ERROR);
 	}
 	if (redir->id == OUTPUT)
 		fd = open(redir->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
@@ -63,15 +63,13 @@ int	handlefiles(t_redir *redir)
 		status = openinput(redir);
 	else
 		status = openoutput(redir);
-	if (status == ERROR)
-		return (ERROR);
+	return (status);
 }
 
 int	exe_redirection(t_redir **redir, t_minishell *params)
 {
 	int	input_i;
 	int	i;
-	int	status;
 
 	if (redir == NULL)
 		return (SUCCESS);

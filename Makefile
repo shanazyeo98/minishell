@@ -2,6 +2,10 @@ CC = cc
 FLAGS = -Wall -Wextra -Werror -g
 NAME = minishell
 SRCS = srcs/main.c \
+srcs/execution/execution.c \
+srcs/execution/execution_heredoc.c \
+srcs/execution/execution_redirection.c \
+srcs/execution/execution_utils.c \
 srcs/general/init_general.c \
 srcs/signals/signals_init.c \
 srcs/general/cleanup.c \
@@ -47,14 +51,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

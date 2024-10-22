@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 19:58:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:48:33 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,15 +37,18 @@ int	main(int argc, char *argv[], char *envp[])
 		init_all_sig_handler(INTERACTIVE);
 		getinput(&ms);
 		init_all_sig_handler(NONINTERACTIVE);
-		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
+		if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
 		tokenize(ms.input, &ms);
-		print_token_list(ms);
+//		print_token_list(ms);
 		if (ms.tokenlist != NULL)
+		{
 			heredoccheck(ms.tokenlist, &ms);
-		if (ms.tokenlist != NULL)
 			ms.ast = parse(*ms.tokenlist, -1);
-		print_ast(ms.ast, 0);
+			execute(ms.ast->cmdnode, &ms);
+		}
+//		printf("cwd: %s\n", ms.cwd);
+		spick_and_span(&ms, SUCCESS);
 	}
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 17:19:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	openpipe(int fd[2])
 		perror(ERR);
 		return (FAIL);
 	}
+	return (SUCCESS);
 }
 
 int	builtin(char *str)
@@ -52,14 +53,14 @@ int	exebuiltin(int func, char **args, t_minishell *params)
 		return (echo(args));
 	if (func == PWD)
 		return (pwd(args, *params));
-	if (func == EXPORT)
-		//export
-	if (func == ENV)
-		//env
-	if (func == UNSET)
-		//unset
+	// if (func == EXPORT)
+	// 	//export
+	// if (func == ENV)
+	// 	//env
+	// if (func == UNSET)
+	// 	//unset
 	if (func == EXIT)
 		return (builtin_exit(args, params));
-	if (func == CD)
-		return (cd(args, params));
+//	if (func == CD)
+	return (cd(args, params));
 }

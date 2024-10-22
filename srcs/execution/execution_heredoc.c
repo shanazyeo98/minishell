@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:40:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 16:25:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,10 @@
 int	amendheredoc(int newfd, int oldfd, t_minishell *params)
 {
 	char	*str;
-	char	*newstr;
+//	char	*newstr;
 
+	//toremove
+	(void)params;
 	while (1)
 	{
 		str = get_next_line(oldfd);
@@ -52,7 +54,8 @@ int	expandheredoc(t_redir *redir, t_minishell *params)
 		perror(ERR);
 		return (FAIL);
 	}
-	if (writeheredoc(fd, redir->fd, params) == FAIL)
+	if (amendheredoc(fd, redir->fd, params) == FAIL)
 		return (close(fd), FAIL);
 	redir->fd = fd;
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:02:29 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:38:23 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:15:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	initredirarray(t_redir **array, int count)
 	}
 }
 
-int		createcmdlist(t_token *start, t_token *end, t_cmdnode *cmdnode)
+int	createcmdlist(t_token *start, t_token *end, t_cmdnode *cmdnode)
 {
 	t_cmd	*cmd;
 	t_list	*lst;
@@ -75,6 +75,8 @@ int		createcmdlist(t_token *start, t_token *end, t_cmdnode *cmdnode)
 	cmd = malloc(sizeof(t_cmd));
 	if (cmd == NULL)
 		return (FAIL);
+	cmd->args = NULL;
+	cmd->redir = NULL;
 	if (initcmd(cmd, start, end) == FAIL)
 		return (FAIL);
 	lst = ft_lstnew(cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/18 13:38:47 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:10:32 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ t_list	*ft_lstnew(void *content);
 t_list	*ft_lstsearchprev(t_list *first, t_list *node);
 int		ft_lstsize(t_list *lst);
 void	ft_lst_freecntnt(void *ptr);
-
 
 //normal functions
 int		ft_atoi(const char *nptr);

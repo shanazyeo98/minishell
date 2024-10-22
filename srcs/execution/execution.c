@@ -6,11 +6,27 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:50 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:13:10 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	expandtokens(t_cmdnode *node, t_minishell *params)
+{
+	t_token	*token;
+
+	token = node->start;
+	while (token != node->end)
+	{
+		if (token->type != SINGLE)
+		{
+			if (token_parameter_expansion(token, params->envp) == FAIL)
+				spick_and_span(params, FAIL);
+		}
+		token = token->next;
+	}
+}
 
 int	nonchildexe(t_cmd *cmd, t_minishell *params)
 {
@@ -40,7 +56,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		params->pid[params->exe_index] = fork();
 		if (params->pid[params->exe_index] == -1)
 			return (free(params->pid), perror(ERR), FAIL);
-		if (params->pid[params->exe_index] == 0)
+		// if (params->pid[params->exe_index] == 0)
 			//function to execute child process;
 		if (params->exe_index % 2 == 1)
 			closepipe(params->fd1);
@@ -79,7 +95,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	t_cmd	*cmd;
 	int		count;
 
-	//expansion function
+	expandtokens(node, params);
 	updatetree(node, params);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
