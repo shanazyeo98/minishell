@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:16:19 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 12:51:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:26:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,46 +88,46 @@ t_list	*ft_lstsort(t_list **lst)
 	return (new);
 }
 
-int	main(void)
-{
-	t_list	*n1;
-	t_list	*n2;
-	t_list	*n3;
-	t_list	*n4;
-	t_list	*n5;
+// int	main(void)
+// {
+// 	t_list	*n1;
+// 	t_list	*n2;
+// 	t_list	*n3;
+// 	t_list	*n4;
+// 	t_list	*n5;
 
-	t_list	*curr;
-	t_list	*sorted;
+// 	t_list	*curr;
+// 	t_list	*sorted;
 
-	n1 = ft_lstnew(ft_strdup("n4"));
-	n2 = ft_lstnew(ft_strdup("n3"));
-	n3 = ft_lstnew(ft_strdup("n11"));
-	n4 = ft_lstnew(ft_strdup("n1"));
-	n5 = ft_lstnew(ft_strdup("n5"));
-
-
-	ft_lstadd_back(&n1, n2);
-	ft_lstadd_back(&n1, n3);
-	ft_lstadd_back(&n1, n4);
-	ft_lstadd_back(&n1, n5);
+// 	n1 = ft_lstnew(ft_strdup("n4"));
+// 	n2 = ft_lstnew(ft_strdup("n3"));
+// 	n3 = ft_lstnew(ft_strdup("n11"));
+// 	n4 = ft_lstnew(ft_strdup("n1"));
+// 	n5 = ft_lstnew(ft_strdup("n5"));
 
 
-	printf("==========Before lstsort==========\n");
-	curr = n1;
-	while (curr != NULL)
-	{
-		printf("Node: %s\n", (char *)curr->content);
-		curr = curr->next;
-	}
+// 	ft_lstadd_back(&n1, n2);
+// 	ft_lstadd_back(&n1, n3);
+// 	ft_lstadd_back(&n1, n4);
+// 	ft_lstadd_back(&n1, n5);
 
-	printf("==========After lstsort==========\n");
-	sorted = ft_lstsort(&n1);
-	curr = sorted;
 
-	while (curr != NULL)
-	{
-		printf("Node: %s\n", (char *)curr->content);
-		curr = curr->next;
-	}
-	return (0);
-}
+// 	printf("==========Before lstsort==========\n");
+// 	curr = n1;
+// 	while (curr != NULL)
+// 	{
+// 		printf("Node: %s\n", (char *)curr->content);
+// 		curr = curr->next;
+// 	}
+
+// 	printf("==========After lstsort==========\n");
+// 	sorted = ft_lstsort(&n1);
+// 	curr = sorted;
+
+// 	while (curr != NULL)
+// 	{
+// 		printf("Node: %s\n", (char *)curr->content);
+// 		curr = curr->next;
+// 	}
+// 	return (0);
+// }

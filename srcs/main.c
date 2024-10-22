@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 11:59:08 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:27:44 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("==========Clone envp==========\n");
 	exp = clone_envp(&ms.envp);
 	builtin_env(env, &exp);
+	printf("==========Print export==========\n");
+	export_print(&exp, &(ms.envp));
 	return (status);
 	// while (1)
 	// {

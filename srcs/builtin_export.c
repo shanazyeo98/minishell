@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 13:12:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 13:29:32 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,11 @@ t_list	*clone_envp(t_list **envp)
 	- Arg 1: ASCII sorted linked list of environment variable names
 	- Arg 2: Linked list of environment variables
    For each node in Arg 1, retrieve the variable value from Arg 2 and print out
-   in the format of the bash commmand: export. Skips the var "_";
+   in the format of the bash commmand: export. Skips the var "_". Returns a
+   status at the end of the execution
 */
 
-void	export_print(t_list **sorted, t_list **envp)
+int	export_print(t_list **sorted, t_list **envp)
 {
 	char	*varlue;
 	t_list	*curr;
@@ -100,14 +101,21 @@ void	export_print(t_list **sorted, t_list **envp)
 
 	status = SUCCESS;
 	curr = *sorted;
+	varlue = NULL;
 	while (curr != NULL)
 	{
 		if (ft_strcmp((char *)curr->content, "_") != 0)
 		{
-			varlue = env
+			varlue = retrieve_env_var((char *)curr->content, *envp, &status);
+			if (status == ERROR)
+				return (ERROR);
+			printf("declare -x ");
+			printf("%s=\"%s\"\n", (char *)curr->content, varlue);
+			free (varlue);
+			varlue = NULL;
 		}
+		curr = curr->next;
 	}
-
-
+	return (SUCCESS);
 }
 
