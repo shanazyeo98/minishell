@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 13:29:32 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:31:33 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,3 +119,27 @@ int	export_print(t_list **sorted, t_list **envp)
 	return (SUCCESS);
 }
 
+/* Description: prints out the environment variables if ther e
+
+*/
+
+int	builtin_export(char **arg, t_list **envp)
+{
+	t_list	*sorted;
+
+	if (countexeargs(arg) == 1)
+	{
+		sorted = clone_envp(envp);
+		if (sorted == NULL)
+			return (ERROR);
+		export_print(&sorted, envp);
+		ft_lstclear(&sorted, free);
+	}
+	// else
+	// {
+	// go in envp list
+	// find the matching node, and rm the node and add a new node into the linked list
+	
+	// }
+	return (SUCCESS);
+}

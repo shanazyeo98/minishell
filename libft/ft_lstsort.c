@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:16:19 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 13:26:34 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:19:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,8 @@ t_list	*ft_lstsort(t_list **lst)
 	t_list	*new;
 	t_list	*add;
 
-	// new = clone_node(*lst);
-	// if (new == NULL)
-		// return (NULL);
 	new = NULL;
-
 	curr = *lst;
-
-	// curr = (*lst)->next;
 	while (curr != NULL)
 	{
 		add = clone_node(curr);

@@ -6,16 +6,17 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/21 13:58:10 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 14:38:48 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/* Description: prints out all the items stored within the envp linked list.
-   This function only accepts an array of strings with 1 string (env) and the
-   envp linked list. If there are multiple strings within the array of strings,
-   the function returns an ERROR.
+/* Description: prints out all the items stored within the envp linked list
+   except for the variables with no values. This function only accepts an
+   array of strings with 1 string (env) and the envp linked list. If there
+   are multiple strings within the array of strings, the function returns an
+   ERROR.
 */
 
 int	builtin_env(char **arg, t_list **envp)
@@ -33,7 +34,8 @@ int	builtin_env(char **arg, t_list **envp)
 	}
 	while (curr != NULL)
 	{
-		printf("%s\n", (char *)curr->content);
+		if (ft_strchr((char *)curr->content, '=') != NULL)
+			printf("%s\n", (char *)curr->content);
 		curr = curr->next;
 	}
 	return (SUCCESS);
