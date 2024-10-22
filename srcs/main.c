@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 14:19:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:14:06 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ int	main(int argc, char *argv[], char *envp[])
 	t_minishell	ms;
 
 
-	char	*test[5] = {"unset", "v1", "v2", "SHELL", NULL};
+	char	*test[5] = {"unset", "v2", "SHELL", NULL};
 	char	*env[2] = {"env", NULL};
-	char	*export[2] = {"export", NULL};
+	char	*export1[2] = {"export", NULL};
+	char	*export2[5] = {"export", "v1=j1", "v2=j2", "v3", NULL};
+
 	int		status;
 	// t_list	*exp;
 
@@ -50,8 +52,12 @@ int	main(int argc, char *argv[], char *envp[])
 	// exp = clone_envp(&ms.envp);
 	// builtin_env(env, &exp);
 	printf("==========Print export==========\n");
-	builtin_export(export, &ms.envp);
-	// export_print(&exp, &(ms.envp));
+	builtin_export(export1, &ms.envp);
+	printf("==========After exporting variables==========\n");
+	add_var(&ms.envp, export2);
+	builtin_export(export1, &ms.envp);
+	printf("==========Env after exporting variables==========\n");
+	builtin_env(env, &ms.envp);
 	return (status);
 	// while (1)
 	// {

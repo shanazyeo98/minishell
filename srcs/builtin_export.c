@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 14:31:33 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 18:10:58 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,10 @@ int	export_print(t_list **sorted, t_list **envp)
 			if (status == ERROR)
 				return (ERROR);
 			printf("declare -x ");
-			printf("%s=\"%s\"\n", (char *)curr->content, varlue);
+			if (varlue == NULL)
+				printf("%s\n", (char *)curr->content);
+			else
+				printf("%s=\"%s\"\n", (char *)curr->content, varlue);
 			free (varlue);
 			varlue = NULL;
 		}
@@ -120,7 +123,7 @@ int	export_print(t_list **sorted, t_list **envp)
 }
 
 /* Description: prints out the environment variables if ther e
-
+   XXXXXXXXXXX FILL IN LATER
 */
 
 int	builtin_export(char **arg, t_list **envp)
@@ -135,11 +138,17 @@ int	builtin_export(char **arg, t_list **envp)
 		export_print(&sorted, envp);
 		ft_lstclear(&sorted, free);
 	}
-	// else
+	else
+	{
+
+	}
+
+
+
 	// {
 	// go in envp list
 	// find the matching node, and rm the node and add a new node into the linked list
-	
+
 	// }
 	return (SUCCESS);
 }

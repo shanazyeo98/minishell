@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 13:47:19 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 17:36:32 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,6 +282,8 @@ t_list		*extract_and_copy_node(t_list *node);
 t_list		*clone_envp(t_list **envp);
 int			export_print(t_list **sorted, t_list **envp);
 int			builtin_export(char **arg, t_list **envp);
+t_list		**add_var(t_list **envp, char **args);
+
 
 
 
