@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:16:19 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 04:56:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 12:51:35 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	insert_sort_node(t_list **lst, t_list *node)
 {
 	t_list	*curr;
 
-	if (ft_strcmp(node->content, (*lst)->content) < 0)
+	if (*lst == NULL)
+		ft_lstadd_back(lst, node);
+	else if (ft_strcmp(node->content, (*lst)->content) < 0)
 		ft_lstadd_front(lst, node);
 	else
 	{
@@ -58,25 +60,29 @@ void	insert_sort_node(t_list **lst, t_list *node)
    allocated within the function and returns a NULL
 */
 
-t_list	**ft_lstsort(t_list **lst)
+t_list	*ft_lstsort(t_list **lst)
 {
 	t_list	*curr;
-	t_list	**new;
+	t_list	*new;
 	t_list	*add;
 
-	*new = clone_node(*lst);
-	if (*new == NULL)
-		return (NULL);
-	curr = (*lst)->next;
+	// new = clone_node(*lst);
+	// if (new == NULL)
+		// return (NULL);
+	new = NULL;
+
+	curr = *lst;
+
+	// curr = (*lst)->next;
 	while (curr != NULL)
 	{
 		add = clone_node(curr);
 		if (add == NULL)
 		{
-			ft_lstclear(new, free);
+			ft_lstclear(&new, free);
 			return (NULL);
 		}
-		insert_sort_node(new, add);
+		insert_sort_node(&new, add);
 		curr = curr->next;
 	}
 	return (new);
@@ -91,7 +97,7 @@ int	main(void)
 	t_list	*n5;
 
 	t_list	*curr;
-	t_list	**sorted;
+	t_list	*sorted;
 
 	n1 = ft_lstnew(ft_strdup("n4"));
 	n2 = ft_lstnew(ft_strdup("n3"));
@@ -116,7 +122,7 @@ int	main(void)
 
 	printf("==========After lstsort==========\n");
 	sorted = ft_lstsort(&n1);
-	curr = *sorted;
+	curr = sorted;
 
 	while (curr != NULL)
 	{

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 02:14:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 12:11:42 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ t_list	*ft_lstsearchprev(t_list *first, t_list *node);
 int		ft_lstsize(t_list *lst);
 void	ft_lstrm_node(t_list **lst, t_list	*rm_node);
 void	ft_lstadd_node(t_list *n1, t_list *n2);
+t_list	*ft_lstsort(t_list **lst);
+
 
 
 

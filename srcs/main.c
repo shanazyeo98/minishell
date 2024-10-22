@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/21 14:00:45 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 11:59:08 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,12 @@ void	break_shell(t_minishell *ms)
 int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
+
+
 	char	*test[5] = {"unset", "v1", "v2", "SHELL", NULL};
 	char	*env[2] = {"env", NULL};
 	int		status;
+	t_list	*exp;
 
 
 
@@ -42,6 +45,9 @@ int	main(int argc, char *argv[], char *envp[])
 	printf("==========After unset==========\n");
 	status = builtin_unset(test, &(ms.envp));
 	builtin_env(env, &ms.envp);
+	printf("==========Clone envp==========\n");
+	exp = clone_envp(&ms.envp);
+	builtin_env(env, &exp);
 	return (status);
 	// while (1)
 	// {

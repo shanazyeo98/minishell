@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 14:00:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/22 11:58:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,16 @@ int			gotorelative(char *dir, t_minishell *params);
 int			checkfileexists(char *path);
 void		cderrormsg(char *dir);
 int			cd(char **args, t_minishell *params);
+
+/* Export builtin functions*/
+int			find_index(char *str, char c);
+t_list		*extract_and_copy_node(t_list *node);
+t_list		*clone_envp(t_list **envp);
+
+
+
+
+
 
 //builtin general
 int			countexeargs(char **args);
