@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 18:10:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:56:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,33 +122,28 @@ int	export_print(t_list **sorted, t_list **envp)
 	return (SUCCESS);
 }
 
-/* Description: prints out the environment variables if ther e
-   XXXXXXXXXXX FILL IN LATER
+/* Description: prints out the environment variables if there in export format
+   if the builtin command is used without any arguments. If additional
+   arguments are provided in the string array, the function adds / replaces
+   the variable in the envp list.
 */
 
-int	builtin_export(char **arg, t_list **envp)
+int	builtin_export(char **args, t_list **envp)
 {
 	t_list	*sorted;
 
-	if (countexeargs(arg) == 1)
+	if (countexeargs(args) == 1)
 	{
 		sorted = clone_envp(envp);
 		if (sorted == NULL)
-			return (ERROR);
+			return (FAIL);
 		export_print(&sorted, envp);
 		ft_lstclear(&sorted, free);
 	}
 	else
 	{
-
+		if (add_var(envp, args) == FAIL)
+			return (FAIL);
 	}
-
-
-
-	// {
-	// go in envp list
-	// find the matching node, and rm the node and add a new node into the linked list
-
-	// }
 	return (SUCCESS);
 }

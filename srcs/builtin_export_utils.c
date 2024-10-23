@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 18:13:03 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:57:46 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*get_var_name(char *in, char c)
    there is a match. Add the whole string into the envp linked list after.
 */
 
-t_list	**add_var(t_list **envp, char **args)
+int	add_var(t_list **envp, char **args)
 {
 	char	*var;
 	int		i;
@@ -48,7 +48,7 @@ t_list	**add_var(t_list **envp, char **args)
 	{
 		var = get_var_name(args[i], '=');
 		if (var == NULL)
-			return (NULL);
+			return (FAIL);
 		found = find_env_var(var, *envp);
 		free (var);
 		var = NULL;
@@ -56,38 +56,12 @@ t_list	**add_var(t_list **envp, char **args)
 			ft_lstrm_node(envp, found);
 		var = ft_strdup(args[i]);
 		if (var == NULL)
-			return (NULL);
+			return (FAIL);
 		add = ft_lstnew(var);
 		if (add == NULL)
-			return (free (var), NULL);
+			return (free (var), FAIL);
 		ft_lstadd_back(envp, add);
 		i++;
 	}
-	return (envp);
+	return (SUCCESS);
 }
-
-
-
-
-
-
-
-// int	main(void)
-// {
-// 	char	*in1;
-// 	char	*in2;
-// 	char	*in3;
-// 	char	*in4;
-
-// 	in1 = "var1";
-// 	in2 = "var2=t2";
-// 	in3 = "var3=longasssthingyhere=";
-// 	in4 = "var5+t4";
-
-// 	printf("in: %s | out: %s\n", in1, get_var_name(in1, '='));
-// 	printf("in: %s | out: %s\n", in2, get_var_name(in2, '='));
-// 	printf("in: %s | out: %s\n", in3, get_var_name(in3, '='));
-// 	printf("in: %s | out: %s\n", in4, get_var_name(in4, '='));
-
-
-// }

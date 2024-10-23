@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/21 13:59:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:45:21 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,17 @@
 	removed. Return SUCCESS
 */
 
-int	builtin_unset(char **arg, t_list **envp)
+int	builtin_unset(char **args, t_list **envp)
 {
 	int 	i;
 	t_list	*found;
 
-	if (countexeargs(arg) > 1)
+	if (countexeargs(args) > 1)
 	{
 		i = 1;
-		while (arg[i] != NULL)
+		while (args[i] != NULL)
 		{
-			found = find_env_var(arg[i], *envp);
+			found = find_env_var(args[i], *envp);
 			if (found != NULL)
 				ft_lstrm_node(envp, found);
 			i++;

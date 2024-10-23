@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 18:14:06 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:59:15 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,57 +30,23 @@ int	main(int argc, char *argv[], char *envp[])
 {
 	t_minishell	ms;
 
-
-	char	*test[5] = {"unset", "v2", "SHELL", NULL};
-	char	*env[2] = {"env", NULL};
-	char	*export1[2] = {"export", NULL};
-	char	*export2[5] = {"export", "v1=j1", "v2=j2", "v3", NULL};
-
-	int		status;
-	// t_list	*exp;
-
-
-
 	ms = init_ms(argc, argv, envp);
-
-	printf("==========Before unset==========\n");
-	builtin_env(env, &ms.envp);
-	printf("==========After unset==========\n");
-	status = builtin_unset(test, &(ms.envp));
-	builtin_env(env, &ms.envp);
-	// printf("==========Clone envp==========\n");
-	// exp = clone_envp(&ms.envp);
-	// builtin_env(env, &exp);
-	printf("==========Print export==========\n");
-	builtin_export(export1, &ms.envp);
-	printf("==========After exporting variables==========\n");
-	add_var(&ms.envp, export2);
-	builtin_export(export1, &ms.envp);
-	printf("==========Env after exporting variables==========\n");
-	builtin_env(env, &ms.envp);
-	return (status);
-	// while (1)
-	// {
-	// 	init_all_sig_handler(INTERACTIVE);
-	// 	getinput(&ms);
-	// 	init_all_sig_handler(NONINTERACTIVE);
-	// 	if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
-	// 		break_shell(&ms);
-	// 	tokenize(ms.input, &ms);
-	// 	// print_token_list(ms);
-	// 	if (ms.tokenlist != NULL)
-	// 		heredoccheck(ms.tokenlist, &ms);
-
-	// 	// printf("===============After token expansion===============\n");
-	// 	// token_parameter_expansion(*ms.tokenlist, ms.envp, ms.exitstatus);
-	// 	// print_token_list(ms);
+	while (1)
+	{
+		init_all_sig_handler(INTERACTIVE);
+		getinput(&ms);
+		init_all_sig_handler(NONINTERACTIVE);
+		if (ms.input == NULL || ft_strcmp(ms.input, EXIT_CMD) == 0)
+			break_shell(&ms);
+		tokenize(ms.input, &ms);
+		// print_token_list(ms);
+		if (ms.tokenlist != NULL)
+			heredoccheck(ms.tokenlist, &ms);
 
 
-
-
-	// 	if (ms.tokenlist != NULL)
-	// 		ms.ast = parse(*ms.tokenlist, -1);
-	// 	// print_ast(ms.ast, 0);
-	// }
-	// return (EXIT_SUCCESS);
+		if (ms.tokenlist != NULL)
+			ms.ast = parse(*ms.tokenlist, -1);
+		print_ast(ms.ast, 0);
+	}
+	return (EXIT_SUCCESS);
 }
