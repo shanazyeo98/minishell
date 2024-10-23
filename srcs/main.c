@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 12:56:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/23 14:22:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 void	break_shell(t_minishell *ms)
 {
-	ft_printf(EXIT_MSG);
+	ft_putendl_fd(EXITCMDMSG, STDOUT_FILENO);
 	spick_and_span(ms, SUCCESS);
 	exit(EXIT_SUCCESS);
 }
