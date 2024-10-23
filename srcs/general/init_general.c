@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/21 16:37:01 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:56:49 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,8 @@ void	getinput(t_minishell *ms)
 	char	*input;
 
 	input = readline(PROMPT);
-	if (input == NULL)
-	{
-		ft_printf(EXIT_MSG);
-		spick_and_span(ms, SUCCESS);
-		exit(EXIT_SUCCESS);
-	}
-	add_history(input);
+	if (g_sig_status != SIGINT)
+		add_history(input);
 	ms->input = input;
 }
 

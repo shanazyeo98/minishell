@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:11:54 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:35:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,24 @@
 							programme now. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 # define ERR "ಥ_ಥ "
+
+/*Extra*/
+
+#define POSITIVECMD "hey"
+#define FLIRTCMD "flirt"
+
+# define POSITIVEMSG0 "keep shining! \U0001F4AB"
+# define POSITIVEMSG1 "you're egg-cellent! \U0001F373"
+# define POSITIVEMSG2 "you've got this! \U0001F64C"
+# define POSITIVEMSG3 "keep pushing forward! \U0001FAF6"
+# define POSITIVEMSG4 "you're tea-riffic! \U0001F375"
+# define POSITIVEMSG5 "you're doing good! \U0001F90D"
+# define POSITIVEMSG6 "donut give up! \U0001F369"
+
+# define FLIRT0 "if you were a triangle, you'd be acute one  (>᎑<๑)/♡"
+# define FLIRT1 "i must be an exception because you have sure caught me (>ᴗ•) !"
+# define FLIRT2 "are you double? because you always float in my mind (⸝⸝ᵕᴗᵕ⸝⸝)"
+# define FLIRT3 "are you a for loop? because you repeat in my mind (✿ᴗ͈ˬᴗ͈)⁾⁾"
 
 //global variable
 
@@ -183,6 +201,8 @@ enum	e_builtin
 {
 	ECHO,
 	PWD,
+	FLIRT,
+	POSITIVE,
 	EXPORT,
 	EXIT,
 	ENV,
@@ -327,6 +347,10 @@ int			cd(char **args, t_minishell *params);
 int			echo(char **args);
 int			pwd(char **args, t_minishell params);
 int			builtin_exit(char **arg, t_minishell *params);
+
+//extra
+int	positivemsg(void);
+int	flirtmsg(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

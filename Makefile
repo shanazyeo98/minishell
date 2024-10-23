@@ -37,7 +37,8 @@ srcs/builtins/builtin_cd_relative.c \
 srcs/builtins/builtin_cd_utils.c \
 srcs/builtins/builtin_echo.c \
 srcs/builtins/builtin_pwd.c \
-srcs/builtins/builtin_exit.c
+srcs/builtins/builtin_exit.c \
+srcs/extra/extra.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
@@ -51,14 +52,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)
