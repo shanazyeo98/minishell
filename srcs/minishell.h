@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:11:54 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/23 13:15:16 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # include <sys/stat.h>
 
 /* General */
-# define DELIMITER " '\"$"
+# define DELIMITER " '\"$?"
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
@@ -40,6 +40,13 @@
 # define APPENDOP ">>"
 # define INPUTOP "<"
 # define OUTPUTOP ">"
+
+/* Error messages */
+# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
+# define ERR_SIGACTION_FAIL "Signal handler registration failed. Goodbye."
+# define ERR_SYNTAX "ಥ_ಥ : Syntax error"
+# define ERR "ಥ_ಥ"
+
 # define OPEN 0
 # define CLOSED 1
 # define TRUE 1
@@ -230,6 +237,7 @@ char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(int argc, char *argv[], char *envp[]);
 int			rl_empty_event(void);
+
 /* Environment funtions */
 t_list		*stray_to_llist(char **str);
 char		**llist_to_stray(t_list *llist);
@@ -277,7 +285,7 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 /* Expansion functions*/
-int			token_parameter_expansion(t_token *token, t_list *envp);
+int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
 
@@ -321,8 +329,27 @@ int			gotorelative(char *dir, t_minishell *params);
 int			checkfileexists(char *path);
 void		cderrormsg(char *dir);
 
+/* Export builtin functions*/
+int			find_index(char *str, char c);
+t_list		*extract_and_copy_node(t_list *node);
+t_list		*clone_envp(t_list **envp);
+int			export_print(t_list **sorted, t_list **envp);
+int			add_var(t_list **envp, char **args);
+int			builtin_export(char **args, t_list **envp);
+
+
+
+
+
+
+
+
+
 //builtin general
 int			countexeargs(char **args);
+int			builtin_env(char **arg, t_list **envp);
+int			builtin_unset(char **arg, t_list **envp);
+
 int			cd(char **args, t_minishell *params);
 int			echo(char **args);
 int			pwd(char **args, t_minishell params);

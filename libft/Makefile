@@ -10,7 +10,7 @@ ft_printf_int.c ft_printf_percentage.c ft_printf_pointer.c ft_printf_specs.c ft_
 ft_atoi_check.c ft_lstsearchprev.c get_next_line_bonus.c get_next_line_utils_bonus.c ft_strcmp.c ft_freearray.c
 OBJS = $(SRCS:.c=.o)
 BONUS_SRCS = ft_lstadd_back.c ft_lstadd_front.c ft_lstclear.c ft_lstdelone.c ft_lstiter.c ft_lstlast.c ft_lstmap.c ft_lstnew.c \
-ft_lstsize.c ft_lst_freecntnt.c
+ft_lstsize.c ft_lstrm_node.c ft_lstadd_node.c ft_lstsort.c
 BONUS_OBJS = $(BONUS_SRCS:.c=.o)
 
 bonus: $(NAME)
