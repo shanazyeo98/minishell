@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 18:40:41 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/25 00:38:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,15 @@ int	main(int argc, char *argv[], char *envp[])
 
 
 
-	while (1)
-	{
-		init_all_sig_handler(INTERACTIVE);
-		getinput(&ms);
-		init_all_sig_handler(NONINTERACTIVE);
-		if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
-			break_shell(&ms);
-		tokenize(ms.input, &ms);
-		print_token_list(ms);
+	// while (1)
+	// {
+	// 	init_all_sig_handler(INTERACTIVE);
+	// 	getinput(&ms);
+	// 	init_all_sig_handler(NONINTERACTIVE);
+	// 	if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
+	// 		break_shell(&ms);
+	// 	tokenize(ms.input, &ms);
+	// 	print_token_list(ms);
 		// token_parameter_expansion(*(ms.tokenlist), ms.envp, ms.exitstatus);
 		// print_token_list(ms);
 
@@ -74,5 +74,5 @@ int	main(int argc, char *argv[], char *envp[])
 //		printf("cwd: %s\n", ms.cwd);
 		// spick_and_span(&ms, SUCCESS);
 	}
-	return (EXIT_SUCCESS);
-}
+// 	return (EXIT_SUCCESS);
+// }
