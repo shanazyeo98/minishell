@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 12:57:46 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:48:18 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,62 @@ char	*get_var_name(char *in, char c)
 	return (var);
 }
 
+/* Description: checks if the variable name is valid. Checks:
+	1. Var name must start wtih '_' or a letter
+	2. No '.', '-', ' '
+   Returns ERROR (1) if the var name is invalid. Returns SUCCESS (0) otherwise
+*/
+int	check_var(char *var)
+{
+	int	i;
+
+	if (var == NULL)
+		return (FAIL);
+	if (ft_isalpha(var[0]) == 0 && var[0] != '_')
+		return (ERROR);
+	i = 1;
+	while (var[i] != '\0')
+	{
+		if ((var[i] >= ' ' && var[i] <= '#') || \
+		(var[i] >= '%' && var[i] <= '/') || \
+		(var[i] >= ':' && var[i] <= '@') || \
+		(var[i] >= '[' && var[i] <= '^') || \
+		(var[i] >= '{' && var[i] <= '~'))
+		{
+			ft_putstr_fd(ERR, STDERR_FILENO);
+			ft_putstr_fd(": export: ", STDERR_FILENO);
+			ft_putstr_fd(var, STDERR_FILENO);
+			ft_putendl_fd(" : Pick a better variable name. 1d10t", STDERR_FILENO);
+			return (ERROR);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+// /* Description: Retrieves the variable name from an input string and validates
+//    the variable name. Return:
+// 	- FAIL: malloc errors
+// 	- ERROR: invalid var name
+// */
+// int	get_check_var(char *in)
+// {
+// 	char	*var;
+
+// 	var = get_var_name(in, '=');
+// 	if (var == NULL)
+// 		return (FAIL);
+// 	if (check_var(var) == ERROR)
+// 	{
+// 		ft_putstr_fd(ERR, STDERR_FILENO);
+// 		ft_putstr_fd(": export: ", STDERR_FILENO);
+// 		ft_putstr_fd(var, STDERR_FILENO);
+// 		ft_putendl_fd(" : Pick a better variable name. 1d10t", STDERR_FILENO);
+// 	}
+// 	return (check_var(var));
+// }
+
+
 
 /* Description: takes in an array of strings containing the environment
    variables and their corresponding values. For each environment variable,
@@ -49,6 +105,13 @@ int	add_var(t_list **envp, char **args)
 		var = get_var_name(args[i], '=');
 		if (var == NULL)
 			return (FAIL);
+		if (check_var(var) == ERROR)
+		{
+			i++;
+			continue;
+		}
+		// supposed to run through all the arguments and set the valid variables
+		// break out of the loop if the var name is invalid
 		found = find_env_var(var, *envp);
 		free (var);
 		var = NULL;

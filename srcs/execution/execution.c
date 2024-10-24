@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:13:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:47:11 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 	{
 		if (token->type != SINGLE)
 		{
-			if (token_parameter_expansion(token, params->envp) == FAIL)
+			if (token_parameter_expansion(token, params->envp, \
+			params->exitstatus) == FAIL)
 				spick_and_span(params, FAIL);
 		}
 		token = token->next;

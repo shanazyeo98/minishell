@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 10:03:22 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 18:39:45 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,30 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
 	return (SUCCESS);
 }
 
+/* Description: replaces any $? within the token string with the exit status.
+   Does nothing if there are no instances of $? within the token string. Also
+   frees the memory allocated to convert the int exit status to a string via
+   ft_itoa.
+   Return:
+    - SUCCESS: if there are no malloc errors
+    - ERROR: if there are malloc errors
+*/
+int replace_exit_status(t_token *token, int exit_status)
+{
+    char    *rep;
+
+    rep = ft_itoa(exit_status);
+    if (rep == NULL)
+        return (FAIL);
+    token->str = ft_strreplace(token->str, "$?", rep, "");
+    if (token->str == NULL)
+        return (free(rep), FAIL);
+    free (rep);
+    return (SUCCESS);
+}
+
+
+
 /* Description: Takes in a token and scans through the content for parameters
    denoted by $ at the start and delimited by a space, double quotes, single
    quotes and a dollar sign. The parameter can also be a null-terminated word.
@@ -83,20 +107,27 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
 	- ERROR: if there are malloc errors
 */
 
-int	token_parameter_expansion(t_token *token, t_list *envp)
+int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
 {
 	char	*par_name;
 	char	*par_dollar;
 	char	*rep;
 	int		status;
 
+	printf("Token content inside expand: %s\n", token->str);
 	status = SUCCESS;
+	if (replace_exit_status(token, exit_status) == FAIL)
+		return (FAIL);
 	while (ft_strchr(token->str, '$') != NULL)
 	{
 		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
+		printf("par_name inside expand: %s\n", par_name);
+
 		if (par_name == NULL)
 			return (ERROR);
 		rep = retrieve_env_var(par_name, envp, &status);
+		printf("rep inside expand: %s\n", rep);
+
 		if (status == ERROR)
 			return (free(par_dollar), ERROR);
 		par_dollar = ft_strjoin("$", par_name);

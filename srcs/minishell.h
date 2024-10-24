@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 09:59:21 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:45:29 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
 # define ERR_SIGACTION_FAIL "Signal handler registration failed. Goodbye."
+# define ERR_INVALIDVARNAME "Please pick a better variable name. 1d10t"
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 # define ERR "ಥ_ಥ"
+
 
 # define OPEN 0
 # define CLOSED 1
@@ -278,7 +280,7 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 /* Expansion functions*/
-int			token_parameter_expansion(t_token *token, t_list *envp);
+int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
 
