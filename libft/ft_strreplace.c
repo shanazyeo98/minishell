@@ -6,13 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 02:40:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 09:50:12 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "libft.h"
-#include "../srcs/minishell.h"
 
 /* Description: Checks if a character, "c" is contained within a set of
    characters, "str". Returns 1 if "c" is found within "str" and 0 if not.

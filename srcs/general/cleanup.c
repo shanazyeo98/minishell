@@ -6,11 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 13:06:23 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 10:03:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //Items to free so far
 // **paths from get paths
@@ -50,7 +50,7 @@ void	spick_and_span(t_minishell *ms, int status)
 	if (ms->path != NULL)
 		free_ft_split(ms->path);
 	if (ms->envp != NULL)
-		ft_lstclear(&(ms->envp), ft_lst_freecntnt);
+		ft_lstclear(&(ms->envp), free);
 	ms->path = NULL;
 	if (ms->tokenlist != NULL)
 		freetokens(ms->tokenlist);

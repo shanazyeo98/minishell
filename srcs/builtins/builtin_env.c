@@ -6,11 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 14:38:48 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 10:04:03 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: prints out all the items stored within the envp linked list
    except for the variables with no values. This function only accepts an
@@ -35,7 +35,7 @@ int	builtin_env(char **arg, t_list **envp)
 	while (curr != NULL)
 	{
 		if (ft_strchr((char *)curr->content, '=') != NULL)
-			printf("%s\n", (char *)curr->content);
+			ft_putendl_fd((char *)curr->content, STDOUT_FILENO);
 		curr = curr->next;
 	}
 	return (SUCCESS);
