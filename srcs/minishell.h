@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 15:07:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:38:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,6 @@
 # define APPENDOP ">>"
 # define INPUTOP "<"
 # define OUTPUTOP ">"
-
-/* Error messages */
-# define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
-# define ERR_SIGACTION_FAIL "Signal handler registration failed. Goodbye."
-# define ERR_SYNTAX "ಥ_ಥ : Syntax error"
-# define ERR "ಥ_ಥ"
-
 # define OPEN 0
 # define CLOSED 1
 # define TRUE 1
@@ -67,8 +60,7 @@
 
 /* Error messages */
 # define ERR_MALLOC_FAIL "Malloc failed. Exiting the programme now. Goodbye."
-# define ERR_SIGACTION_FAIL "Error registering signal handler. Exiting the \
-							programme now. Goodbye."
+# define ERR_SIGACTION_FAIL "Signal handler registration failed. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 # define ERR "ಥ_ಥ "
 
@@ -305,7 +297,7 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 /* Expansion functions*/
-int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
+int			token_parameter_expansion(t_token *token, t_list *envp);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
 
@@ -357,14 +349,6 @@ int			export_print(t_list **sorted, t_list **envp);
 int			add_var(t_list **envp, char **args);
 int			builtin_export(char **args, t_list **envp);
 
-
-
-
-
-
-
-
-
 //builtin general
 int			countexeargs(char **args);
 int			builtin_env(char **arg, t_list **envp);
@@ -375,12 +359,12 @@ int			pwd(char **args, t_minishell params);
 int			builtin_exit(char **arg, t_minishell *params);
 
 //extra
-int	positivemsg(void);
-int	flirtmsg(void);
+int			positivemsg(void);
+int			flirtmsg(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
-void		spick_and_span(t_minishell *ms, int status);
+void		spick_and_span(t_minishell *ms, int status, int end);
 void		break_shell(t_minishell *ms);
 
 #endif

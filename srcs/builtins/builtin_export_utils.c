@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 12:57:46 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:21:26 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: Retrieves a variable name from an input string. Searches up to
    char c within the input string using ft_strchr. If 'c' does not exist within

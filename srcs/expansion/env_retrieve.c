@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_retrieve.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 02:33:28 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 00:35:18 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:21:03 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: Takes in a variable name and the envp linked list. Checks if
    the variable exists within the list and returns the address of the node in

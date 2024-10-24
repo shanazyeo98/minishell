@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:38:05 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:43:09 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,11 @@ Error: Free tokenlist and prints error message*/
 void	tokenstatus(t_minishell *params, int status)
 {
 	if (status == FAIL)
-		spick_and_span(params, FAIL);
+		spick_and_span(params, FAIL, TRUE);
 	else if (status == ERROR)
 		ft_putendl_fd(ERR_SYNTAX, 2);
 	if (status == ERROR || *(params->tokenlist) == NULL)
-		spick_and_span(params, ERROR);
+		spick_and_span(params, ERROR, FALSE);
 }
 
 /*Description: Initialises the token list and the info*/
@@ -54,7 +54,7 @@ void	inittokenlist(t_minishell *params, t_tokendets *info, char *prompt)
 	params->hdcount = 0;
 	params->tokenlist = malloc(sizeof(t_token *));
 	if (params->tokenlist == NULL)
-		spick_and_span(params, FAIL);
+		spick_and_span(params, FAIL, TRUE);
 	*(params->tokenlist) = NULL;
 }
 

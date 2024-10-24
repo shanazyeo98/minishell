@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   token_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 13:16:13 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:21:09 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: Retrieves the name of a parameter, given the pointer address of
    the first $. Finds the closest delimiter, space, single quote, double quotes

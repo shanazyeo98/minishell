@@ -6,11 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 15:08:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:13:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 //Items to free so far
 // **paths from get paths
@@ -44,15 +44,18 @@ void	free_ft_split(char **arr)
 	- t_minishell -> t_list *envp
 	- TO ADD ON AFTERWARDS
 */
-void	spick_and_span(t_minishell *ms, int status)
+void	spick_and_span(t_minishell *ms, int status, int end)
 {
 	if (ms->input != NULL)
 		free(ms->input);
-	if (ms->path != NULL)
-		free_ft_split(ms->path);
-	if (ms->envp != NULL)
-		ft_lstclear(&(ms->envp), ft_lst_freecntnt);
-	ms->path = NULL;
+	ms->input = NULL;
+	// if (ms->path != NULL )
+	// 	free_ft_split(ms->path);
+	if (ms->envp != NULL && end == TRUE)
+	{
+		ft_lstclear(&(ms->envp), &free); //to check with MJ On the clean function
+		ms->envp = NULL;
+	}
 	if (ms->tokenlist != NULL)
 		freetokens(ms->tokenlist);
 	ms->tokenlist = NULL;

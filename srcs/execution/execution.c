@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/23 12:58:30 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:39:53 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 		if (token->type != SINGLE)
 		{
 			if (token_parameter_expansion(token, params->envp) == FAIL)
-				spick_and_span(params, FAIL);
+				spick_and_span(params, FAIL, TRUE);
 		}
 		token = token->next;
 	}
@@ -57,7 +57,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		if (params->pid[params->exe_index] == -1)
 			return (free(params->pid), perror(ERR), FAIL);
 		// if (params->pid[params->exe_index] == 0)
-			//function to execute child process;
+		// 	function to execute child process;
 		if (params->exe_index % 2 == 1)
 			closepipe(params->fd1);
 		if (params->exe_index > 0 && params->exe_index % 2 == 0)
@@ -99,7 +99,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	updatetree(node, params);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
-	if (count == 1 && cmd->args != NULL && builtin(cmd->args[0]) > 3)
+	if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 3)
 		return (nonchildexe(cmd, params));
 	else
 	{

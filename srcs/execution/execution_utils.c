@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/23 12:36:01 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:24:16 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ int	exebuiltin(int func, char **args, t_minishell *params)
 		return (echo(args));
 	if (func == PWD)
 		return (pwd(args, *params));
-	// if (func == EXPORT)
-	// 	//export
-	// if (func == ENV)
-	// 	//env
-	// if (func == UNSET)
-	// 	//unset
+	if (func == EXPORT)
+		return (builtin_export(args, &params->envp));
+	if (func == ENV)
+		return (builtin_env(args, &params->envp));
+	if (func == UNSET)
+		return (builtin_unset(args, &params->envp));
 	if (func == EXIT)
 		return (builtin_exit(args, params));
 	if (func == CD)

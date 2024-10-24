@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:55:06 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:12:17 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:43:52 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	builtin_exit(char **arg, t_minishell *params)
 		while (exitstat > 255)
 			exitstat %= 256;
 	}
-	spick_and_span(params, SUCCESS);
+	spick_and_span(params, SUCCESS, TRUE);
 	exit(exitstat);
 	return (SUCCESS);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 13:10:49 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:20:55 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: Takes in an array of strings and converts them into a linked
    list. Each string is stored in the content of the linked list by using

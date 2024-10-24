@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 12:56:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:21:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: finds the index of the first instance of c in str. Returns -1
    if c is not found

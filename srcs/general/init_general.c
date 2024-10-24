@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 12:56:49 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 16:56:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,24 @@
 	           exits the programme
 */
 
-char	**getpaths(void)
-{
-	char	*path_var;
-	char	**paths;
+// char	**getpaths(void)
+// {
+// 	char	*path_var;
+// 	char	**paths;
 
-	paths = NULL;
-	path_var = getenv("PATH");
-	if (path_var != NULL)
-	{
-		paths = ft_split(path_var, ':');
-		if (paths == NULL)
-		{
-			ft_printf("%s\n", ERR_MALLOC_FAIL);
-			exit(EXIT_FAILURE);
-		}
-	}
-	return (paths);
-}
+// 	paths = NULL;
+// 	path_var = getenv("PATH");
+// 	if (path_var != NULL)
+// 	{
+// 		paths = ft_split(path_var, ':');
+// 		if (paths == NULL)
+// 		{
+// 			ft_printf("%s\n", ERR_MALLOC_FAIL);
+// 			exit(EXIT_FAILURE);
+// 		}
+// 	}
+// 	return (paths);
+// }
 
 /* Description: empty function that is called periodically when readline is
    waiting for user input.
@@ -88,7 +88,7 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
 		exit (ERROR);
 	}
-	ms.path = getpaths();
+//	ms.path = getpaths();
 	ms.input = NULL;
 	ms.tokenlist = NULL;
 	ms.ast = NULL;

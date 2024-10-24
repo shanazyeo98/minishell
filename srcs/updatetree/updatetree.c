@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:02:29 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:15:46 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:43:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	updatetree(t_cmdnode *cmdnode, t_minishell *params)
 		if (token->type == OPERATOR)
 		{
 			if (createcmdlist(start, token, cmdnode) == FAIL)
-				spick_and_span(params, FAIL);
+				spick_and_span(params, FAIL, TRUE);
 			token = token->next;
 			start = token;
 		}
@@ -107,6 +107,6 @@ void	updatetree(t_cmdnode *cmdnode, t_minishell *params)
 			token = token->next;
 	}
 	if (createcmdlist(start, cmdnode->end, cmdnode) == FAIL)
-		spick_and_span(params, FAIL);
+		spick_and_span(params, FAIL, TRUE);
 //	printcmdlist(cmdnode->cmds);
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/22 14:38:48 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:21:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: prints out all the items stored within the envp linked list
    except for the variables with no values. This function only accepts an

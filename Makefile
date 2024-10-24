@@ -17,7 +17,6 @@ srcs/tokenizer/token_list.c \
 srcs/tokenizer/token_new.c \
 srcs/tokenizer/token_read.c \
 srcs/tokenizer/tokenize.c \
-srcs/tokenizer/token_expand.c \
 srcs/tokenizer/token_utils.c \
 srcs/parser/parse_branch.c \
 srcs/parser/parse_free.c \
@@ -25,9 +24,10 @@ srcs/parser/parse_fillcmd.c \
 srcs/parser/parse_ops.c \
 srcs/parser/parse_retrievetype.c \
 srcs/parser/parse.c \
-srcs/env_init.c \
-srcs/env_retrieve.c \
 srcs/parser/ast_utils.c \
+srcs/expansion/env_init.c \
+srcs/expansion/env_retrieve.c \
+srcs/expansion/token_expand.c \
 srcs/updatetree/updatetree.c \
 srcs/updatetree/updatetree_cmd.c \
 srcs/updatetree/updatetree_fill.c \
@@ -38,11 +38,11 @@ srcs/builtins/builtin_cd_utils.c \
 srcs/builtins/builtin_echo.c \
 srcs/builtins/builtin_pwd.c \
 srcs/builtins/builtin_exit.c \
-srcs/builtin_env.c \
-srcs/builtin_unset.c \
-srcs/builtin_export.c \
-srcs/builtin_export_utils.c \
-srcs/extra/extra.c \
+srcs/builtins/builtin_env.c \
+srcs/builtins/builtin_unset.c \
+srcs/builtins/builtin_export.c \
+srcs/builtins/builtin_export_utils.c \
+srcs/extra/extra.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
@@ -56,14 +56,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

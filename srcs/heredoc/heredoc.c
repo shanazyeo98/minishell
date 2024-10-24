@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 17:10:03 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/24 17:42:42 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,18 @@ void	heredoccheck(t_token **tokenlist, t_minishell *params)
 			hd++;
 			limiter = delim(token, params);
 			if (limiter == NULL)
-				spick_and_span(params, FAIL);
+				spick_and_span(params, FAIL, TRUE);
 			status = heredoc(hd, token, limiter, params);
+			free(limiter);
 			if (status != SUCCESS)
 				break ;
 		}
 		token = token->next;
 	}
-	if (status == FAIL || status == ERROR)
-		spick_and_span(params, status);
+	if (status == FAIL)
+		spick_and_span(params, status, TRUE);
+	else if (status == FAIL)
+		spick_and_span(params, status, FALSE);
 }
 
 /*Description: Uses get next line to retrieve the input and write into the fd*/
@@ -54,7 +57,8 @@ void	writeheredoc(int fd, char *delim, t_minishell *params)
 		input = readline(HEREDOCPROMPT);
 		if (g_sig_status == SIGINT)
 		{
-			spick_and_span(params, ERROR);
+			free(delim);
+			spick_and_span(params, ERROR, TRUE);
 			exit(ERROR);
 		}
 		if (input == NULL || ft_strcmp(input, delim) == 0)
@@ -62,6 +66,7 @@ void	writeheredoc(int fd, char *delim, t_minishell *params)
 			if (input == NULL)
 				write(1, "\n", 1);
 			free(input);
+			free(delim);
 			break ;
 		}
 		ft_putstr_fd(input, fd);
@@ -88,7 +93,8 @@ int	executedoc(int fd, char *delim, t_minishell *params)
 	{
 		init_all_sig_handler(INTERACTIVE);
 		writeheredoc(fd, delim, params);
-		spick_and_span(params, SUCCESS);
+		close(fd);
+		spick_and_span(params, SUCCESS, TRUE);
 		exit(SUCCESS);
 	}
 	else
