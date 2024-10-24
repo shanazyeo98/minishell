@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 13:06:23 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:08:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ void	free_ft_split(char **arr)
 */
 void	spick_and_span(t_minishell *ms, int status)
 {
-	free(ms->input);
+	if (ms->input != NULL)
+		free(ms->input);
 	if (ms->path != NULL)
 		free_ft_split(ms->path);
 	if (ms->envp != NULL)

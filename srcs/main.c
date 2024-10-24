@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/23 13:13:22 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/24 15:06:37 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 */
 void	break_shell(t_minishell *ms)
 {
-	ft_printf(EXIT_MSG);
+	ft_putendl_fd(EXITCMDMSG, STDOUT_FILENO);
 	spick_and_span(ms, SUCCESS);
 	exit(EXIT_SUCCESS);
 }
@@ -33,13 +33,15 @@ int	main(int argc, char *argv[], char *envp[])
 	ms = init_ms(argc, argv, envp);
 	while (1)
 	{
+		g_sig_status = 0;
 		init_all_sig_handler(INTERACTIVE);
 		getinput(&ms);
 		init_all_sig_handler(NONINTERACTIVE);
 		if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
 			break_shell(&ms);
-		tokenize(ms.input, &ms);
-//		// print_token_list(ms);
+		if (g_sig_status != SIGINT)
+			tokenize(ms.input, &ms);
+//		print_token_list(ms);
 		if (ms.tokenlist != NULL)
 		{
 			heredoccheck(ms.tokenlist, &ms);

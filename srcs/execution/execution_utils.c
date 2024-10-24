@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 17:19:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:36:01 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,10 @@ int	builtin(char *str)
 		return (ECHO);
 	if (ft_strcmp(str, PWDCMD) == 0)
 		return (PWD);
+	if (ft_strcmp(str, POSITIVECMD) == 0)
+		return (POSITIVE);
+	if (ft_strcmp(str, FLIRTCMD) == 0)
+		return (FLIRT);
 	return (-1);
 }
 
@@ -61,6 +65,9 @@ int	exebuiltin(int func, char **args, t_minishell *params)
 	// 	//unset
 	if (func == EXIT)
 		return (builtin_exit(args, params));
-//	if (func == CD)
-	return (cd(args, params));
+	if (func == CD)
+		return (cd(args, params));
+	if (func == POSITIVE)
+		return (positivemsg());
+	return (flirtmsg());
 }

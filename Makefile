@@ -42,7 +42,7 @@ srcs/builtin_env.c \
 srcs/builtin_unset.c \
 srcs/builtin_export.c \
 srcs/builtin_export_utils.c \
-
+srcs/extra/extra.c \
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
@@ -56,14 +56,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

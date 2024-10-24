@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:13:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/23 12:58:30 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	updatetree(node, params);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
-	if (count == 1 && cmd->args != NULL && builtin(cmd->args[0]) > 1)
+	if (count == 1 && cmd->args != NULL && builtin(cmd->args[0]) > 3)
 		return (nonchildexe(cmd, params));
 	else
 	{
