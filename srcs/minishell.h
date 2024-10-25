@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/25 13:42:31 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/25 15:53:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@
 # define JOKECMD "joke"
 # define DUCKCMD "quack"
 # define CONDUCKCMD "confusedquack"
+# define SOPHDUCKCMD "sophisticatedquack"
 
 # define POSITIVEMSG0 "keep shining! \U0001F4AB"
 # define POSITIVEMSG1 "you're egg-cellent! \U0001F373"
@@ -85,7 +86,10 @@
 # define FLIRT2 "are you double? because you always float in my mind (⸝⸝ᵕᴗᵕ⸝⸝)"
 # define FLIRT3 "are you a for loop? because you repeat in my mind (✿ᴗ͈ˬᴗ͈)⁾⁾"
 
-# define J0 "why did the programmer go broke?\nbecause they used up all their cache"
+# define INSULT0 "you're proof that broken things can still be beautiful"
+# define INSULT1 "the light at the end of the tunnel might be an oncoming train"
+# define INSULT2 "this is the worst day of my life... so far"
+# define INSULT3 "if at first you don't success, then skydiving is probably not for you"
 
 //global variable
 
@@ -209,6 +213,7 @@ enum	e_builtin
 	POSITIVE,
 	DUCK,
 	CONDUCK,
+	SOPHDUCK,
 	EXPORT,
 	EXIT,
 	ENV,
@@ -370,6 +375,7 @@ int			positivemsg(void);
 int			flirtmsg(void);
 int			confusedduck(void);
 int			duck(void);
+int			sophduck(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

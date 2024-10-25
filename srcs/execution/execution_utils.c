@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/25 13:43:36 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/25 15:53:48 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int	builtin(char *str)
 		return (DUCK);
 	if (ft_strcmp(str, CONDUCKCMD) == 0)
 		return (CONDUCK);
+	if (ft_strcmp(str, SOPHDUCKCMD) == 0)
+		return (SOPHDUCK);
 	return (-1);
 }
 
@@ -77,5 +79,7 @@ int	exebuiltin(int func, char **args, t_minishell *params)
 		return (duck());
 	if (func == CONDUCK)
 		return (confusedduck());
+	if (func == SOPHDUCK)
+		return (sophduck());
 	return (flirtmsg());
 }
