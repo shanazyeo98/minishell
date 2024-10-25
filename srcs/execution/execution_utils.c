@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 15:24:16 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/25 13:43:36 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@ int	builtin(char *str)
 		return (POSITIVE);
 	if (ft_strcmp(str, FLIRTCMD) == 0)
 		return (FLIRT);
+	if (ft_strcmp(str, DUCKCMD) == 0)
+		return (DUCK);
+	if (ft_strcmp(str, CONDUCKCMD) == 0)
+		return (CONDUCK);
 	return (-1);
 }
 
@@ -69,5 +73,9 @@ int	exebuiltin(int func, char **args, t_minishell *params)
 		return (cd(args, params));
 	if (func == POSITIVE)
 		return (positivemsg());
+	if (func == DUCK)
+		return (duck());
+	if (func == CONDUCK)
+		return (confusedduck());
 	return (flirtmsg());
 }
