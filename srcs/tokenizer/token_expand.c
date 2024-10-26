@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/26 10:18:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 11:28:53 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*retrieve_param_name(char *str)
    memory allocated for the replacement text and the par_dollar strings.
    Return:
 	- SUCCESS: if there are no malloc errors
-	- ERROR: if there are malloc errors
+	- FAIL: if there are malloc errors
 */
 int	replace_param(t_token *token, char *par_dollar, char *rep)
 {
@@ -61,13 +61,13 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
 	{
 		token->str = ft_strreplace_one(token->str, par_dollar, "", DELIMITER);
 		if (token->str == NULL)
-			return (free(par_dollar), ERROR);
+			return (free(par_dollar), FAIL);
 	}
 	else
 	{
 		token->str = ft_strreplace_one(token->str, par_dollar, rep, DELIMITER);
 		if (token->str == NULL)
-			return (free(par_dollar), free (rep), ERROR);
+			return (free(par_dollar), free (rep), FAIL);
 		free (par_dollar);
 		free (rep);
 	}
@@ -80,7 +80,7 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
    ft_itoa.
    Return:
     - SUCCESS: if there are no malloc errors
-    - ERROR: if there are malloc errors
+    - FAIL: if there are malloc errors
 */
 int replace_exit_status(t_token *token, int exit_status)
 {
@@ -96,7 +96,38 @@ int replace_exit_status(t_token *token, int exit_status)
     return (SUCCESS);
 }
 
+/* Description: given the first found position of $ within the token string,
+   retrieves the parameter name and attempts to find the corresponding
+   parameter value within the envp linked list. Performs a replacement of the
+   original parameter within the token string afterwards. If there is no
+   corresponding parameter in the envp list, the parameter is replkaced with
+   "".
+   Return:
+	- SUCCESS: if there are no malloc errors
+	- FAIL: if there are malloc errors
+*/
 
+int	find_and_replace_param(t_token *token, t_list *envp, char *found)
+{
+	char	*par_name;
+	char	*par_dollar;
+	char	*rep;
+	int		status;
+
+	par_name = retrieve_param_name(found);
+	if (par_name == NULL)
+		return (FAIL);
+	rep = retrieve_env_var(par_name, envp, &status);
+	if (status == FAIL)
+		return (free(par_name), FAIL);
+	par_dollar = ft_strjoin("$", par_name);
+	free (par_name);
+	if (par_dollar == NULL)
+		return (FAIL);
+	if (replace_param(token, par_dollar, rep) == FAIL)
+		return (FAIL);
+	return (SUCCESS);
+}
 
 /* Description: Takes in a token and scans through the content for parameters
    denoted by $ at the start and delimited by a space, double quotes, single
@@ -104,48 +135,14 @@ int replace_exit_status(t_token *token, int exit_status)
    Replaces the content inside the token with the expanded content.
    Return:
 	- SUCCESS: if there are no malloc errors
-	- ERROR: if there are malloc errors
+	- FAIL: if there are malloc errors
 */
-
-// int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
-// {
-// 	char	*par_name;
-// 	char	*par_dollar;
-// 	char	*rep;
-// 	int		status;
-
-// 	status = SUCCESS;
-// 	if (replace_exit_status(token, exit_status) == FAIL)
-// 		return (FAIL);
-// 	while (ft_strchr(token->str, '$') != NULL)
-// 	{
-// 		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
-// 		if (par_name == NULL)
-// 			return (ERROR);
-// 		rep = retrieve_env_var(par_name, envp, &status);
-// 		if (status == ERROR)
-// 			return (free(par_dollar), ERROR);
-// 		par_dollar = ft_strjoin("$", par_name);
-// 		free (par_name);
-// 		if (par_dollar == NULL)
-// 			return (ERROR);
-// 		if (replace_param(token, par_dollar, rep) == ERROR)
-// 			return (ERROR);
-// 	}
-// 	return (SUCCESS);
-// }
 
 int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
 {
-	char	*par_name;
-	char	*par_dollar;
-	char	*rep;
 	char	*found;
-	int		status;
 
-	status = SUCCESS;
 	found = ft_strchr(token->str, '$');
-
 	while (found != NULL)
 	{
 		if (found[1] == '?')
@@ -155,22 +152,10 @@ int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
 		}
 		else
 		{
-			par_name = retrieve_param_name(found);
-			if (par_name == NULL)
-				return (ERROR);
-			rep = retrieve_env_var(par_name, envp, &status);
-			if (status == ERROR)
-				return (free(par_dollar), ERROR);
-			par_dollar = ft_strjoin("$", par_name);
-			free (par_name);
-			if (par_dollar == NULL)
-				return (ERROR);
-			if (replace_param(token, par_dollar, rep) == ERROR)
-				return (ERROR);
+			if(find_and_replace_param(token, envp, found) == FAIL)
+				return (FAIL);
 		}
 		found = ft_strchr(token->str, '$');
-
-
 	}
 	return (SUCCESS);
 }

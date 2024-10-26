@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/26 09:47:53 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 11:33:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,9 @@ int	main(int argc, char *argv[], char *envp[])
 	char		*env[2] = {"env", NULL};
 	char		*exp1[2] = {"export", NULL};
 	char		*exp2[8] = {"export", "va\%r", "v1=t1", "v2=t2", "v3=t3", "v4=t4", "v5=t5", NULL};
+	char		*unset[4] = {"unset", "va\%r", "v5", NULL};
+
+
 
 
 
@@ -48,6 +51,10 @@ int	main(int argc, char *argv[], char *envp[])
 	builtin_export(exp2, &ms.envp);
 
 	printf("====================Print export====================\n");
+	builtin_export(exp1, &ms.envp);\
+
+	printf("====================Test unset====================\n");
+	builtin_unset(unset, &ms.envp);
 	builtin_export(exp1, &ms.envp);
 
 

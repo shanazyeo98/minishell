@@ -6,11 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 02:33:28 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/19 00:35:18 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 11:42:09 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: Takes in a variable name and the envp linked list. Checks if
    the variable exists within the list and returns the address of the node in
@@ -41,7 +41,7 @@ t_list	*find_env_var(char *var, t_list *envp)
 /* Description: retrieves the value of the of an environment variable given the
    the variable name (without $) and the envp list. Returns a NULL if the given
    variable does not exist within the list. If malloc fails, the status is set
-   as ERROR.
+   as FAIL.
 */
 
 char	*retrieve_env_var(char *var, t_list *envp, int *status)
@@ -55,7 +55,7 @@ char	*retrieve_env_var(char *var, t_list *envp, int *status)
 	value = substring_after_char(found_node->content, '=');
 	if (value == NULL)
 	{
-		*status = ERROR;
+		*status = FAIL;
 		return (NULL);
 	}
 	*status = SUCCESS;

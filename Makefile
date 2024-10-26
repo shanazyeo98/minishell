@@ -25,8 +25,8 @@ srcs/parser/parse_fillcmd.c \
 srcs/parser/parse_ops.c \
 srcs/parser/parse_retrievetype.c \
 srcs/parser/parse.c \
-srcs/env_init.c \
-srcs/env_retrieve.c \
+srcs/environment/env_init.c \
+srcs/environment/env_retrieve.c \
 srcs/parser/ast_utils.c \
 srcs/updatetree/updatetree.c \
 srcs/updatetree/updatetree_cmd.c \
@@ -39,9 +39,9 @@ srcs/builtins/builtin_echo.c \
 srcs/builtins/builtin_pwd.c \
 srcs/builtins/builtin_exit.c \
 srcs/builtins/builtin_env.c \
-srcs/builtin_unset.c \
-srcs/builtin_export.c \
-srcs/builtin_export_utils.c \
+srcs/builtins/builtin_unset.c \
+srcs/builtins/builtin_export.c \
+srcs/builtins/builtin_export_utils.c \
 
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
