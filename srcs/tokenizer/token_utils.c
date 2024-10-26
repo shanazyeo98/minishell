@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 13:22:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 18:30:33 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 10:19:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,6 @@ void	print_token_list(t_minishell ms)
 		printf("Content: %s | Type: %d | Grp: %d | Word Grp: %d\n", \
 		curr_token->str, curr_token->type, curr_token->grp, \
 		curr_token->wordgrp);
-
-		token_parameter_expansion(curr_token, ms.envp, ms.exitstatus);
-
-		printf("Content: %s | Type: %d | Grp: %d | Word Grp: %d\n", \
-		curr_token->str, curr_token->type, curr_token->grp, \
-		curr_token->wordgrp);
-
 		curr_token = curr_token->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 18:39:45 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 10:18:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
 {
 	if (rep == NULL)
 	{
-		token->str = ft_strreplace(token->str, par_dollar, "", DELIMITER);
+		token->str = ft_strreplace_one(token->str, par_dollar, "", DELIMITER);
 		if (token->str == NULL)
 			return (free(par_dollar), ERROR);
 	}
 	else
 	{
-		token->str = ft_strreplace(token->str, par_dollar, rep, DELIMITER);
+		token->str = ft_strreplace_one(token->str, par_dollar, rep, DELIMITER);
 		if (token->str == NULL)
 			return (free(par_dollar), free (rep), ERROR);
 		free (par_dollar);
@@ -89,7 +89,7 @@ int replace_exit_status(t_token *token, int exit_status)
     rep = ft_itoa(exit_status);
     if (rep == NULL)
         return (FAIL);
-    token->str = ft_strreplace(token->str, "$?", rep, "");
+    token->str = ft_strreplace_one(token->str, "$?", rep, "");
     if (token->str == NULL)
         return (free(rep), FAIL);
     free (rep);
@@ -107,35 +107,70 @@ int replace_exit_status(t_token *token, int exit_status)
 	- ERROR: if there are malloc errors
 */
 
+// int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
+// {
+// 	char	*par_name;
+// 	char	*par_dollar;
+// 	char	*rep;
+// 	int		status;
+
+// 	status = SUCCESS;
+// 	if (replace_exit_status(token, exit_status) == FAIL)
+// 		return (FAIL);
+// 	while (ft_strchr(token->str, '$') != NULL)
+// 	{
+// 		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
+// 		if (par_name == NULL)
+// 			return (ERROR);
+// 		rep = retrieve_env_var(par_name, envp, &status);
+// 		if (status == ERROR)
+// 			return (free(par_dollar), ERROR);
+// 		par_dollar = ft_strjoin("$", par_name);
+// 		free (par_name);
+// 		if (par_dollar == NULL)
+// 			return (ERROR);
+// 		if (replace_param(token, par_dollar, rep) == ERROR)
+// 			return (ERROR);
+// 	}
+// 	return (SUCCESS);
+// }
+
 int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
 {
 	char	*par_name;
 	char	*par_dollar;
 	char	*rep;
+	char	*found;
 	int		status;
 
-	printf("Token content inside expand: %s\n", token->str);
 	status = SUCCESS;
-	if (replace_exit_status(token, exit_status) == FAIL)
-		return (FAIL);
-	while (ft_strchr(token->str, '$') != NULL)
+	found = ft_strchr(token->str, '$');
+
+	while (found != NULL)
 	{
-		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
-		printf("par_name inside expand: %s\n", par_name);
+		if (found[1] == '?')
+		{
+			if (replace_exit_status(token, exit_status) == FAIL)
+				return (FAIL);
+		}
+		else
+		{
+			par_name = retrieve_param_name(found);
+			if (par_name == NULL)
+				return (ERROR);
+			rep = retrieve_env_var(par_name, envp, &status);
+			if (status == ERROR)
+				return (free(par_dollar), ERROR);
+			par_dollar = ft_strjoin("$", par_name);
+			free (par_name);
+			if (par_dollar == NULL)
+				return (ERROR);
+			if (replace_param(token, par_dollar, rep) == ERROR)
+				return (ERROR);
+		}
+		found = ft_strchr(token->str, '$');
 
-		if (par_name == NULL)
-			return (ERROR);
-		rep = retrieve_env_var(par_name, envp, &status);
-		printf("rep inside expand: %s\n", rep);
 
-		if (status == ERROR)
-			return (free(par_dollar), ERROR);
-		par_dollar = ft_strjoin("$", par_name);
-		free (par_name);
-		if (par_dollar == NULL)
-			return (ERROR);
-		if (replace_param(token, par_dollar, rep) == ERROR)
-			return (ERROR);
 	}
 	return (SUCCESS);
 }
