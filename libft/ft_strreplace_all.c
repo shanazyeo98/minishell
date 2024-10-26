@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 09:50:12 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 08:29:38 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ char	*combine_string(char *in, char *or, char *rep, char *found)
    "in" and returns a new string with its own memory allocated.
 */
 
-char	*ft_strreplace(char *in, char *or, char *rep, char *delim)
+char	*ft_strreplace_all(char *in, char *or, char *rep, char *delim)
 {
 	char	*res;
 	char	*found;
