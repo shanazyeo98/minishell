@@ -8,7 +8,7 @@
 			"name": "(gdb) indiv file debugging",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "${workspaceFolder}/a.out",
+			"program": "${workspaceFolder}/minishell.out",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",

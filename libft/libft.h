@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/23 13:09:12 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/26 09:32:47 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
-char	*ft_strreplace(char *in, char *or, char *rep, char *delim);
+char	*ft_strreplace_all(char *in, char *or, char *rep, char *delim);
+char	*ft_strreplace_one(char *in, char *or, char *rep, char *delim);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	ft_freearray(char **array);

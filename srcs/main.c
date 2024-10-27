@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 17:39:28 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/27 18:22:30 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ int	main(int argc, char *argv[], char *envp[])
 	t_minishell	ms;
 
 	ms = init_ms(argc, argv, envp);
-	while (1)
 	{
 		g_sig_status = 0;
 		init_all_sig_handler(INTERACTIVE);
@@ -51,5 +50,6 @@ int	main(int argc, char *argv[], char *envp[])
 //		printf("cwd: %s\n", ms.cwd);
 		spick_and_span(&ms, SUCCESS, FALSE);
 	}
+
 	return (EXIT_SUCCESS);
 }

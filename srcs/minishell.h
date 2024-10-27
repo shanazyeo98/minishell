@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/27 14:39:46 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/27 18:16:39 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,6 +299,12 @@ void		branch_error(t_ast *branch);
 int			token_parameter_expansion(t_token *token, t_list *envp);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
+char		*retrieve_param_name(char *str);
+char		*replace_param(char *input, char *par_dollar, char *rep);
+char		*replace_exit_status(char *input, int exit_status);
+char		*find_and_replace_param(char *input, t_list *envp, char *found);
+char		*parameter_expansion(char *input, t_list *envp, int exit_status);
+int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
 void		print_ast_node(t_ast *node);

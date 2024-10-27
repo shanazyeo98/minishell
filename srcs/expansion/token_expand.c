@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 15:21:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/27 18:13:29 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,18 @@ int	replace_param(t_token *token, char *par_dollar, char *rep)
    Replaces the content inside the token with the expanded content.
    Return:
 	- SUCCESS: if there are no malloc errors
-	- ERROR: if there are malloc errors
+	- FAIL: if there are malloc errors
 */
 
-int	token_parameter_expansion(t_token *token, t_list *envp)
+int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
 {
-	char	*par_name;
-	char	*par_dollar;
-	char	*rep;
-	int		status;
+	char	*temp;
+	char	*out;
 
-	status = SUCCESS;
-	while (ft_strchr(token->str, '$') != NULL)
-	{
-		par_name = retrieve_param_name(ft_strchr(token->str, '$'));
-		if (par_name == NULL)
-			return (ERROR);
-		rep = retrieve_env_var(par_name, envp, &status);
-		if (status == ERROR)
-			return (free(par_dollar), ERROR);
-		par_dollar = ft_strjoin("$", par_name);
-		free (par_name);
-		if (par_dollar == NULL)
-			return (ERROR);
-		if (replace_param(token, par_dollar, rep) == ERROR)
-			return (ERROR);
-	}
+	temp = token->str;
+	out = parameter_expansion(temp, envp, exit_status);
+	if (out == NULL)
+		return (FAIL);
+	token->str = out;
 	return (SUCCESS);
 }
