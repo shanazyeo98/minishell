@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/24 16:56:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/28 01:54:25 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+
+
+
+//PROBABLY CAN BE USED ON THE PATH IN ENVP LIST LATER
 /* Description: Retrieves the environment path stored in the $PATH variable
    Returns:
 	- success: an array of strings containing the different directories if
@@ -88,7 +92,6 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
 		exit (ERROR);
 	}
-//	ms.path = getpaths();
 	ms.input = NULL;
 	ms.tokenlist = NULL;
 	ms.ast = NULL;

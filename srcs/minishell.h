@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/27 19:18:56 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/28 01:55:12 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,7 +225,6 @@ enum	e_exitstat
 typedef struct s_minishell
 {
 	t_list	*envp;
-	char	**path;
 	char	*input;
 	t_token	**tokenlist;
 	char	connector[4];
