@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 17:15:28 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 18:36:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,9 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
    quotes and a dollar sign. The parameter can also be a null-terminated word.
    Allocates new memory for the string with the expanded parameters.
    Return:
-	- SUCCESS: if there are no malloc errors
-	- FAIL: if there are malloc errors
+	- A string with newly allocated memory with the parameters expanded. Input
+	  string is freed
+	- NULL. If there are malloc errors. The input string is not freed
 */
 
 char	*parameter_expansion(char *input, t_list *envp, int exit_status)
