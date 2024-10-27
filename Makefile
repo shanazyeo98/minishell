@@ -24,12 +24,11 @@ srcs/parser/parse_fillcmd.c \
 srcs/parser/parse_ops.c \
 srcs/parser/parse_retrievetype.c \
 srcs/parser/parse.c \
-srcs/environment/env_init.c \
-srcs/environment/env_retrieve.c \
 srcs/parser/ast_utils.c \
 srcs/expansion/env_init.c \
 srcs/expansion/env_retrieve.c \
 srcs/expansion/token_expand.c \
+srcs/expansion/expand_parameter.c \
 srcs/updatetree/updatetree.c \
 srcs/updatetree/updatetree_cmd.c \
 srcs/updatetree/updatetree_fill.c \
@@ -40,19 +39,18 @@ srcs/builtins/builtin_cd_utils.c \
 srcs/builtins/builtin_echo.c \
 srcs/builtins/builtin_pwd.c \
 srcs/builtins/builtin_exit.c \
-srcs/builtins/builtins/builtin_env.c \
-srcs/builtins/builtins/builtin_unset.c \
-srcs/builtins/builtins/builtin_export.c \
-srcs/builtins/builtins/builtin_export_utils.c \
-srcs/expansion/expand_parameter.c
+srcs/builtins/builtin_env.c \
+srcs/builtins/builtin_unset.c \
+srcs/builtins/builtin_export.c \
+srcs/builtins/builtin_export_utils.c \
 srcs/extra/extra.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
 LIB = -lreadline
 HEADERS = srcs/minishell.h
-MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
-MAC_LIB = -L/opt/homebrew/opt/readline/lib
+# MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
+# MAC_LIB = -L/opt/homebrew/opt/readline/lib
 
 all: $(NAME)
 

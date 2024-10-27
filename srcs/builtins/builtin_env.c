@@ -6,11 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:17:33 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 19:34:15 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: prints out all the items stored within the envp linked list
    except for the variables with no values. This function only accepts an

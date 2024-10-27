@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/27 18:16:39 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 19:18:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,7 +296,6 @@ int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
 
 /* Expansion functions*/
-int			token_parameter_expansion(t_token *token, t_list *envp);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
 char		*retrieve_param_name(char *str);
