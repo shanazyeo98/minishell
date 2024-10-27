@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 17:38:30 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/27 14:39:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,7 +294,6 @@ t_cmdnode	*createcmd(t_token *token);
 t_ast		*parse(t_token *token, int id);
 int			ret_grp(t_token *token, int basegrp);
 void		branch_error(t_ast *branch);
-void		tree_error(t_ast *node);
 
 /* Expansion functions*/
 int			token_parameter_expansion(t_token *token, t_list *envp);
