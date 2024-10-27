@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strreplace.c                                    :+:      :+:    :+:   */
+/*   ft_strreplace_all.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/26 08:29:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:10:14 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,37 +105,3 @@ char	*ft_strreplace_all(char *in, char *or, char *rep, char *delim)
 	}
 	return (res);
 }
-
-// int	main(void)
-// {
-// 	char	*in1;
-// 	char	*in2;
-// 	char	*in3;
-// 	char	*in4;
-
-// 	char	*out1;
-// 	char	*out2;
-// 	char	*out3;
-// 	char	*out4;
-
-
-
-// 	in1 = ft_strdup("$?test");
-// 	in2 = ft_strdup("$?test$?");
-// 	in3 = ft_strdup("$v1? $v1\" '$v1' $v1$v2 $v1");
-// 	in4 = ft_strdup("$v2? $v2\" '$v2' $v2$v3 $v2");
-
-// 	printf("in1: %s\nin2: %s\nin3: %s\nin4: %s\n", in1, in2, in3, in4);
-
-// 	// out1 = ft_strreplace(in1, "$?", "rep", "");
-// 	// out2 = ft_strreplace(in2, "$?", "rep", "");
-// 	out3 = ft_strreplace(in3, "$v1", "rep", DELIMITER);
-// 	// printf
-// 	out4 = ft_strreplace(in4, "$v1", "rep", DELIMITER);
-// 	printf("o3: %s | o4: %s\n", out3, out4);
-
-
-
-// 	// printf("o1: %s | o2: %s | o3: %s | o4: %s\n", out1, out2, out3, out4);
-
-// }

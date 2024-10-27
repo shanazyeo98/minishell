@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/27 09:19:48 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:07:47 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -280,11 +280,14 @@ void		branch_error(t_ast *branch);
 void		tree_error(t_ast *node);
 
 /* Expansion functions*/
-int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 char		*substring_after_char(char *input, char delim);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
-int			parameter_expansion(char *input, t_list *envp, int exit_status);
-
+char		*retrieve_param_name(char *str);
+char		*replace_param(char *input, char *par_dollar, char *rep);
+char		*replace_exit_status(char *input, int exit_status);
+char		*find_and_replace_param(char *input, t_list *envp, char *found);
+char		*parameter_expansion(char *input, t_list *envp, int exit_status);
+int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
 void		print_ast_node(t_ast *node);
@@ -333,14 +336,6 @@ t_list		*clone_envp(t_list **envp);
 int			export_print(t_list **sorted, t_list **envp);
 int			add_var(t_list **envp, char **args);
 int			builtin_export(char **args, t_list **envp);
-
-
-
-
-
-
-
-
 
 //builtin general
 int			countexeargs(char **args);

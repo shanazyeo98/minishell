@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parameter_expansion.c                              :+:      :+:    :+:   */
+/*   expand_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 09:27:01 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:15:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: Retrieves the name of a parameter, given the pointer address of
    the first $. Finds the closest delimiter, space, single quote, double quotes
@@ -19,7 +19,7 @@
    E.g. {$param_name}\0
 */
 
-static char	*retrieve_param_name(char *str)
+char	*retrieve_param_name(char *str)
 {
 	char	*param_name;
 	int		i;
@@ -55,23 +55,20 @@ static char	*retrieve_param_name(char *str)
 	- SUCCESS: if there are no malloc errors
 	- FAIL: if there are malloc errors
 */
-static int	replace_param(char *input, char *par_dollar, char *rep)
+
+char	*replace_param(char *input, char *par_dollar, char *rep)
 {
+	char	*out;
+
 	if (rep == NULL)
-	{
-		input = ft_strreplace_one(input, par_dollar, "", DELIMITER);
-		if (input == NULL)
-			return (free(par_dollar), FAIL);
-	}
+		out = ft_strreplace_one(input, par_dollar, "", DELIMITER);
 	else
 	{
-		input = ft_strreplace_one(input, par_dollar, rep, DELIMITER);
-		if (input == NULL)
-			return (free(par_dollar), free (rep), FAIL);
-		free (par_dollar);
+		out = ft_strreplace_one(input, par_dollar, rep, DELIMITER);
 		free (rep);
 	}
-	return (SUCCESS);
+	free (par_dollar);
+	return (out);
 }
 
 /* Description: replaces any $? within the input string with the exit status.
@@ -82,18 +79,20 @@ static int	replace_param(char *input, char *par_dollar, char *rep)
     - SUCCESS: if there are no malloc errors
     - FAIL: if there are malloc errors
 */
-static int replace_exit_status(char *input, int exit_status)
+
+char	*replace_exit_status(char *input, int exit_status)
 {
     char    *rep;
+	char	*out;
 
     rep = ft_itoa(exit_status);
     if (rep == NULL)
-        return (FAIL);
-    input = ft_strreplace_one(input, "$?", rep, "");
-    if (input == NULL)
-        return (free(rep), FAIL);
+        return (NULL);
+    out = ft_strreplace_one(input, "$?", rep, "");
     free (rep);
-    return (SUCCESS);
+	if (out == NULL)
+        return (NULL);
+    return (out);
 }
 
 /* Description: given the first found position of $ within the input string,
@@ -107,26 +106,28 @@ static int replace_exit_status(char *input, int exit_status)
 	- FAIL: if there are malloc errors
 */
 
-static int	find_and_replace_param(char *input, t_list *envp, char *found)
+char	*find_and_replace_param(char *input, t_list *envp, char *found)
 {
 	char	*par_name;
 	char	*par_dollar;
 	char	*rep;
 	int		status;
+	char	*out;
 
 	par_name = retrieve_param_name(found);
 	if (par_name == NULL)
-		return (FAIL);
+		return (NULL);
 	rep = retrieve_env_var(par_name, envp, &status);
 	if (status == FAIL)
-		return (free(par_name), FAIL);
+		return (free(par_name), NULL);
 	par_dollar = ft_strjoin("$", par_name);
 	free (par_name);
 	if (par_dollar == NULL)
-		return (FAIL);
-	if (replace_param(input, par_dollar, rep) == FAIL)
-		return (FAIL);
-	return (SUCCESS);
+		return (NULL);
+	out = replace_param(input, par_dollar, rep);
+	if (out == NULL)
+		return (NULL);
+	return (out);
 }
 
 /* Description: Takes in a string and scans through the content for parameters
@@ -138,24 +139,30 @@ static int	find_and_replace_param(char *input, t_list *envp, char *found)
 	- FAIL: if there are malloc errors
 */
 
-int	parameter_expansion(char *input, t_list *envp, int exit_status)
+char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 {
 	char	*found;
+	char	*temp;
+	char	*out;
 
-	found = ft_strchr(input, '$');
+	temp = input;
+	found = ft_strchr(temp, '$');
 	while (found != NULL)
 	{
 		if (found[1] == '?')
 		{
-			if (replace_exit_status(input, exit_status) == FAIL)
-				return (FAIL);
+			out = replace_exit_status(temp, exit_status);
+			if (out == NULL)
+				return (NULL);
 		}
 		else
 		{
-			if(find_and_replace_param(input, envp, found) == FAIL)
-				return (FAIL);
+			out = find_and_replace_param(temp, envp, found);
+			if (out == NULL)
+				return (NULL);
 		}
-		found = ft_strchr(input, '$');
+		temp = out;
+		found = ft_strchr(temp, '$');
 	}
-	return (SUCCESS);
+	return (out);
 }

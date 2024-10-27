@@ -42,7 +42,7 @@ srcs/builtins/builtin_env.c \
 srcs/builtins/builtin_unset.c \
 srcs/builtins/builtin_export.c \
 srcs/builtins/builtin_export_utils.c \
-srcs/parameter_expansion.c
+srcs/expansion/expand_parameter.c
 
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft

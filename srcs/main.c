@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 09:24:59 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 17:22:21 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ int	main(int argc, char *argv[], char *envp[])
 	char		*exp2[8] = {"export", "va\%r", "v1=t1", "v2=t2", "v3=t3", "v4=t4", "v5=t5", NULL};
 	char		*unset[4] = {"unset", "va\%r", "v5", NULL};
 	char		*input;
+	char		*out;
 
 
 
@@ -52,29 +53,31 @@ int	main(int argc, char *argv[], char *envp[])
 	builtin_export(exp2, &ms.envp);
 
 	printf("====================Print export====================\n");
-	builtin_export(exp1, &ms.envp);\
+	builtin_export(exp1, &ms.envp);
 
 	printf("====================Test unset====================\n");
 	builtin_unset(unset, &ms.envp);
 	builtin_export(exp1, &ms.envp);
 
 	printf("====================Test string expansion====================\n");
-	input = ft_strdup("$v1$?$v2$v1 '$v1'");
+	input = ft_strdup("$v1$v2 $v1$v8 $?");
 	printf("String before expansion: %s\n", input);
-	parameter_expansion(input, ms.envp, ms.exitstatus);
-	printf("String after expansion: %s\n", input);
+	out = parameter_expansion(input, ms.envp, ms.exitstatus);
+	printf("String after expansion: %s\n", out);
 
-	// while (1)
-	// {
-	// 	init_all_sig_handler(INTERACTIVE);
-	// 	getinput(&ms);
-	// 	init_all_sig_handler(NONINTERACTIVE);
-	// 	if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
-	// 		break_shell(&ms);
-	// 	tokenize(ms.input, &ms);
-	// 	print_token_list(ms);
-	// 	token_parameter_expansion(*(ms.tokenlist), ms.envp, ms.exitstatus);
-	// 	print_token_list(ms);
+	// free (out);
+
+	while (1)
+	{
+		init_all_sig_handler(INTERACTIVE);
+		getinput(&ms);
+		init_all_sig_handler(NONINTERACTIVE);
+		if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
+			break_shell(&ms);
+		tokenize(ms.input, &ms);
+		print_token_list(ms);
+		token_parameter_expansion(*(ms.tokenlist), ms.envp, ms.exitstatus);
+		print_token_list(ms);
 
 
 		// if (ms.tokenlist != NULL)
@@ -83,9 +86,9 @@ int	main(int argc, char *argv[], char *envp[])
 		// 	ms.ast = parse(*ms.tokenlist, -1);
 		// 	execute(ms.ast->cmdnode, &ms);
 		// }
-		// printf("cwd: %s\n", ms.cwd);
+		printf("cwd: %s\n", ms.cwd);
 		// spick_and_span(&ms, SUCCESS);
-	// }
+	}
 
 	return (EXIT_SUCCESS);
 }
