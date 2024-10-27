@@ -6,11 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:18:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 19:34:07 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: finds the index of the first instance of c in str. Returns -1
    if c is not found

@@ -6,11 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:17:48 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/27 19:33:37 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 /* Description: removes environment variables in the envp linked list. Behaves
    in the following manner depending on the input arguments:

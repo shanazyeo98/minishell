@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:20:07 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/28 02:00:15 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,11 @@ void	free_ft_split(char **arr)
 void	spick_and_span(t_minishell *ms, int status, int end)
 {
 	free(ms->input);
-	if (ms->path != NULL)
-		free_ft_split(ms->path);
-	if (ms->envp != NULL)
-		ft_lstclear(&(ms->envp), free);
-	ms->path = NULL;
+	if (ms->envp != NULL && end == TRUE)
+	{
+		ft_lstclear(&(ms->envp), &free); //to check with MJ On the clean function
+		ms->envp = NULL;
+	}
 	if (ms->tokenlist != NULL)
 		freetokens(ms->tokenlist);
 	ms->tokenlist = NULL;
