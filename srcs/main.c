@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 16:58:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 17:01:02 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 			execute(ms.ast->cmdnode, &ms);
 		}
-		printf("cwd: %s\n", ms.cwd);
+//		printf("cwd: %s\n", ms.cwd);
 		spick_and_span(&ms, SUCCESS, FALSE);
 	}
 	return (EXIT_SUCCESS);

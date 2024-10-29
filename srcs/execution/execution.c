@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 16:52:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 17:00:53 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 		}
 		token = token->next;
 	}
-	print_token_list(*params);
+//	print_token_list(*params);
 }
 
 int	nonchildexe(t_cmd *cmd, t_minishell *params)
