@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 16:24:37 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 16:52:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 {
 	t_token	*token;
 
-	// token = node->start;
-	// while (token != node->end)
-	// {
-	// 	if (token->type != SINGLE)
-	// 	{
-	// 		if (token_parameter_expansion(token, params->envp, params->exitstatus) == FAIL)
-	// 			spick_and_span(params, FAIL, TRUE);
-	// 	}
-	// 	token = token->next;
-	// }
+	token = node->start;
+	while (token != node->end)
+	{
+		if (token->type != SINGLE)
+		{
+			if (token_parameter_expansion(token, params->envp, params->exitstatus) == FAIL)
+				spick_and_span(params, FAIL, TRUE);
+		}
+		token = token->next;
+	}
 	token = node->start;
 	while (token != node->end)
 	{
