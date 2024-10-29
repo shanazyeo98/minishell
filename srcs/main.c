@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/28 02:39:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:47:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	break_shell(t_minishell *ms)
 /* Description: main programme for minishell
 */
 
-int	main(int argc, char *argv[], char *envp[])
-{
-	t_minishell	ms;
+// int	main(int argc, char *argv[], char *envp[])
+// {
+// 	t_minishell	ms;
 
 	ms = init_ms(argc, argv, envp);
 	while (1)

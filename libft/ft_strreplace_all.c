@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace_all.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 17:10:14 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:48:16 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,6 @@ char	*ft_strreplace_all(char *in, char *or, char *rep, char *delim)
 	char	*found;
 	char	*temp;
 	size_t	or_len;
-
 
 	res = in;
 	temp = in;
