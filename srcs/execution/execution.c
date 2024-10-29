@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/27 19:24:29 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 16:52:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,24 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 	{
 		if (token->type != SINGLE)
 		{
-			if (token_parameter_expansion(token, params->envp, \
-			params->exitstatus) == FAIL)
+			if (token_parameter_expansion(token, params->envp, params->exitstatus) == FAIL)
 				spick_and_span(params, FAIL, TRUE);
 		}
 		token = token->next;
 	}
+	token = node->start;
+	while (token != node->end)
+	{
+		if (token->type == BASIC && searchstar(token->str, 0) > -1)
+		{
+			if (wildcard_expansion(token->wordgrp, params) == FAIL)
+				spick_and_span(params, FAIL, TRUE);
+			while (token->next != NULL && (token->next)->wordgrp != token->wordgrp)
+				token = token->next;
+		}
+		token = token->next;
+	}
+	print_token_list(*params);
 }
 
 int	nonchildexe(t_cmd *cmd, t_minishell *params)

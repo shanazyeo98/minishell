@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/28 01:55:12 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:47:36 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <dirent.h>
 
 /* General */
 # define DELIMITER " '\"$?"
@@ -66,8 +67,8 @@
 
 /*Extra*/
 
-#define POSITIVECMD "hey"
-#define FLIRTCMD "flirt"
+# define POSITIVECMD "hey"
+# define FLIRTCMD "flirt"
 
 # define POSITIVEMSG0 "keep shining! \U0001F4AB"
 # define POSITIVEMSG1 "you're egg-cellent! \U0001F373"
@@ -114,6 +115,8 @@ typedef struct s_token
 	int				wordgrp;
 	int				grp;
 	int				hd_expand;
+	int				wildcard;
+	int				wildcard_found;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -195,6 +198,14 @@ typedef struct s_cd
 	char	**cdpath;
 }	t_cd;
 
+//wildcard
+
+typedef struct s_wc
+{
+	char	*str;
+	int		wildcard;
+}	t_wc;
+
 //builtins
 enum	e_builtin
 {
@@ -275,6 +286,7 @@ void		tokenize(char *prompt, t_minishell *params);
 void		freetokens(t_token **list);
 t_token		*ret_token(int id, t_token *token);
 void		print_token_list(t_minishell ms);
+t_token		*ret_tokenwordgrp(int wordgrp, t_token *token);
 
 //heredoc
 int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
@@ -321,12 +333,18 @@ int			initcmd(t_cmd *cmd, t_token *start, t_token *end);
 void		initredirarray(t_redir **array, int count);
 void		initchararray(char **array, int count);
 void		updatetree(t_cmdnode *cmdnode, t_minishell *params);
+char		*newstring(char *str, char *addstr);
 
 //redirections
 int			expandheredoc(t_redir *redir, t_minishell *params);
 int			amendheredoc(int newfd, int oldfd, t_minishell *params);
 int			exe_redirection(t_redir **redir, t_minishell *params);
 void		closeredirfds(t_redir **redir);
+
+//wildcard
+int			searchdir(char **newstr, t_list *wclist, char *cwd);
+int			wildcard_expansion(int grp, t_minishell *params);
+int			searchstar(char *str, int start);
 
 //execution
 void		closepipe(int fd[2]);

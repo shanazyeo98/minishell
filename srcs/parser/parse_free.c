@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:20:27 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 17:15:16 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:34:29 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	freecmdnode(t_ast *node)
 {
 	if (node->cmdnode->cmds != NULL)
 		ft_lstclear(&node->cmdnode->cmds, &clearcmd);
-
 	free(node->cmdnode);
 	free(node);
 }

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 16:54:59 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 16:58:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	main(int argc, char *argv[], char *envp[])
 
 			//tree traversal portion here -> execute inside
 
-			// execute(ms.ast->cmdnode, &ms);
+			execute(ms.ast->cmdnode, &ms);
 		}
 		printf("cwd: %s\n", ms.cwd);
 		spick_and_span(&ms, SUCCESS, FALSE);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/26 09:32:47 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:46:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int		ft_lstsize(t_list *lst);
 void	ft_lstrm_node(t_list **lst, t_list	*rm_node);
 void	ft_lstadd_node(t_list *n1, t_list *n2);
 t_list	*ft_lstsort(t_list **lst);
-
-
 
 //normal functions
 int		ft_atoi(const char *nptr);
@@ -82,6 +80,7 @@ char	*ft_strreplace_one(char *in, char *or, char *rep, char *delim);
 int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	ft_freearray(char **array);
+int		ft_strncmp_reverse(char *s1, char *s2, int n);
 
 //printf
 

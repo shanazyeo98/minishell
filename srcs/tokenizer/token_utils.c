@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 13:22:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/26 10:19:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:47:56 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,15 @@ void	print_token_list(t_minishell ms)
 		curr_token->wordgrp);
 		curr_token = curr_token->next;
 	}
+}
+
+t_token	*ret_tokenwordgrp(int wordgrp, t_token *token)
+{
+	while (token != NULL)
+	{
+		if (token->wordgrp == wordgrp)
+			return (token);
+		token = token->next;
+	}
+	return (NULL);
 }
