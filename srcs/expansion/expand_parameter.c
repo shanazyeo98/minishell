@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 16:23:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 16:58:11 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,15 +142,15 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
 
 char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 {
-	char	*found;
 	char	*temp;
 	char	*out;
 
 	temp = input;
-	found = ft_strchr(temp, '$');
-	while (found != NULL)
+	if (ft_strchr(temp, '$') == NULL)
+		return (input);
+	while (ft_strchr(temp, '$') != NULL)
 	{
-		if (found[1] == '?')
+		if (ft_strchr(temp, '$')[1] == '?')
 		{
 			out = replace_exit_status(temp, exit_status);
 			if (out == NULL)
@@ -158,12 +158,11 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 		}
 		else
 		{
-			out = find_and_replace_param(temp, envp, found);
+			out = find_and_replace_param(temp, envp, ft_strchr(temp, '$'));
 			if (out == NULL)
 				return (NULL);
 		}
 		temp = out;
-		found = ft_strchr(temp, '$');
 	}
 	return (out);
 }
