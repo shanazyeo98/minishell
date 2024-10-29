@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 17:01:02 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 18:07:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int	main(int argc, char *argv[], char *envp[])
 		{
 			heredoccheck(ms.tokenlist, &ms);
 			ms.ast = parse(*ms.tokenlist, -1);
-			print_ast(ms.ast, 0);
+//			print_ast(ms.ast, 0);
 
 			//tree traversal portion here -> execute inside
 

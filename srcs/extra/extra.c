@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:57:23 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/23 12:35:28 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/25 15:55:22 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,35 @@ int	flirtmsg(void)
 	if (i % 4 == 3)
 		ft_putendl_fd(FLIRT3, STDOUT_FILENO);
 	i++;
+	return (SUCCESS);
+}
+
+int	duck(void)
+{
+	ft_putendl_fd("           -----", STDOUT_FILENO);
+	ft_putendl_fd("         < quack >", STDOUT_FILENO);
+	ft_putendl_fd("   __   /  -----", STDOUT_FILENO);
+	ft_putendl_fd("__( •)> ", STDOUT_FILENO);
+	ft_putendl_fd("\\____)", STDOUT_FILENO);
+	return (SUCCESS);
+}
+
+int	confusedduck(void)
+{
+	ft_putendl_fd("           ----------", STDOUT_FILENO);
+	ft_putendl_fd("  ?      < huh? quack >", STDOUT_FILENO);
+	ft_putendl_fd("   __   /  ----------", STDOUT_FILENO);
+	ft_putendl_fd("__( •)>", STDOUT_FILENO);
+	ft_putendl_fd("\\____)", STDOUT_FILENO);
+	return (SUCCESS);
+}
+
+int	sophduck(void)
+{
+	ft_putendl_fd("           -------------------------", STDOUT_FILENO);
+	ft_putendl_fd("   __    < fancy a cup of tea? quack >", STDOUT_FILENO);
+	ft_putendl_fd(" _|__|_  / -------------------------", STDOUT_FILENO);
+	ft_putendl_fd("__(╭•)>", STDOUT_FILENO);
+	ft_putendl_fd("\\____)", STDOUT_FILENO);
 	return (SUCCESS);
 }
