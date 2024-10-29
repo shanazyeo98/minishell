@@ -6,17 +6,31 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 19:52:19 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 15:24:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 16:49:49 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+char	*nonwccheck(char *file, char *oldpos, t_list *wclist, int i)
+{
+	char	*str;
+	char	*pos;
+
+	str = (char *) wclist->content;
+	pos = ft_strnstr(file, str, ft_strlen(file));
+	if (pos == NULL)
+		return (NULL);
+	if ((i == 0 && pos != file) || (oldpos != NULL && pos < oldpos))
+		return (NULL);
+	if (wclist->next == NULL && ft_strlen(str) != ft_strlen(pos))
+		return (NULL);
+	return (pos);
+}
+
 int	patternmatch(char *file, t_list *wclist)
 {
 	int		i;
-	char	*str;
-	char	*pos;
 	char	*oldpos;
 
 	i = 0;
@@ -25,16 +39,12 @@ int	patternmatch(char *file, t_list *wclist)
 	{
 		if (wclist->content != NULL)
 		{
-			str = (char *) wclist->content;
-			pos = ft_strnstr(file, str, ft_strlen(file));
-			if (pos == NULL)
+			oldpos = nonwccheck(file, oldpos, wclist, i);
+			if (oldpos == NULL)
 				return (FALSE);
-			if ((i == 0 && pos != file) || (oldpos != NULL && pos < oldpos))
-				return (FALSE);
-			if (wclist->next == NULL && ft_strlen(str) != ft_strlen(pos))
-				return (FALSE);
-			oldpos = pos;
 		}
+		if (i == 0 && wclist->content == NULL && file[0] == '.')
+			return (FALSE);
 		i++;
 		wclist = wclist->next;
 	}
@@ -84,5 +94,7 @@ int	searchdir(char **newstr, t_list *wclist, char *cwd)
 			return (closedir(dirstream), FAIL);
 	}
 	closedir(dirstream);
+	if (*newstr == NULL)
+		return (ERROR);
 	return (SUCCESS);
 }

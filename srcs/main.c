@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 15:47:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/29 15:49:43 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	break_shell(t_minishell *ms)
 /* Description: main programme for minishell
 */
 
-// int	main(int argc, char *argv[], char *envp[])
-// {
-// 	t_minishell	ms;
+int	main(int argc, char *argv[], char *envp[])
+{
+	t_minishell	ms;
 
 	ms = init_ms(argc, argv, envp);
 	while (1)
@@ -45,7 +45,7 @@ void	break_shell(t_minishell *ms)
 		{
 			heredoccheck(ms.tokenlist, &ms);
 			ms.ast = parse(*ms.tokenlist, -1);
-			// execute(ms.ast->cmdnode, &ms);
+			execute(ms.ast->cmdnode, &ms);
 		}
 		printf("cwd: %s\n", ms.cwd);
 		spick_and_span(&ms, SUCCESS, FALSE);
