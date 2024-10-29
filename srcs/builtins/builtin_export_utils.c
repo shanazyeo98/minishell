@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:18:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/30 01:22:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,39 +29,108 @@ char	*get_var_name(char *in, char c)
 	return (var);
 }
 
+/* Description: prints out the error message when an invalid variable name
+   is detected.
+*/
+void	print_invalid_var_err(char *var)
+{
+	ft_putstr_fd(ERR, STDERR_FILENO);
+	ft_putstr_fd(": export: ", STDERR_FILENO);
+	ft_putstr_fd(var, STDERR_FILENO);
+	ft_putendl_fd(" : Pick a better variable name. 1d10t", STDERR_FILENO);
+}
+
+/* Description: checks if the variable name is valid. Checks:
+	1. Var name must start wtih '_' or a letter
+	2. No '.', '-', ' '
+   Returns ERROR (1) if the var name is invalid. Returns SUCCESS (0) otherwise
+*/
+int	check_var(char *var)
+{
+	int	i;
+
+	if (var == NULL)
+		return (FAIL);
+	if (ft_isalpha(var[0]) == 0 && var[0] != '_')
+	{
+		print_invalid_var_err(var);
+		return (ERROR);
+	}
+	i = 1;
+	while (var[i] != '\0')
+	{
+		if ((var[i] >= ' ' && var[i] <= '#') || \
+		(var[i] >= '%' && var[i] <= '/') || \
+		(var[i] >= ':' && var[i] <= '@') || \
+		(var[i] >= '[' && var[i] <= '^') || \
+		(var[i] >= '{' && var[i] <= '~'))
+		{
+			print_invalid_var_err(var);
+			return (ERROR);
+		}
+		i++;
+	}
+	return (SUCCESS);
+}
+
+/* Description: Given an argument from the array of arguments, retrieve the
+   variable name, check if the name is valid. If the name is invalid, return
+   ERROR. Otherwise, replace the existing node within the envp list if there
+   is an existing node. Otherwise, add the node in.
+*/
+
+int	process_arg(char *arg, t_list **envp)
+{
+	char	*var;
+	t_list	*found;
+	t_list	*add;
+
+	var = get_var_name(arg, '=');
+	if (var == NULL)
+		return (FAIL);
+	if (check_var(var) == ERROR)
+		return (free(var), ERROR);
+	found = find_env_var(var, *envp);
+	free (var);
+	var = NULL;
+	if (found != NULL)
+		ft_lstrm_node(envp, found);
+	var = ft_strdup(arg);
+	if (var == NULL)
+		return (FAIL);
+	add = ft_lstnew(var);
+	if (add == NULL)
+		return (free (var), FAIL);
+	ft_lstadd_back(envp, add);
+	return (SUCCESS);
+}
 
 /* Description: takes in an array of strings containing the environment
-   variables and their corresponding values. For each environment variable,
-   search through the envp linked list for a match and remove that node if
-   there is a match. Add the whole string into the envp linked list after.
+   variables and their corresponding values.
+   For each environment variable:
+	- Check if the variable name is valid. Continue to the next variable if the
+	  name is not valid
+	- Search through the envp linked list for a match and remove that node if
+	  there is a match. Add the whole string into the envp linked list after.
+   Returns (FAIL) if at least 1 variable name is invalid
 */
 
 int	add_var(t_list **envp, char **args)
 {
-	char	*var;
+	int		status;
 	int		i;
-	t_list	*found;
-	t_list	*add;
+	int		process;
 
 	i = 1;
+	status = SUCCESS;
 	while (args[i] != NULL)
 	{
-		var = get_var_name(args[i], '=');
-		if (var == NULL)
+		process = process_arg(args[i], envp);
+		if (process == ERROR)
+			status = ERROR;
+		else if (process == FAIL)
 			return (FAIL);
-		found = find_env_var(var, *envp);
-		free (var);
-		var = NULL;
-		if (found != NULL)
-			ft_lstrm_node(envp, found);
-		var = ft_strdup(args[i]);
-		if (var == NULL)
-			return (FAIL);
-		add = ft_lstnew(var);
-		if (add == NULL)
-			return (free (var), FAIL);
-		ft_lstadd_back(envp, add);
 		i++;
 	}
-	return (SUCCESS);
+	return (status);
 }
