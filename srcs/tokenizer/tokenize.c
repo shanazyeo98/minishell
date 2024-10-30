@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 17:43:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:53:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	tokenstatus(t_minishell *params, int status)
 	else if (status == ERROR)
 		ft_putendl_fd(ERR_SYNTAX, 2);
 	if (status == ERROR || *(params->tokenlist) == NULL)
-		spick_and_span(params, ERROR, FALSE);
+	{
+		freetokens(params->tokenlist);
+		params->tokenlist = NULL;
+	}
 }
 
 /*Description: Initialises the token list and the info*/

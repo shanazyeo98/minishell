@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:13:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 12:17:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:16:17 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,13 @@ int	herefile(int hd)
 
 	num = ft_itoa(hd);
 	if (num == NULL)
-	{
-		ft_putendl_fd(ERR_MALLOC_FAIL, 2);
 		return (-1);
-	}
 	name = ft_strjoin(HEREDOCFILE, num);
 	free(num);
 	unlink(name);
 	fd = open(name, O_RDWR | O_CREAT | O_APPEND, 0644);
+	if (fd == -1)
+		perror(ERR);
 	unlink(name);
 	free(name);
 	return (fd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/30 00:23:22 by mintan           ###   ########.fr       */
+/*   Updated: 2024/10/30 18:06:07 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,14 @@ int	main(int argc, char *argv[], char *envp[])
 		if (g_sig_status != SIGINT)
 			tokenize(ms.input, &ms);
 		if (ms.tokenlist != NULL)
-		{
 			heredoccheck(ms.tokenlist, &ms);
+		init_all_sig_handler(NONINTERACTIVE);
+		if (ms.tokenlist != NULL)
+		{
 			ms.ast = parse(*ms.tokenlist, -1);
-//			print_ast(ms.ast, 0);
-
 			//tree traversal portion here -> execute inside
-
 			execute(ms.ast->cmdnode, &ms);
 		}
-//		printf("cwd: %s\n", ms.cwd);
 		spick_and_span(&ms, SUCCESS, FALSE);
 	}
 	return (EXIT_SUCCESS);

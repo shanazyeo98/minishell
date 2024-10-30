@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:38:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:08:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,7 @@ int	splitbasic(t_token *token, char **args, int *i, t_token *end)
 
 int	det_action(t_cmd *cmd, t_token **token, int *i_arg, t_token *end)
 {
-	if ((*token)->type == REDIRECTOR)
-	{
-		if (redirection(end, token, cmd->redir) == FAIL)
-			return (FAIL);
-	}
-	else if ((*token)->type == BASIC)
+	if ((*token)->type == BASIC)
 	{
 		if (splitbasic(*token, cmd->args, i_arg, end) == FAIL)
 			return (FAIL);
@@ -92,22 +87,27 @@ int	det_action(t_cmd *cmd, t_token **token, int *i_arg, t_token *end)
 int	fill(t_cmd *cmd, t_token *start, t_token *end)
 {
 	int		i_arg;
-	t_token	*token;
+	int		i_redir;
 	int		grp;
 
 	i_arg = 0;
-	token = start;
-	grp = token->wordgrp;
-	while (token != end)
+	i_redir = 0;
+	grp = start->wordgrp;
+	while (start != end)
 	{
-		if (det_action(cmd, &token, &i_arg, end) == FAIL)
+		if (det_action(cmd, &start, &i_arg, end) == FAIL)
 			return (FAIL);
-		token = token->next;
-		if (token != NULL && token->wordgrp != grp)
+		if (start->type == REDIRECTOR)
+		{
+			if (redirection(end, &start, cmd->redir, &i_redir) == FAIL)
+				return (FAIL);
+		}
+		start = start->next;
+		if (start != NULL && start->wordgrp != grp)
 		{
 			if (cmd->args[i_arg] != NULL)
 				i_arg++;
-			grp = token->wordgrp;
+			grp = start->wordgrp;
 		}
 	}
 	return (SUCCESS);

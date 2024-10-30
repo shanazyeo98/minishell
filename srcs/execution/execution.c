@@ -6,40 +6,46 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 18:05:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:35:52 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+/*Description: Expands the tokens in the node for variable expansion
+and wildcard expansion. Program will exit if malloc fails*/
+
 void	expandtokens(t_cmdnode *node, t_minishell *params)
 {
-	t_token	*token;
+	t_token	*t;
 
-	token = node->start;
-	while (token != node->end)
+	t = node->start;
+	while (t != node->end)
 	{
-		if (token->type != SINGLE)
+		if (t->type != SINGLE)
 		{
-			if (token_parameter_expansion(token, params->envp, params->exitstatus) == FAIL)
+			if (token_parameter_expansion(t, params->envp, \
+			params->exitstatus) == FAIL)
 				spick_and_span(params, FAIL, TRUE);
 		}
-		token = token->next;
+		t = t->next;
 	}
-	token = node->start;
-	while (token != node->end)
+	t = node->start;
+	while (t != node->end)
 	{
-		if (token->type == BASIC && searchstar(token->str, 0) > -1)
+		if (t->type == BASIC && searchstar(t->str, 0) > -1)
 		{
-			if (wildcard_expansion(token->wordgrp, params) == FAIL)
+			if (wildcard_expansion(t->wordgrp, params) == FAIL)
 				spick_and_span(params, FAIL, TRUE);
-			while (token->next != NULL && (token->next)->wordgrp != token->wordgrp)
-				token = token->next;
+			while (t->next != NULL && (t->next)->wordgrp != t->wordgrp)
+				t = t->next;
 		}
-		token = token->next;
+		t = t->next;
 	}
-//	print_token_list(*params);
 }
+
+/*Description: Function to execute builtins that do not require a child process
+It will open and close the redirectors if applicable.*/
 
 int	nonchildexe(t_cmd *cmd, t_minishell *params)
 {
@@ -53,6 +59,9 @@ int	nonchildexe(t_cmd *cmd, t_minishell *params)
 	func = builtin(cmd->args[0]);
 	return (exebuiltin(func, cmd->args, params));
 }
+
+/*Description: Function to generate the child processes for applicable
+commands. If there is more than one command, pipes will be created.*/
 
 int	forkchild(int count, t_list *cmd, t_minishell *params)
 {
@@ -81,6 +90,9 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 	return (SUCCESS);
 }
 
+/*Description: Function for the parent process to wait for the child and
+retrieves the status.*/
+
 int	waitforchild(int count, t_minishell *params)
 {
 	int	pid;
@@ -102,6 +114,12 @@ int	waitforchild(int count, t_minishell *params)
 	free(params->pid);
 	return (final_status);
 }
+
+/*Description: Overall function to execute. Following steps will happen:
+1. Variable and wildcard expansion
+2. Convert tokens into list of arguments and redirections
+3. Execution - either in parent or a child process
+Returns the exit status of the execution*/
 
 int	execute(t_cmdnode *node, t_minishell *params)
 {

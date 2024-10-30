@@ -6,11 +6,15 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 19:52:19 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 10:46:13 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:43:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*Description: if wc node is a substring, it checks if the file name
+consists of the substring and the position compared to the previous substr
+if any. Returns NULL if unable to find*/
 
 char	*nonwccheck(char *file, char *oldpos, t_list *wclist, int i)
 {
@@ -27,6 +31,9 @@ char	*nonwccheck(char *file, char *oldpos, t_list *wclist, int i)
 		return (NULL);
 	return (pos + ft_strlen(str));
 }
+
+/*Description: Loops through the wildcard linked list to check if the
+file name matches the pattern. Returns TRUE if pattern matches, else FALSE*/
 
 int	patternmatch(char *file, t_list *wclist)
 {
@@ -51,6 +58,9 @@ int	patternmatch(char *file, t_list *wclist)
 	return (TRUE);
 }
 
+/*Description: Checks if the file matches the pattern. If so, combine
+the file names into a string*/
+
 int	checkfile(char *file, t_list *wclist, char **str)
 {
 	if (patternmatch(file, wclist) == TRUE)
@@ -73,6 +83,9 @@ int	checkfile(char *file, t_list *wclist, char **str)
 	}
 	return (SUCCESS);
 }
+
+/*Description: Loops through the file in the cwd and check if
+the files matches the wildcard pattern.*/
 
 int	searchdir(char **newstr, t_list *wclist, char *cwd)
 {

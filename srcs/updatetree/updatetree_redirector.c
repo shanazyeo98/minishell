@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 02:22:38 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 13:45:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:08:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,31 +70,30 @@ int	initredir(t_redir **redir, t_token **token, int *grp, int *null)
 	return (SUCCESS);
 }
 
-int	redirection(t_token *end, t_token **token, t_redir **redir)
+int	redirection(t_token *end, t_token **token, t_redir **redir, int *i)
 {
-	static int	i = 0;
 	int			grp;
 	int			null;
 
-	if (initredir(&(redir[i]), token, &grp, &null) == FAIL)
+	if (initredir(&(redir[*i]), token, &grp, &null) == FAIL)
 		return (FAIL);
 	while (1)
 	{
-		if ((redir[i])->id != HEREDOC && (*token)->type == BASIC \
+		if ((redir[*i])->id != HEREDOC && (*token)->type == BASIC \
 		&& ft_countstr((*token)->str, ' ') != 1)
 		{
 			null = 1;
-			free((redir[i])->file);
-			(redir[i])->file = NULL;
+			free((redir[*i])->file);
+			(redir[*i])->file = NULL;
 		}
-		if ((redir[i])->id != HEREDOC && null == 0 \
-		&& assignfilename(*token, redir[i]) == FAIL)
+		if ((redir[*i])->id != HEREDOC && null == 0 \
+		&& assignfilename(*token, redir[*i]) == FAIL)
 			return (FAIL);
 		if ((*token)->next == end || (*token)->next->wordgrp != grp || \
 		(*token)->next->type == REDIRECTOR)
 			break ;
 		*token = (*token)->next;
 	}
-	i++;
+	(*i)++;
 	return (SUCCESS);
 }

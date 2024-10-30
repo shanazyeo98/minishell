@@ -6,11 +6,16 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:48:48 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 14:08:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:25:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*Description: Opens the input file
+Returns: ERROR - if file name has a space inside and is unquoted or unable
+to open
+Else, SUCCESS*/
 
 int	openinput(t_redir *redir)
 {
@@ -19,7 +24,7 @@ int	openinput(t_redir *redir)
 	if (redir->file == NULL)
 	{
 		ft_putstr_fd(ERR, 2);
-		ft_putendl_fd("ambiguous redirect", STDERR_FILENO);
+		ft_putendl_fd(": ambiguous redirect", STDERR_FILENO);
 		return (ERROR);
 	}
 	fd = open(redir->file, O_RDONLY);
@@ -31,6 +36,11 @@ int	openinput(t_redir *redir)
 	redir->fd = fd;
 	return (SUCCESS);
 }
+
+/*Description: Opens the output file (either truncated or append mode)
+Returns: ERROR - if file name has a space inside and is unquoted or unable
+to open
+Else, SUCCESS*/
 
 int	openoutput(t_redir *redir)
 {
@@ -55,6 +65,8 @@ int	openoutput(t_redir *redir)
 	return (SUCCESS);
 }
 
+/*Description: Intermediary function to call input / output functions*/
+
 int	handlefiles(t_redir *redir)
 {
 	int	status;
@@ -65,6 +77,13 @@ int	handlefiles(t_redir *redir)
 		status = openoutput(redir);
 	return (status);
 }
+
+/*Description: Run through the input and output redirections to open the files.
+If the last input file is a heredoc, it will undergo the file generation
+and expansion for heredoc accordingly.
+Returns: ERROR - if there is any issue opening the file (excluding heredoc)
+FAIL - malloc issues or unable to generate file for heredoc
+Else, SUCCESS*/
 
 int	exe_redirection(t_redir **redir, t_minishell *params)
 {
@@ -90,6 +109,8 @@ int	exe_redirection(t_redir **redir, t_minishell *params)
 	}
 	return (SUCCESS);
 }
+
+/*Description: Loops through the redirection list to close the fds*/
 
 void	closeredirfds(t_redir **redir)
 {

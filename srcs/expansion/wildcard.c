@@ -6,11 +6,14 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 14:46:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 16:50:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:40:28 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*Description: Returns the index of where the wildcard occurs
+Returns -1 if unable to find*/
 
 int	searchstar(char *str, int start)
 {
@@ -25,6 +28,10 @@ int	searchstar(char *str, int start)
 	}
 	return (-1);
 }
+
+/*Description: Generates a wildcard node
+If node is a *, the pointer in the list node will be NULL
+Else, it will store the substring of the wildcard word*/
 
 int	addwcnode(char *str, t_list **wclist, int start, int end)
 {
@@ -55,6 +62,9 @@ int	addwcnode(char *str, t_list **wclist, int start, int end)
 	return (SUCCESS);
 }
 
+/*Description: Takes in the whole word where the wildcard occurs and
+breaks it down into a linked list comprising of * and substrings*/
+
 int	genwildcardlist(t_token *token, t_list **wclist)
 {
 	int		o_index;
@@ -81,6 +91,11 @@ int	genwildcardlist(t_token *token, t_list **wclist)
 	return (SUCCESS);
 }
 
+/*Description: Replaces the strings in the token with the new expanded
+string. If there is multiple tokens across the same word, the first
+token string will be updated with the new string while subsequent tokens
+will be updated with ""*/
+
 int	replacestrs(t_token *tokenlist, char *newstr, int wordgrp)
 {
 	t_token	*token;
@@ -99,6 +114,12 @@ int	replacestrs(t_token *tokenlist, char *newstr, int wordgrp)
 	}
 	return (SUCCESS);
 }
+
+/*Description: Overall function for wildcard expansion. Returns the
+status:
+1. FAIL - malloc errors
+2. ERROR - unable to find matching files
+3. SUCCESS*/
 
 int	wildcard_expansion(int grp, t_minishell *params)
 {

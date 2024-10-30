@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/05 13:22:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 15:47:56 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:28:17 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ void	print_token_list(t_minishell ms)
 	}
 }
 
+/*Description: Retrieves the first token in the wordgroup that is
+not an operator or redirector*/
+
 t_token	*ret_tokenwordgrp(int wordgrp, t_token *token)
 {
 	while (token != NULL)
 	{
-		if (token->wordgrp == wordgrp)
+		if (token->type != OPERATOR && token->type != REDIRECTOR \
+		&& token->wordgrp == wordgrp)
 			return (token);
 		token = token->next;
 	}

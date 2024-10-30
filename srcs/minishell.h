@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 13:43:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:14:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # include <dirent.h>
 
 /* General */
-# define DELIMITER " '\"$?"
+# define DELIMITER " '\n\"$?"
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
@@ -304,6 +304,7 @@ t_token		*ret_tokenwordgrp(int wordgrp, t_token *token);
 int			heredoc(t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
 char		*delim(t_token *token, t_minishell *params);
+int			herefile(int hd);
 
 //parsing
 int			ret_op(char *str);
@@ -336,7 +337,6 @@ void		traverse_ast_first_last(t_ast *node);
 //update tree
 void		count(int *args, int *redir, t_token *start, t_token *end);
 int			countargs(char *str, t_token *token, t_token *start, t_token *end);
-int			redirection(t_token *end, t_token **token, t_redir **redir);
 int			ft_assignstr(char *newstr, char **args);
 int			fill(t_cmd *cmd, t_token *start, t_token *end);
 void		free_tree(t_ast *node);
@@ -345,6 +345,7 @@ void		initredirarray(t_redir **array, int count);
 void		initchararray(char **array, int count);
 void		updatetree(t_cmdnode *cmdnode, t_minishell *params);
 char		*newstring(char *str, char *addstr);
+int			redirection(t_token *end, t_token **token, t_redir **redir, int *i);
 
 //redirections
 int			expandheredoc(t_redir *redir, t_minishell *params);

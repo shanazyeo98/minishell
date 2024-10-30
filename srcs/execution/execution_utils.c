@@ -6,17 +6,23 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/25 15:53:48 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 17:30:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/*Description: Close the fds in a pipe*/
 
 void	closepipe(int fd[2])
 {
 	close(fd[0]);
 	close(fd[1]);
 }
+
+/*Description: pipe a fd[2]
+Return: FAIL - if pipe fails
+Else, SUCCESS*/
 
 int	openpipe(int fd[2])
 {
@@ -27,6 +33,9 @@ int	openpipe(int fd[2])
 	}
 	return (SUCCESS);
 }
+
+/*Description: Determine if the command belongs to any builtin
+Returns -1 if unable to match*/
 
 int	builtin(char *str)
 {
@@ -56,6 +65,8 @@ int	builtin(char *str)
 		return (SOPHDUCK);
 	return (-1);
 }
+
+/*Description: Executes the builtin*/
 
 int	exebuiltin(int func, char **args, t_minishell *params)
 {
