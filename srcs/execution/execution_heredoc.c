@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 16:39:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 11:01:02 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,18 @@
 int	amendheredoc(int newfd, int oldfd, t_minishell *params)
 {
 	char	*str;
-//	char	*newstr;
+	char	*newstr;
 
-	//toremove
-	(void)params;
 	while (1)
 	{
 		str = get_next_line(oldfd);
 		if (str == NULL)
 			break ;
-		//expand str
-		ft_putstr_fd(str, newfd);
+		newstr = parameter_expansion(str, params->envp, params->exitstatus);
+		if (newstr == NULL)
+			return (FAIL);
+		ft_putstr_fd(newstr, newfd);
+		free(newstr);
 	}
 	close(oldfd);
 	return (SUCCESS);
