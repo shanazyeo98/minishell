@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:48:48 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:14:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 14:08:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ int	exe_redirection(t_redir **redir, t_minishell *params)
 			input_i = i;
 		i++;
 	}
-	if (input_i > -1 && redir[input_i]->id == HEREDOC && \
-	redir[input_i]->hd_expand == TRUE)
+	if (input_i > -1 && redir[input_i]->id == HEREDOC)
 	{
 		if (expandheredoc(redir[input_i], params) == FAIL)
 			return (FAIL);

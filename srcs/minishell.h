@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 18:04:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 13:43:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,7 @@ typedef struct s_token
 	int				wordgrp;
 	int				grp;
 	int				hd_expand;
-	int				wildcard;
-	int				wildcard_found;
+	char			*hd_content;
 	struct s_token	*next;
 	struct s_token	*prev;
 }	t_token;
@@ -184,6 +183,7 @@ typedef struct s_redir
 	char	*file;
 	int		fd;
 	int		hd_expand;
+	char	*hd_content;
 }	t_redir;
 
 typedef struct s_cmd
@@ -301,10 +301,9 @@ void		print_token_list(t_minishell ms);
 t_token		*ret_tokenwordgrp(int wordgrp, t_token *token);
 
 //heredoc
-int			heredoc(int hd, t_token *token, char *delim, t_minishell *params);
+int			heredoc(t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
 char		*delim(t_token *token, t_minishell *params);
-int			herefile(int hd);
 
 //parsing
 int			ret_op(char *str);

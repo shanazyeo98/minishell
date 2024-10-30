@@ -6,29 +6,33 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 11:01:02 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 14:23:49 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	amendheredoc(int newfd, int oldfd, t_minishell *params)
+int	inputheredoc(t_redir *redir, int fd, t_minishell *params)
 {
-	char	*str;
 	char	*newstr;
+	char	*content;
 
-	while (1)
+	content = ft_strdup(redir->hd_content);
+	if (content == NULL)
+		return (FAIL);
+	if (redir->hd_expand == TRUE)
 	{
-		str = get_next_line(oldfd);
-		if (str == NULL)
-			break ;
-		newstr = parameter_expansion(str, params->envp, params->exitstatus);
+		newstr = parameter_expansion(content, params->envp, params->exitstatus);
 		if (newstr == NULL)
 			return (FAIL);
-		ft_putstr_fd(newstr, newfd);
+		ft_putstr_fd(newstr, fd);
 		free(newstr);
 	}
-	close(oldfd);
+	else
+	{
+		ft_putstr_fd(content, fd);
+		free(content);
+	}
 	return (SUCCESS);
 }
 
@@ -42,7 +46,7 @@ int	expandheredoc(t_redir *redir, t_minishell *params)
 	num = ft_itoa(i);
 	if (num == NULL)
 		return (FAIL);
-	name = ft_strjoin(HEREDOCFINAL, num);
+	name = ft_strjoin(HEREDOCFILE, num);
 	if (name == NULL)
 		return (free(num), FAIL);
 	unlink(name);
@@ -55,8 +59,8 @@ int	expandheredoc(t_redir *redir, t_minishell *params)
 		perror(ERR);
 		return (FAIL);
 	}
-	if (amendheredoc(fd, redir->fd, params) == FAIL)
+	if (inputheredoc(redir, fd, params) == FAIL)
 		return (close(fd), FAIL);
 	redir->fd = fd;
-	return (SUCCESS);
+	return (i++, SUCCESS);
 }

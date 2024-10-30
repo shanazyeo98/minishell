@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:37:54 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/30 14:33:22 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	freetokens(t_token **list)
 			next = token->next;
 			if (token->str != NULL)
 				free(token->str);
+			if (token->hd_content != NULL)
+				free(token->hd_content);
 			free(token);
 			token = next;
 		}
@@ -59,6 +61,7 @@ t_token	*createtoken(int type, t_tokendets *info)
 	newtoken->str = NULL;
 	newtoken->next = NULL;
 	newtoken->prev = NULL;
+	newtoken->hd_content = NULL;
 	newtoken->id = info->id;
 	info->id++;
 	return (newtoken);
