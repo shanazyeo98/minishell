@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/30 18:06:07 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/31 12:09:14 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ms.tokenlist != NULL)
 		{
 			ms.ast = parse(*ms.tokenlist, -1);
-			//tree traversal portion here -> execute inside
+			print_ast(ms.ast, 0);
+			// tree traversal portion here -> execute inside
 			execute(ms.ast->cmdnode, &ms);
 		}
 		spick_and_span(&ms, SUCCESS, FALSE);

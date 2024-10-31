@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:14:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/31 12:31:45 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -330,7 +330,9 @@ int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
 void		print_ast_node(t_ast *node);
-void		print_ast_cmd(t_token *start, t_token *end);
+void		print_ast_tkn(t_token *start, t_token *end);
+void		print_ast_cmd(t_list *cmds);
+void		printcmdlist(t_list *node);
 void		print_ast(t_ast *node, int ctr);
 void		traverse_ast_first_last(t_ast *node);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:35:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/10/31 12:31:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,23 +123,28 @@ Returns the exit status of the execution*/
 
 int	execute(t_cmdnode *node, t_minishell *params)
 {
-	t_cmd	*cmd;
-	int		count;
+	// t_cmd	*cmd;
+	// int		count;
 
 	expandtokens(node, params);
 	updatetree(node, params);
-	count = ft_lstsize(node->cmds);
-	cmd = (t_cmd *) node->cmds->content;
-	if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 6)
-		return (nonchildexe(cmd, params));
-	else
-	{
-		params->exe_index = 0;
-		params->pid = malloc(sizeof(int) * count);
-		if (params->pid == NULL)
-			return (FAIL);
-		if (forkchild(count, node->cmds, params) == FAIL)
-			return (FAIL);
-		return (waitforchild(count, params));
-	}
+
+	printcmdlist(node->cmds);
+	return (1);
+
+
+	// count = ft_lstsize(node->cmds);
+	// cmd = (t_cmd *) node->cmds->content;
+	// if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 6)
+	// 	return (nonchildexe(cmd, params));
+	// else
+	// {
+	// 	params->exe_index = 0;
+	// 	params->pid = malloc(sizeof(int) * count);
+	// 	if (params->pid == NULL)
+	// 		return (FAIL);
+	// 	if (forkchild(count, node->cmds, params) == FAIL)
+	// 		return (FAIL);
+	// 	return (waitforchild(count, params));
+	// }
 }
