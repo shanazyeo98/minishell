@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:02:29 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 15:33:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/01 13:54:37 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	printcmdlist(t_list *node)
 			printf("fd: %d\n", cmd->redir[i]->fd);
 			printf("hd expand: %d\n", cmd->redir[i]->hd_expand);
 			printf("id: %d\n", cmd->redir[i]->id);
+			printf("heredoc content: %s\n", cmd->redir[i]->hd_content);
 			i++;
 		}
 		node = node->next;
@@ -80,10 +81,7 @@ int	createcmdlist(t_token *start, t_token *end, t_cmdnode *cmdnode)
 	if (initcmd(cmd, start, end) == FAIL)
 		return (FAIL);
 	lst = ft_lstnew(cmd);
-	if (cmdnode->cmds == NULL)
-		cmdnode->cmds = lst;
-	else
-		ft_lstadd_back(&cmdnode->cmds, lst);
+	ft_lstadd_back(&cmdnode->cmds, lst);
 	return (SUCCESS);
 }
 
