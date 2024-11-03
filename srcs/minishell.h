@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 15:07:01 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:49:04 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 # define PWDCMD "pwd"
 # define UNSETCMD "unset"
 # define ECHOCMD "echo"
+
 # define EXITCMDMSG "(´• ω •`)ﾉ	bye"
 
 /* Error messages */
@@ -69,10 +70,10 @@
 
 # define POSITIVECMD "hey"
 # define FLIRTCMD "flirt"
-# define JOKECMD "joke"
 # define DUCKCMD "quack"
 # define CONDUCKCMD "confusedquack"
 # define SOPHDUCKCMD "sophisticatedquack"
+# define DEPRESSCMD "de"
 
 # define POSITIVEMSG0 "keep shining! \U0001F4AB"
 # define POSITIVEMSG1 "you're egg-cellent! \U0001F373"
@@ -87,10 +88,12 @@
 # define FLIRT2 "are you double? because you always float in my mind (⸝⸝ᵕᴗᵕ⸝⸝)"
 # define FLIRT3 "are you a for loop? because you repeat in my mind (✿ᴗ͈ˬᴗ͈)⁾⁾"
 
-# define INSULT0 "you're proof that broken things can still be beautiful"
-# define INSULT1 "the light at the end of the tunnel might be an oncoming train"
-# define INSULT2 "this is the worst day of my life... so far"
-# define INSULT3 "if at first you don't success, then skydiving is probably not for you"
+# define DEE0 "you're proof that broken things can still be beautiful"
+# define DEE1 "the light at the end of the tunnel might be an oncoming train"
+# define DEE2 "this is the worst day of my life... so far"
+# define DEE3 "Why chase dreams when reality will always catch up?"
+# define DEE4 "Just because you haven't found the right person..."
+# define DEE5 "It doesn't mean you will"
 
 //global variable
 
@@ -225,6 +228,7 @@ enum	e_builtin
 	DUCK,
 	CONDUCK,
 	SOPHDUCK,
+	DEPRESS,
 	EXPORT,
 	EXIT,
 	ENV,
@@ -326,7 +330,7 @@ char		*replace_param(char *input, char *par_dollar, char *rep);
 char		*replace_exit_status(char *input, int exit_status);
 char		*find_and_replace_param(char *input, t_list *envp, char *found);
 char		*parameter_expansion(char *input, t_list *envp, int exit_status);
-int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
+int			token_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
 void		print_ast_node(t_ast *node);
@@ -373,6 +377,7 @@ int			checkdirexists(char *path);
 int			gotorelative(char *dir, t_minishell *params);
 int			checkfileexists(char *path);
 void		cderrormsg(char *dir);
+int			checkmatchingpath(char *dir, char *path, char *cwd);
 
 /* Export builtin functions*/
 int			find_index(char *str, char c);
@@ -394,9 +399,9 @@ int			builtin_exit(char **arg, t_minishell *params);
 //extra
 int			positivemsg(void);
 int			flirtmsg(void);
-int			confusedduck(void);
-int			duck(void);
+int			duck(char **args);
 int			sophduck(void);
+int			depressedmsg(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 19:34:07 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:38:29 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ t_list	*extract_and_copy_node(t_list *node)
 	}
 	return (copy);
 }
-
 
 /* Description: Takes in the envp list and clones a new temporary linked list
    with only the variable name as the content. A new ASCII-sorted linked list

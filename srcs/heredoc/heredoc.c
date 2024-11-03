@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 18:06:34 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:46:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,9 @@ int	writeheredoc(t_token *token, char *delim)
 			free(input);
 			break ;
 		}
-		if (token->hd_content == NULL)
-			token->hd_content = newstring(input, "\n");
-		else
-		{
-			token->hd_content = newstring(token->hd_content, input);
-			token->hd_content = newstring(token->hd_content, "\n");
-			free(input);
-		}
+		token->hd_content = newstring(token->hd_content, input);
+		token->hd_content = newstring(token->hd_content, "\n");
+		free(input);
 		if (token->hd_content == NULL)
 			return (FAIL);
 	}
@@ -87,7 +82,6 @@ int	heredoc(t_token *token, char *delim, t_minishell *params)
 {
 	int		status;
 
-	init_all_sig_handler(INTERACTIVE);
 	status = writeheredoc(token, delim);
 	if (status == SUCCESS)
 		token->hd_expand = params->hd_expand;

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 15:12:27 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:21:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	main(int argc, char *argv[], char *envp[])
 	ms = init_ms(argc, argv, envp);
 	while (1)
 	{
+		g_sig_status = 0;
 		init_all_sig_handler(INTERACTIVE);
 		getinput(&ms);
-		init_all_sig_handler(NONINTERACTIVE);
 		if (ms.input == NULL)
 			break_shell(&ms);
 		if (g_sig_status != SIGINT)

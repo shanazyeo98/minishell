@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 06:34:35 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:03:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ int	pwd(char **args, t_minishell params)
 	if (status == FAIL)
 		return (FAIL);
 	if (dir == NULL)
-		dir = params.cwd;
-	ft_putendl_fd(dir, STDOUT_FILENO);
+		ft_putendl_fd(params.cwd, STDOUT_FILENO);
+	else
+		ft_putendl_fd(dir, STDOUT_FILENO);
+	free(dir);
 	return (SUCCESS);
 }
 

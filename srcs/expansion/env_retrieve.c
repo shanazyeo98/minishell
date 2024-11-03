@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_retrieve.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 02:33:28 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:29:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:10:34 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,16 @@ char	*retrieve_env_var(char *var, t_list *envp, int *status)
 	t_list	*found_node;
 	char	*value;
 
+	*status = SUCCESS;
 	found_node = find_env_var(var, envp);
 	if (found_node == NULL)
 		return (NULL);
 	value = substring_after_char(found_node->content, '=');
 	if (value == NULL)
 	{
-		*status = ERROR;
+		*status = FAIL;
 		return (NULL);
 	}
-	*status = SUCCESS;
 	return (value);
 }
 

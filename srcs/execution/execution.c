@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:35:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:49:56 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 	{
 		if (t->type != SINGLE)
 		{
-			if (token_parameter_expansion(t, params->envp, \
+			if (token_expansion(t, params->envp, \
 			params->exitstatus) == FAIL)
 				spick_and_span(params, FAIL, TRUE);
 		}
@@ -130,7 +130,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	updatetree(node, params);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
-	if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 6)
+	if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 7)
 		return (nonchildexe(cmd, params));
 	else
 	{

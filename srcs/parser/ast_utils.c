@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 15:15:38 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 15:37:31 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ int	traverse_ast(t_ast *node, t_minishell *params)
 	if (node->type != CMD)
 	{
 		status = traverse_ast(node->left, params);
-		if ((node->op == AND && status == 0) || (node->op == OR && status > 0))
+		if ((node->op == AND && status == SUCCESS) \
+		|| (node->op == OR && status != SUCCESS))
 			return (traverse_ast(node->right, params));
 		else
 			return (status);
