@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/28 01:54:25 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/03 15:10:41 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,6 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;
+	g_sig_status = 0;
 	return (ms);
 }

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:14:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 15:07:01 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,7 +332,7 @@ int			token_parameter_expansion(t_token *token, t_list *envp, int exit_status);
 void		print_ast_node(t_ast *node);
 void		print_ast_cmd(t_token *start, t_token *end);
 void		print_ast(t_ast *node, int ctr);
-void		traverse_ast_first_last(t_ast *node);
+int			traverse_ast(t_ast *node, t_minishell *params);
 
 //update tree
 void		count(int *args, int *redir, t_token *start, t_token *end);
