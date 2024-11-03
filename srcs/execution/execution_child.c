@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 18:23:28 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/04 05:09:23 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,11 @@ char	*get_cmd_path(char *cmd, char **paths)
 	return (cmd);
 }
 
-
-/* Description: Within a child process, executes a command using execve. Execve
-   takes over the child if it does not fail
-   XXXXXXXXX
+/* Description: Replaces the first argument in the argument array of the
+   argument array with the full command path if the command is not the full
+   path already. E.g. {"ls", "-l" } -> {"/usr/bin/ls", "-l" }
 */
-
-int	exe_chd(t_minishell *params, t_list *cmd)
+int	replace_cmd(t_minishell *params, t_list *cmd)
 {
 	char	*cmd_name;
 	char	*cmd_path;
@@ -73,9 +71,30 @@ int	exe_chd(t_minishell *params, t_list *cmd)
 	if (cmd_path != cmd_name)
 	{
 		free (cmd_name);
-		cmd_name = cmd_path;
+		((t_cmd *)cmd->content)->args[0] = cmd_path;
 	}
-	printf("Check if arg[0] was replaced: %s\n", ((t_cmd *)cmd->content)->args[0]);
+	return (SUCCESS);
+}
+
+/* Description: Perform all the redirections 
+
+*/
+
+
+/* Description: Within a child process, executes a command using execve. Execve
+   takes over the child if it does not fail
+   XXXXXXXXX
+*/
+
+int	exe_chd(t_minishell *params, t_list *cmd)
+{
+
+	if (replace_cmd(params, cmd) == FAIL)
+		return (FAIL);
+
+
+
+
 
 	return (1);
 
@@ -85,11 +104,11 @@ int	exe_chd(t_minishell *params, t_list *cmd)
 
 
 	//replace command path the t_list cmd.args with the full path -> done
-	//use exe_redirection to open all the files and store the fds. continue with next steps if Error
+	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)
 	//only stop if FAIL (malloc issues)
 	//redirection
-		//find the latest in / heredoc in the cmd.redir array
-		//find the latest out / append in the cmd.redir array
+		//find the latest in / heredoc in the cmd.redir array -> done
+		//find the latest out / append in the cmd.redir array -> done
 		//perform redirection of fds within the child
 		//close all the unused fds
 	//execve
@@ -102,7 +121,7 @@ int	exe_chd(t_minishell *params, t_list *cmd)
 
 
 
-	//use closeredirfds to close all the fds
+	//use closeredirfds to close all the fds -> might want to do this at the parent level
 
 
 }

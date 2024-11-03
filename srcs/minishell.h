@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 18:09:31 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/04 04:31:02 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,6 +357,7 @@ int			expandheredoc(t_redir *redir, t_minishell *params);
 int			amendheredoc(int newfd, int oldfd, t_minishell *params);
 int			exe_redirection(t_redir **redir, t_minishell *params);
 void		closeredirfds(t_redir **redir);
+int			get_last_redirector(int type, t_redir **redir);
 
 //wildcard
 int			searchdir(char **newstr, t_list *wclist, char *cwd);

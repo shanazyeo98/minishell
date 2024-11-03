@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 18:18:57 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/04 04:31:07 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 
 	while (cmd != NULL)
 	{
+		if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == FAIL)
+			return (FAIL);
+
+		printf("here\n");
+		printcmdlist(cmd);
+		printf("index of last in: %d | index of last out: %d\n", get_last_redirector(INPUT, ((t_cmd *)cmd->content)->redir), \
+		get_last_redirector(OUTPUT, ((t_cmd *)cmd->content)->redir));
+
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 			status = pipe(params->fd1);
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
@@ -79,11 +87,11 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		if (params->pid[params->exe_index] == -1)
 			return (free(params->pid), perror(ERR), FAIL);
 
+		// 	function to execute child process;
 		if (params->pid[params->exe_index] == 0)
 		{
 			exe_chd(params, cmd);
 		}
-		// 	function to execute child process;
 
 
 
@@ -139,6 +147,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	updatetree(node, params);
 	if (populate_env_and_paths(params) == FAIL)
 		return (FAIL);
+
 	//remember to clear the envp_arr and paths at the end of execute
 
 	// printcmdlist(node->cmds);
