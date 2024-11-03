@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 15:46:50 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 14:54:19 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 void	ft_freearray(char **array);
 int		ft_strncmp_reverse(char *s1, char *s2, int n);
+char	*ft_pathjoin(char const *s1, char const *s2);
 
 //printf
 

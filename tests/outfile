@@ -1,4 +1,9 @@
-qwe
-ewrt
-qwe
-ewrt
+total 308
+-rw-r--r--  1 mintan 2024_singapore      0 Oct 24 09:36 a
+drwxr-xr-x  2 mintan 2024_singapore   4096 Oct 31 11:22 libft
+-rw-r--r--  1 mintan 2024_singapore 123774 Oct 31 11:22 libft.a
+-rw-r--r--  1 mintan 2024_singapore   2079 Oct 31 10:33 Makefile
+-rwxr-xr-x  1 mintan 2024_singapore 164960 Oct 31 12:33 minishell
+-rw-r--r--  1 mintan 2024_singapore   1706 Oct  1 09:33 README.md
+drwxr-xr-x 12 mintan 2024_singapore   4096 Oct 31 12:33 srcs
+drwxr-xr-x  2 mintan 2024_singapore   4096 Nov  3 09:40 tests

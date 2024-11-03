@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/31 12:31:04 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/03 18:18:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,15 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		params->pid[params->exe_index] = fork();
 		if (params->pid[params->exe_index] == -1)
 			return (free(params->pid), perror(ERR), FAIL);
-		// if (params->pid[params->exe_index] == 0)
+
+		if (params->pid[params->exe_index] == 0)
+		{
+			exe_chd(params, cmd);
+		}
 		// 	function to execute child process;
+
+
+
 		if (params->exe_index % 2 == 1)
 			closepipe(params->fd1);
 		if (params->exe_index > 0 && params->exe_index % 2 == 0)
@@ -123,28 +130,57 @@ Returns the exit status of the execution*/
 
 int	execute(t_cmdnode *node, t_minishell *params)
 {
-	// t_cmd	*cmd;
-	// int		count;
+	t_cmd	*cmd;
+	int		count;
+
+	// int			i;
 
 	expandtokens(node, params);
 	updatetree(node, params);
+	if (populate_env_and_paths(params) == FAIL)
+		return (FAIL);
+	//remember to clear the envp_arr and paths at the end of execute
 
-	printcmdlist(node->cmds);
-	return (1);
+	// printcmdlist(node->cmds);
 
 
-	// count = ft_lstsize(node->cmds);
-	// cmd = (t_cmd *) node->cmds->content;
-	// if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 6)
-	// 	return (nonchildexe(cmd, params));
-	// else
+	// printf("========Check envp string arr========\n");
+
+
+	// params->envp_arr = llist_to_stray(params->envp);
+	// if (params->envp_arr == NULL)
+	// 	return (FAIL);
+
+	// i = 0;
+	// while (params->envp_arr[i] != NULL)
 	// {
-	// 	params->exe_index = 0;
-	// 	params->pid = malloc(sizeof(int) * count);
-	// 	if (params->pid == NULL)
-	// 		return (FAIL);
-	// 	if (forkchild(count, node->cmds, params) == FAIL)
-	// 		return (FAIL);
-	// 	return (waitforchild(count, params));
+	// 	printf("envp stray: %s\n", params->envp_arr[i]);
+	// 	i++;
 	// }
+
+	// printf("========Check things in path========\n");
+
+	// i = 0;
+	// while (params->paths[i] != NULL)
+	// {
+	// 	printf("path: %s\n", params->paths[i]);
+	// 	i++;
+	// }
+
+	// return (1);
+
+	count = ft_lstsize(node->cmds);
+	cmd = (t_cmd *) node->cmds->content;
+	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 6)
+		return (nonchildexe(cmd, params));
+	else
+	{
+		params->exe_index = 0;
+		params->pid = malloc(sizeof(int) * count);
+		if (params->pid == NULL)
+			return (FAIL);
+		if (forkchild(count, node->cmds, params) == FAIL)
+			return (FAIL);
+		return (waitforchild(count, params));
+	}
 }

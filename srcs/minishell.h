@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/31 12:31:45 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/03 18:09:31 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,8 @@ enum	e_exitstat
 typedef struct s_minishell
 {
 	t_list	*envp;
+	char	**envp_arr;
+	char	**paths;
 	char	*input;
 	t_token	**tokenlist;
 	char	connector[4];
@@ -267,7 +269,6 @@ typedef struct s_minishell
 
 /* Initialisation functions */
 void		declarearray(t_minishell *params);
-char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(int argc, char *argv[], char *envp[]);
 int			rl_empty_event(void);
@@ -278,6 +279,8 @@ char		**llist_to_stray(t_list *llist);
 t_list		*find_env_var(char *var, t_list *envp);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
 char		*substring_after_char(char *input, char delim);
+int			populate_env_and_paths(t_minishell *params);
+int			getpaths(t_minishell *params);
 
 /* Signal functions */
 void		init_all_sig_handler(int state);
@@ -366,6 +369,8 @@ int			openpipe(int fd[2]);
 int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
+int			exe_chd(t_minishell *params, t_list *cmd);
+
 
 //cd
 int			checkslash(char *str);
