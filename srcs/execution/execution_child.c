@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/05 23:53:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/06 01:37:50 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	redirect_pipes_out(t_minishell * params, t_list *cmd, int count)
 	out_idx = get_last_redir(OUTPUT, ((t_cmd *)cmd->content)->redir);
 	if (out_idx != -1)
 	{
-		if (dup2(((t_redir *)((t_cmd *)cmd->content)->redir)[out_idx].fd, \
+		if (dup2((((t_cmd *)cmd->content)->redir)[out_idx]->fd, \
 		STDOUT_FILENO) == -1)
 			return (FAIL);
 	}
@@ -126,15 +126,16 @@ int	redirect_pipes_out(t_minishell * params, t_list *cmd, int count)
 
 int	redirect_pipes_in(t_minishell * params, t_list *cmd)
 {
-	int	in_idx;
+	int		in_idx;
 
 	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
 	if (in_idx != -1)
 	{
-		if (dup2(((t_redir *)((t_cmd *)cmd->content)->redir)[in_idx].fd, \
+		if (dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd,\
 		STDIN_FILENO) == -1)
 			return (FAIL);
 	}
+	//there's some pipes to be closed here still
 	else
 	{
 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
@@ -173,7 +174,6 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	cmd_args = ((t_cmd *)cmd->content)->args;
 	if (execve(path, cmd_args, params->envp_arr) == -1)
 		return (FAIL);
-	printf("If i see this it means that execve didn't take over the process\n");
 	return (SUCCESS);
 	//replace command path the t_list cmd.args with the full path -> done
 	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)
