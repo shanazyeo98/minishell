@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/04 11:22:37 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/05 16:41:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		//delete this later
 		printf("here\n");
 		printcmdlist(cmd);
-		printf("index of last in: %d | index of last out: %d\n", get_last_redirector(INPUT, ((t_cmd *)cmd->content)->redir), \
-		get_last_redirector(OUTPUT, ((t_cmd *)cmd->content)->redir));
+		printf("index of last in: %d | index of last out: %d\n", get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir), \
+		get_last_redir(OUTPUT, ((t_cmd *)cmd->content)->redir));
 		//delete this later
 
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
@@ -92,7 +92,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		// 	function to execute child process;
 		if (params->pid[params->exe_index] == 0) //inside  child process cos the PID is 0
 		{
-			exe_chd(params, cmd);
+			exe_chd(params, cmd, count); //check behaviour here if the execve fails
 		}
 
 
@@ -101,6 +101,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 			closepipe(params->fd1);
 		if (params->exe_index > 0 && params->exe_index % 2 == 0)
 			closepipe(params->fd2);
+		closeredirfds(((t_cmd *)cmd->content)->redir);
 		params->exe_index++;
 		cmd = cmd->next;
 	}

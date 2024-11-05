@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/05 11:39:59 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/05 16:44:39 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 	   cmd_paths
 	2. If any of the malloc fails, free previously allocated memory and
 	   return NULL
-
 */
 
 char	*get_cmd_path(char *cmd, char **paths)
@@ -111,35 +110,25 @@ int	redirect_pipes_out(t_minishell * params, t_list *cmd, int count)
 				return (closepipe(params->fd2), FAIL);
 			closepipe (params->fd2);
 		}
-		return (SUCCESS);
 	}
+	return (SUCCESS);
 }
 
 /* Description: Redirects the input of a command.
    Scenarios:
-	- If there are OUT redirectors, redirect STDOUT_FILENO to those
-	- If there are no OUT redirectors and the command is not the last command,
-	  redirect STDOUT_FILENO to the corresponding pipe FD[1]
+	- If there are IN redirectors, redirect STDIN_FILENO to those
+	- If there are no IN redirectors and the command is not the first command,
+	  redirect STDIN_FILENO to the corresponding pipe FD[0]
    Returns:
 	- SUCCESS: if pipe does not fail
 	- FAIL: if pipe fails
 */
 
-
-
-
-/* Description: Perform all the redirections for a child process based on the
-   lastest input and output file descriptor for the command.
-   SMTH ABOUT FIRST AND LAST COMMAND
-   SMTH ABT DUPING TO PIPES
-*/
-
-int	redirect_pipes(t_minishell * params, t_list *cmd, int count)
+int	redirect_pipes_in(t_minishell * params, t_list *cmd)
 {
 	int	in_idx;
 
 	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
-
 	if (in_idx != -1)
 	{
 		if (dup2(((t_redir *)((t_cmd *)cmd->content)->redir)[in_idx].fd, \
@@ -148,15 +137,21 @@ int	redirect_pipes(t_minishell * params, t_list *cmd, int count)
 	}
 	else
 	{
-		if (params->exe_index > 0 && params->exe_index % 2 == 1)
+		if (params->exe_index % 2 == 0 && params->exe_index > 0)
+		{
+			if (dup2(params->fd2[0], STDIN_FILENO) == -1)
+				return (closepipe(params->fd2), FAIL);
+			closepipe(params->fd2);
+		}
+		else if (params->exe_index % 2 == 1 && params->exe_index > 0)
+		{
+			if (dup2(params->fd1[0], STDIN_FILENO) == -1)
+				return (closepipe(params->fd1), FAIL);
+			closepipe (params->fd1);
+		}
 	}
-
-
-
-
-
+	return (SUCCESS);
 }
-
 
 /* Description: Within a child process, executes a command using execve. Execve
    takes over the child if it does not fail
@@ -165,42 +160,33 @@ int	redirect_pipes(t_minishell * params, t_list *cmd, int count)
 
 int	exe_chd(t_minishell *params, t_list *cmd, int count)
 {
+	char	*path;
+	char	**cmd_args;
 
 	if (replace_cmd(params, cmd) == FAIL)
 		return (FAIL);
-
-
-
-
-
-	return (1);
-
-
-
-
-
-
+	if (redirect_pipes_in(params, cmd) == FAIL)
+		return (FAIL);
+	if (redirect_pipes_out(params, cmd, count) == FAIL)
+		return (FAIL);
+	path = ((t_cmd *)cmd->content)->args[0];
+	cmd_args = ((t_cmd *)cmd->content)->args;
+	if (execve(path, cmd_args, params->envp_arr) == -1)
+		return (FAIL);
+	return (SUCCESS);
 	//replace command path the t_list cmd.args with the full path -> done
 	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)
 	//only stop if FAIL (malloc issues)
 	//redirection
 		//find the latest in / heredoc in the cmd.redir array -> done
 		//find the latest out / append in the cmd.redir array -> done
-		//perform redirection of fds within the child
+		//perform redirection of fds within the child -> done
 		//close all the unused fds
 	//execve
 	//if execve fails,
 		//check if we still need to use strerror or if execve will already print out the error message
 		//call a cleanup function to free
-
-
-
-
-
-
 	//use closeredirfds to close all the fds -> might want to do this at the parent level
-
-
 }
 
 
