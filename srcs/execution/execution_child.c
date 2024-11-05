@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/04 05:09:23 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/05 11:39:59 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,86 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
 	return (SUCCESS);
 }
 
-/* Description: Perform all the redirections 
-
+/* Description: Redirects the output of a command.
+   Scenarios:
+	- If there are OUT redirectors, redirect STDOUT_FILENO to those
+	- If there are no OUT redirectors and the command is not the last command,
+	  redirect STDOUT_FILENO to the corresponding pipe FD[1]
+   Returns:
+	- SUCCESS: if pipe does not fail
+	- FAIL: if pipe fails
 */
+
+int	redirect_pipes_out(t_minishell * params, t_list *cmd, int count)
+{
+	int	out_idx;
+
+	out_idx = get_last_redir(OUTPUT, ((t_cmd *)cmd->content)->redir);
+	if (out_idx != -1)
+	{
+		if (dup2(((t_redir *)((t_cmd *)cmd->content)->redir)[out_idx].fd, \
+		STDOUT_FILENO) == -1)
+			return (FAIL);
+	}
+	else
+	{
+		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
+		{
+			if (dup2(params->fd1[1], STDOUT_FILENO) == -1)
+				return (closepipe(params->fd1), FAIL);
+			closepipe(params->fd1);
+		}
+		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
+		{
+			if (dup2(params->fd2[1], STDOUT_FILENO) == -1)
+				return (closepipe(params->fd2), FAIL);
+			closepipe (params->fd2);
+		}
+		return (SUCCESS);
+	}
+}
+
+/* Description: Redirects the input of a command.
+   Scenarios:
+	- If there are OUT redirectors, redirect STDOUT_FILENO to those
+	- If there are no OUT redirectors and the command is not the last command,
+	  redirect STDOUT_FILENO to the corresponding pipe FD[1]
+   Returns:
+	- SUCCESS: if pipe does not fail
+	- FAIL: if pipe fails
+*/
+
+
+
+
+/* Description: Perform all the redirections for a child process based on the
+   lastest input and output file descriptor for the command.
+   SMTH ABOUT FIRST AND LAST COMMAND
+   SMTH ABT DUPING TO PIPES
+*/
+
+int	redirect_pipes(t_minishell * params, t_list *cmd, int count)
+{
+	int	in_idx;
+
+	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
+
+	if (in_idx != -1)
+	{
+		if (dup2(((t_redir *)((t_cmd *)cmd->content)->redir)[in_idx].fd, \
+		STDIN_FILENO) == -1)
+			return (FAIL);
+	}
+	else
+	{
+		if (params->exe_index > 0 && params->exe_index % 2 == 1)
+	}
+
+
+
+
+
+}
 
 
 /* Description: Within a child process, executes a command using execve. Execve
@@ -86,7 +163,7 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
    XXXXXXXXX
 */
 
-int	exe_chd(t_minishell *params, t_list *cmd)
+int	exe_chd(t_minishell *params, t_list *cmd, int count)
 {
 
 	if (replace_cmd(params, cmd) == FAIL)

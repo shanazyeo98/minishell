@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/04 04:31:07 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/04 11:22:37 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == FAIL)
 			return (FAIL);
 
+		//delete this later
 		printf("here\n");
 		printcmdlist(cmd);
 		printf("index of last in: %d | index of last out: %d\n", get_last_redirector(INPUT, ((t_cmd *)cmd->content)->redir), \
 		get_last_redirector(OUTPUT, ((t_cmd *)cmd->content)->redir));
+		//delete this later
 
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 			status = pipe(params->fd1);
@@ -88,7 +90,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 			return (free(params->pid), perror(ERR), FAIL);
 
 		// 	function to execute child process;
-		if (params->pid[params->exe_index] == 0)
+		if (params->pid[params->exe_index] == 0) //inside  child process cos the PID is 0
 		{
 			exe_chd(params, cmd);
 		}
@@ -150,7 +152,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 
 	//remember to clear the envp_arr and paths at the end of execute
 
-	// printcmdlist(node->cmds);
+	printcmdlist(node->cmds);
 
 
 	// printf("========Check envp string arr========\n");
