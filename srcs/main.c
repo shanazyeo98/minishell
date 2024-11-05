@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/31 12:09:14 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/05 22:32:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ms.tokenlist != NULL)
 		{
 			ms.ast = parse(*ms.tokenlist, -1);
-			print_ast(ms.ast, 0);
+			// print_ast(ms.ast, 0);
 			// tree traversal portion here -> execute inside
 			execute(ms.ast->cmdnode, &ms);
 		}

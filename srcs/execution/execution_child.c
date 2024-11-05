@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/05 16:44:39 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/05 23:53:20 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	cmd_args = ((t_cmd *)cmd->content)->args;
 	if (execve(path, cmd_args, params->envp_arr) == -1)
 		return (FAIL);
+	printf("If i see this it means that execve didn't take over the process\n");
 	return (SUCCESS);
 	//replace command path the t_list cmd.args with the full path -> done
 	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)

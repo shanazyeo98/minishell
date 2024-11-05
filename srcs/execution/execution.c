@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/05 16:41:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/06 00:15:35 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,6 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 	{
 		if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == FAIL)
 			return (FAIL);
-
-		//delete this later
-		printf("here\n");
-		printcmdlist(cmd);
-		printf("index of last in: %d | index of last out: %d\n", get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir), \
-		get_last_redir(OUTPUT, ((t_cmd *)cmd->content)->redir));
-		//delete this later
-
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 			status = pipe(params->fd1);
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
@@ -116,11 +108,16 @@ int	waitforchild(int count, t_minishell *params)
 	int	pid;
 	int	status;
 	int	final_status;
+	int	i;
 
-	pid = 0;
-	while (pid != 1)
+	i = 0;
+	// pid = 0;
+	// whil"e (pid != 1)
+	printf("Total commands: %d | PID of the final command: %d\n", count, params->pid[count - 1]);
+	while (i < count - 1)
 	{
 		pid = wait(&status);
+		printf("Process ID: %d\n", pid);
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
@@ -128,6 +125,7 @@ int	waitforchild(int count, t_minishell *params)
 			else if (WIFSIGNALED(status))
 				final_status = WTERMSIG(status) + FATALSIGNAL;
 		}
+		i++;
 	}
 	free(params->pid);
 	return (final_status);
@@ -153,7 +151,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 
 	//remember to clear the envp_arr and paths at the end of execute
 
-	printcmdlist(node->cmds);
 
 
 	// printf("========Check envp string arr========\n");
