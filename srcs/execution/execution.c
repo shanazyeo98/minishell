@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/06 00:37:59 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/06 20:11:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,11 +113,9 @@ int	waitforchild(int count, t_minishell *params)
 	i = 0;
 	// pid = 0;
 	// while (pid != 1)
-	printf("Total commands: %d | PID of the final command: %d\n", count, params->pid[count - 1]);
 	while (i < count - 1)
 	{
 		pid = wait(&status);
-		printf("Process ID: %d\n", pid);
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
