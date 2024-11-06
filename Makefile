@@ -31,6 +31,7 @@ srcs/expansion/token_expand.c \
 srcs/expansion/expand_parameter.c \
 srcs/expansion/wildcard.c \
 srcs/expansion/wildcard_match.c \
+srcs/expansion/wildcard_utils.c \
 srcs/updatetree/updatetree.c \
 srcs/updatetree/updatetree_cmd.c \
 srcs/updatetree/updatetree_fill.c \
@@ -59,14 +60,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 19:52:19 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:43:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/06 12:59:06 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,43 @@ int	checkfile(char *file, t_list *wclist, char **str)
 {
 	if (patternmatch(file, wclist) == TRUE)
 	{
-		if (*str == NULL)
-		{
-			*str = ft_strdup(file);
-			if (*str == NULL)
-				return (FAIL);
-		}
-		else
+		if (*str != NULL)
 		{
 			*str = newstring(*str, " ");
 			if (*str == NULL)
 				return (FAIL);
-			*str = newstring(*str, file);
-			if (*str == NULL)
-				return (FAIL);
 		}
+		*str = newstring(*str, file);
+		if (*str == NULL)
+			return (FAIL);
 	}
 	return (SUCCESS);
+}
+
+int	reorderstring(char **newstr)
+{
+	char	**split;
+	int		i;
+	int		j;
+
+	split = ft_split(*newstr, ' ');
+	if (split == NULL)
+		return (free(*newstr), FAIL);
+	i = 0;
+	while (split[i] != NULL)
+	{
+		j = i + 1;
+		while (split[j] != NULL)
+		{
+			if (ft_strcmp(split[i], split[j]) > 0)
+				swapstrings(&split[i], &split[j]);
+			j++;
+		}
+		i++;
+	}
+	if (createnewstr(newstr, split) == FAIL)
+		return (ft_freearray(split), FAIL);
+	return (ft_freearray(split), SUCCESS);
 }
 
 /*Description: Loops through the file in the cwd and check if
@@ -109,5 +129,7 @@ int	searchdir(char **newstr, t_list *wclist, char *cwd)
 	closedir(dirstream);
 	if (*newstr == NULL)
 		return (ERROR);
+	if (reorderstring(newstr) == FAIL)
+		return (FAIL);
 	return (SUCCESS);
 }

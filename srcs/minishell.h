@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 17:49:04 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/06 12:58:57 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,6 +361,8 @@ void		closeredirfds(t_redir **redir);
 int			searchdir(char **newstr, t_list *wclist, char *cwd);
 int			wildcard_expansion(int grp, t_minishell *params);
 int			searchstar(char *str, int start);
+int			createnewstr(char **newstr, char **array);
+void		swapstrings(char **str1, char **str2);
 
 //execution
 void		closepipe(int fd[2]);
