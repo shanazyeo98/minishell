@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 16:46:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/06 11:31:55 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int	heredoc(t_token *token, char *delim, t_minishell *params)
 	int		status;
 
 	status = writeheredoc(token, delim);
+	params->exitstatus = status;
 	if (status == SUCCESS)
 		token->hd_expand = params->hd_expand;
 	return (status);
