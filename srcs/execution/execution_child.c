@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/06 20:08:23 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/08 19:06:18 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int	redirect_pipes_in(t_minishell * params, t_list *cmd)
 	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
 	if (in_idx != -1)
 	{
+
 		if (dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd,\
 		STDIN_FILENO) == -1)
 			return (FAIL);
@@ -132,14 +133,18 @@ int	redirect_pipes_in(t_minishell * params, t_list *cmd)
 	//there's some pipes to be closed here still
 	else
 	{
+		printf("Inside here 1\n");
 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
 		{
+			printf("Inside here 2\n");
+
 			if (dup2(params->fd2[0], STDIN_FILENO) == -1)
 				return (closepipe(params->fd2), FAIL);
 			closepipe(params->fd2);
 		}
 		else if (params->exe_index % 2 == 1 && params->exe_index > 0)
 		{
+			printf("Inside here 3\n");
 			if (dup2(params->fd1[0], STDIN_FILENO) == -1)
 				return (closepipe(params->fd1), FAIL);
 			closepipe (params->fd1);
@@ -198,17 +203,41 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	char	*path;
 	char	**cmd_args;
 
+	// int		i;
+
+	// printf("Inside execute child now\n");
+
 	if (replace_cmd(params, cmd) == FAIL)
 		return (FAIL);
-	close_child_pipes(params, count, FALSE);
+
+	// close_child_pipes(params, count, FALSE);
+
+
 	if (redirect_pipes_in(params, cmd) == FAIL)
 		return (FAIL);
 	if (redirect_pipes_out(params, cmd, count) == FAIL)
 		return (FAIL);
+
 	path = ((t_cmd *)cmd->content)->args[0];
 	cmd_args = ((t_cmd *)cmd->content)->args;
+
+	// printf("Path: %s\n", path);
+	// printf("printing envp array now\n");
+	// i = 0;
+	// while (params->envp_arr[i] != NULL)
+	// {
+	// 	printf("envp array: %s\n", params->envp_arr[i]);
+	// 	i++;
+	// }
+
+
+
+
 	if (execve(path, cmd_args, params->envp_arr) == -1)
+	{
+		// printf("If you see this it means that the process failed\n");
 		return (FAIL);
+	}
 	return (SUCCESS);
 	//replace command path the t_list cmd.args with the full path -> done
 	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)

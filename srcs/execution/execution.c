@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/06 20:11:56 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/08 19:14:51 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 
 	while (cmd != NULL)
 	{
+		printf("inside forchild while loop\n");
 		if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == FAIL)
 			return (FAIL);
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
@@ -86,6 +87,8 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		{
 			exe_chd(params, cmd, count); //check behaviour here if the execve fails
 		}
+
+
 
 
 
@@ -110,12 +113,20 @@ int	waitforchild(int count, t_minishell *params)
 	int	final_status;
 	int	i;
 
-	i = 0;
-	// pid = 0;
-	// while (pid != 1)
-	while (i < count - 1)
+	printf("inside wait children. All child PID:\n");
+	i= 0;
+	while (params->pid[i] > 0)
 	{
+		printf("i: %d | pid: %d\n", i, params->pid[i]);
+		i++;
+	}
+
+	i = 0;
+	while (i < count)
+	{
+
 		pid = wait(&status);
+		printf("Compare PID of child process. count: %d | PID: %d | params.pid: %d\n", count, pid, params->pid[count - 1]);
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
@@ -177,8 +188,9 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	// return (1);
 
 	count = ft_lstsize(node->cmds);
+	printf("Inside execute. Count: %d\n", count);
 	cmd = (t_cmd *) node->cmds->content;
-	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 6)
+	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 0)
 		return (nonchildexe(cmd, params));
 	else
 	{
