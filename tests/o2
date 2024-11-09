@@ -1,0 +1,3 @@
+	make bonus -C $(LIBFTDIR)
+	make clean -C ./$(LIBFTDIR)
+	make fclean -C ./libft

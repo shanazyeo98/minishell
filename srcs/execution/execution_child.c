@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/09 12:08:52 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 18:53:17 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@
 	   return NULL
 */
 
-char	*get_cmd_path(char *cmd, char **paths)
+char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 {
 	char	*cmd_path;
 	int		i;
 
 	i = 0;
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, F_OK) == 0)
 		return (cmd);
 	if (paths != NULL)
 	{
@@ -44,14 +44,17 @@ char	*get_cmd_path(char *cmd, char **paths)
 			cmd_path = ft_pathjoin(paths[i], cmd);
 			if (cmd_path == NULL)
 				return (NULL);
-			if (access(cmd_path, X_OK) == 0)
+			if (access(cmd_path, F_OK) == 0)
 				return (cmd_path);
 			i++;
 			free (cmd_path);
 		}
 	}
-	// ft_printf("%s: command not found\n", cmd); // should handle this later when you execve and get errnoent
-	return (cmd);
+	ft_putstr_fd(ERR, STDERR_FILENO);
+	ft_putstr_fd(cmd, STDERR_FILENO);
+	ft_putendl_fd(": command not found", STDERR_FILENO);
+	spick_and_span(params, CMDNOTFOUND, FALSE);
+	exit (CMDNOTFOUND);
 }
 
 /* Description: Replaces the first argument in the argument array of the
@@ -64,7 +67,7 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
 	char	*cmd_path;
 
 	cmd_name = ((t_cmd *)cmd->content)->args[0];
-	cmd_path = get_cmd_path(cmd_name, params->paths);
+	cmd_path = get_cmd_path(cmd_name, params->paths, params);
 	if (cmd_path == NULL)
 		return (FAIL);
 	if (cmd_path != cmd_name)
@@ -79,31 +82,30 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
 	= unused pipes should be closed for all scenarios
 */
 
-void	close_child_pipes(t_minishell *params, int count, int used)
-{
-	if (used == FALSE)
-	{
-		if (params->exe_index % 2 == 0)
-		{
-			close(params->fd1[0]);
-			if (params->exe_index > 0)
-				close(params->fd2[1]);
-		}
-		else if (params->exe_index % 2 == 1)
-		{
-			close(params->fd1[1]);
-			if (params->exe_index < count - 1)
-				close(params->fd2[0]);
-		}
-	}
-	else
-	{
-		if (params->exe_index % 2 == 0 && params->exe_index > 0)
-			close (params->fd2[0]);
-		else if (params->exe_index % 2 == 1)
-			close (params->fd1[0]);
-	}
-}
+// void	close_child_pipes(t_minishell *params, int count,)
+// {
+// 	if (used == FALSE)
+// 	{
+// 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
+// 		{
+// 			close(params->fd1[0]);
+// 			close(params->fd2[1]);
+// 		}
+// 		else if (params->exe_index % 2 == 1)
+// 		{
+// 			close(params->fd1[1]);
+// 			if (params->exe_index < count - 1)
+// 				close(params->fd2[0]);
+// 		}
+// 	}
+// 	else
+// 	{
+// 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
+// 			close (params->fd2[0]);
+// 		else if (params->exe_index % 2 == 1)
+// 			close (params->fd1[0]);
+// 	}
+// }
 
 
 
@@ -118,39 +120,23 @@ void	close_child_pipes(t_minishell *params, int count, int used)
 	- FAIL: if pipe fails
 */
 
-int	redirect_pipes_in(t_minishell * params, t_list *cmd)
+void	redirect_pipes_in(t_minishell * params, t_list *cmd)
 {
 	int		in_idx;
 
 	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
 	if (in_idx != -1)
 	{
-
-		if (dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd,\
-		STDIN_FILENO) == -1)
-			return (FAIL);
+		dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd,\
+		STDIN_FILENO);
 	}
-	//there's some pipes to be closed here still
 	else
 	{
-		printf("Inside here 1\n");
 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
-		{
-			printf("Inside here 2\n");
-
-			if (dup2(params->fd2[0], STDIN_FILENO) == -1)
-				return (closepipe(params->fd2), FAIL);
-			closepipe(params->fd2);
-		}
+			dup2(params->fd2[0], STDIN_FILENO);
 		else if (params->exe_index % 2 == 1 && params->exe_index > 0)
-		{
-			printf("Inside here 3\n");
-			if (dup2(params->fd1[0], STDIN_FILENO) == -1)
-				return (closepipe(params->fd1), FAIL);
-			closepipe (params->fd1);
-		}
+			dup2(params->fd1[0], STDIN_FILENO);
 	}
-	return (SUCCESS);
 }
 
 /* Description: Redirects the output of a command.
@@ -163,7 +149,7 @@ int	redirect_pipes_in(t_minishell * params, t_list *cmd)
 	- FAIL: if pipe fails
 */
 
-int	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
+void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 {
 	int	out_idx;
 
@@ -172,9 +158,8 @@ int	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 	if (out_idx != -1)
 	{
 		ft_putendl_fd("in 2", STDERR_FILENO);
-		if (dup2((((t_cmd *)cmd->content)->redir)[out_idx]->fd, \
-		STDOUT_FILENO) == -1)
-			return (FAIL);
+		dup2((((t_cmd *)cmd->content)->redir)[out_idx]->fd, \
+		STDOUT_FILENO);
 	}
 	else
 	{
@@ -182,21 +167,15 @@ int	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 		{
 			ft_putendl_fd("in 4", STDERR_FILENO);
-			if (dup2(params->fd1[1], STDOUT_FILENO) == -1)
-				return (closepipe(params->fd1), FAIL);
-			closepipe(params->fd1);
+			dup2(params->fd1[1], STDOUT_FILENO);
 		}
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
 		{
 			ft_putendl_fd("in 5", STDERR_FILENO);
-			if (dup2(params->fd2[1], STDOUT_FILENO) == -1)
-				return (closepipe(params->fd2), FAIL);
-			closepipe(params->fd2);
+			dup2(params->fd2[1], STDOUT_FILENO);
 		}
 	}
-	return (SUCCESS);
 }
-
 
 /* Description: Within a child process, executes a command using execve. Execve
    takes over the child if it does not fail
@@ -208,48 +187,28 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	char	*path;
 	char	**cmd_args;
 
-	// int		i;
-
-	// printf("Inside execute child now\n");
-
+	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
+	{
+		spick_and_span(params, ERROR, FALSE);
+		exit (ERROR);
+	}
+	redirect_pipes_in(params, cmd);
+	redirect_pipes_out(params, cmd, count);
+	closepipe(params->fd1);
+	closepipe(params->fd2);
+	closeredirfds(((t_cmd *)cmd->content)->redir);
 	if (replace_cmd(params, cmd) == FAIL)
-		return (FAIL);
-
-	// close_child_pipes(params, count, FALSE);
-
-
+		exit (FAIL);
 	path = ((t_cmd *)cmd->content)->args[0];
 	cmd_args = ((t_cmd *)cmd->content)->args;
-
-	// printf("Path: %s\n", path);
-	// printf("printing envp array now\n");
-	// i = 0;
-	// while (params->envp_arr[i] != NULL)
-	// {
-	// 	printf("envp array: %s\n", params->envp_arr[i]);
-	// 	i++;
-	// }
-
-
-	if (redirect_pipes_in(params, cmd) == FAIL)
-		return (FAIL);
-	if (redirect_pipes_out(params, cmd, count) == FAIL)
-		return (FAIL);
-
-	// path = ((t_cmd *)cmd->content)->args[0];
-	// cmd_args = ((t_cmd *)cmd->content)->args;
-
-
-
-
-
-
 	if (execve(path, cmd_args, params->envp_arr) == -1)
 	{
-		ft_putendl_fd("execve failed if you see this", STDERR_FILENO);
-		exit(EXIT_FAILURE);
+
+		perror(ERR);
+		spick_and_span(params, ERROR, FALSE);
+		exit(errno);
 	}
-	return (SUCCESS);
+	exit (SUCCESS);
 	//replace command path the t_list cmd.args with the full path -> done
 	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)
 	//only stop if FAIL (malloc issues)

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/05 11:04:50 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 18:52:06 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <errno.h>
 
 /* General */
 # define DELIMITER " '\n\"$?"

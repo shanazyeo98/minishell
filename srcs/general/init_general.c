@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 12:22:18 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 15:42:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,13 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	ms.hd_expand = TRUE;
 	ms.cwd = getcwd(NULL, 0);
 	ms.exitstatus = 0;
+	ms.fd1[0] = -1;
+	ms.fd1[1] = -1;
+	ms.fd2[0] = -1;
+	ms.fd2[1] = -1;
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;
+
 	return (ms);
 }

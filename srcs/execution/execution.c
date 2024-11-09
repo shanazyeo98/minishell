@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/08 19:14:51 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 16:05:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 
 	while (cmd != NULL)
 	{
-		printf("inside forchild while loop\n");
-		if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == FAIL)
-			return (FAIL);
+
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 			status = pipe(params->fd1);
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
@@ -96,7 +94,6 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 			closepipe(params->fd1);
 		if (params->exe_index > 0 && params->exe_index % 2 == 0)
 			closepipe(params->fd2);
-		closeredirfds(((t_cmd *)cmd->content)->redir);
 		params->exe_index++;
 		cmd = cmd->next;
 	}
@@ -126,7 +123,7 @@ int	waitforchild(int count, t_minishell *params)
 	{
 
 		pid = wait(&status);
-		printf("Compare PID of child process. count: %d | PID: %d | params.pid: %d\n", count, pid, params->pid[count - 1]);
+		// printf("Compare PID of child process. count: %d | PID: %d | params.pid: %d\n", count, pid, params->pid[count - 1]);
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
@@ -162,30 +159,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 
 
 
-	// printf("========Check envp string arr========\n");
-
-
-	// params->envp_arr = llist_to_stray(params->envp);
-	// if (params->envp_arr == NULL)
-	// 	return (FAIL);
-
-	// i = 0;
-	// while (params->envp_arr[i] != NULL)
-	// {
-	// 	printf("envp stray: %s\n", params->envp_arr[i]);
-	// 	i++;
-	// }
-
-	// printf("========Check things in path========\n");
-
-	// i = 0;
-	// while (params->paths[i] != NULL)
-	// {
-	// 	printf("path: %s\n", params->paths[i]);
-	// 	i++;
-	// }
-
-	// return (1);
 
 	count = ft_lstsize(node->cmds);
 	printf("Inside execute. Count: %d\n", count);

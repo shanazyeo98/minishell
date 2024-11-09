@@ -6,7 +6,6 @@
 		"stdio.h": "c",
 		"stdlib.h": "c",
 		"history.h": "c",
-		"libft.h": "c",
 		"signal.h": "c",
 		"array": "c",
 		"deque": "c",
@@ -17,7 +16,8 @@
 		"initializer_list": "c",
 		"sstream": "c",
 		"thread": "c",
-		"*.tcc": "c"
+		"*.tcc": "c",
+		"stat.h": "c"
 	},
 	"makefile.configureOnOpen": true
 }

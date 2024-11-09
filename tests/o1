@@ -1,0 +1,4 @@
+fd1[0]: 3 | fd1[1]: 4 | fd2[0]: -1 | fd2[1]: -1
+	make bonus -C $(LIBFTDIR)
+	make clean -C ./$(LIBFTDIR)
+	make fclean -C ./libft
