@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/09 18:53:17 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 19:31:25 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,77 +77,6 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
 	}
 	return (SUCCESS);
 }
-
-/* Description: XXXXX
-	= unused pipes should be closed for all scenarios
-*/
-
-// void	close_child_pipes(t_minishell *params, int count,)
-// {
-// 	if (used == FALSE)
-// 	{
-// 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
-// 		{
-// 			close(params->fd1[0]);
-// 			close(params->fd2[1]);
-// 		}
-// 		else if (params->exe_index % 2 == 1)
-// 		{
-// 			close(params->fd1[1]);
-// 			if (params->exe_index < count - 1)
-// 				close(params->fd2[0]);
-// 		}
-// 	}
-// 	else
-// 	{
-// 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
-// 			close (params->fd2[0]);
-// 		else if (params->exe_index % 2 == 1)
-// 			close (params->fd1[0]);
-// 	}
-// }
-
-
-
-
-/* Description: Redirects the input of a command.
-   Scenarios:
-	- If there are IN redirectors, redirect STDIN_FILENO to those
-	- If there are no IN redirectors and the command is not the first command,
-	  redirect STDIN_FILENO to the corresponding pipe FD[0]
-   Returns:
-	- SUCCESS: if pipe does not fail
-	- FAIL: if pipe fails
-*/
-
-void	redirect_pipes_in(t_minishell * params, t_list *cmd)
-{
-	int		in_idx;
-
-	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
-	if (in_idx != -1)
-	{
-		dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd,\
-		STDIN_FILENO);
-	}
-	else
-	{
-		if (params->exe_index % 2 == 0 && params->exe_index > 0)
-			dup2(params->fd2[0], STDIN_FILENO);
-		else if (params->exe_index % 2 == 1 && params->exe_index > 0)
-			dup2(params->fd1[0], STDIN_FILENO);
-	}
-}
-
-/* Description: Redirects the output of a command.
-   Scenarios:
-	- If there are OUT redirectors, redirect STDOUT_FILENO to those
-	- If there are no OUT redirectors and the command is not the last command,
-	  redirect STDOUT_FILENO to the corresponding pipe FD[1]
-   Returns:
-	- SUCCESS: if pipe does not fail
-	- FAIL: if pipe fails
-*/
 
 void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 {

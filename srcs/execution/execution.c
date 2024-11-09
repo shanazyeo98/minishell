@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/09 16:05:28 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 19:48:29 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,20 +110,11 @@ int	waitforchild(int count, t_minishell *params)
 	int	final_status;
 	int	i;
 
-	printf("inside wait children. All child PID:\n");
-	i= 0;
-	while (params->pid[i] > 0)
-	{
-		printf("i: %d | pid: %d\n", i, params->pid[i]);
-		i++;
-	}
-
 	i = 0;
 	while (i < count)
 	{
 
 		pid = wait(&status);
-		// printf("Compare PID of child process. count: %d | PID: %d | params.pid: %d\n", count, pid, params->pid[count - 1]);
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
@@ -156,8 +147,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 		return (FAIL);
 
 	//remember to clear the envp_arr and paths at the end of execute
-
-
 
 
 	count = ft_lstsize(node->cmds);
