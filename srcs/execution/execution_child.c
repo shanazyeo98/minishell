@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/08 19:06:18 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/09 12:08:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,23 +167,28 @@ int	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 {
 	int	out_idx;
 
+	ft_putendl_fd("in 1", STDERR_FILENO);
 	out_idx = get_last_redir(OUTPUT, ((t_cmd *)cmd->content)->redir);
 	if (out_idx != -1)
 	{
+		ft_putendl_fd("in 2", STDERR_FILENO);
 		if (dup2((((t_cmd *)cmd->content)->redir)[out_idx]->fd, \
 		STDOUT_FILENO) == -1)
 			return (FAIL);
 	}
 	else
 	{
+		ft_putendl_fd("in 3", STDERR_FILENO);
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 		{
+			ft_putendl_fd("in 4", STDERR_FILENO);
 			if (dup2(params->fd1[1], STDOUT_FILENO) == -1)
 				return (closepipe(params->fd1), FAIL);
 			closepipe(params->fd1);
 		}
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
 		{
+			ft_putendl_fd("in 5", STDERR_FILENO);
 			if (dup2(params->fd2[1], STDOUT_FILENO) == -1)
 				return (closepipe(params->fd2), FAIL);
 			closepipe(params->fd2);
@@ -213,11 +218,6 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	// close_child_pipes(params, count, FALSE);
 
 
-	if (redirect_pipes_in(params, cmd) == FAIL)
-		return (FAIL);
-	if (redirect_pipes_out(params, cmd, count) == FAIL)
-		return (FAIL);
-
 	path = ((t_cmd *)cmd->content)->args[0];
 	cmd_args = ((t_cmd *)cmd->content)->args;
 
@@ -231,12 +231,23 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	// }
 
 
+	if (redirect_pipes_in(params, cmd) == FAIL)
+		return (FAIL);
+	if (redirect_pipes_out(params, cmd, count) == FAIL)
+		return (FAIL);
+
+	// path = ((t_cmd *)cmd->content)->args[0];
+	// cmd_args = ((t_cmd *)cmd->content)->args;
+
+
+
+
 
 
 	if (execve(path, cmd_args, params->envp_arr) == -1)
 	{
-		// printf("If you see this it means that the process failed\n");
-		return (FAIL);
+		ft_putendl_fd("execve failed if you see this", STDERR_FILENO);
+		exit(EXIT_FAILURE);
 	}
 	return (SUCCESS);
 	//replace command path the t_list cmd.args with the full path -> done
