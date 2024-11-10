@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 18:10:13 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 18:31:44 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int	traverse_ast(t_ast *node, t_minishell *params)
 	else
 	{
 		status = execute(node->cmdnode, params);
-		free_envp_arr_and_paths(params);
+		// free_envp_arr_and_paths(params);
 		if (status == FAIL)
 			spick_and_span(params, FAIL, TRUE);
 		return (status);
