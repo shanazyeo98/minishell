@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:36:56 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:57:49 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,19 +63,19 @@ char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
    argument array with the full command path if the command is not the full
    path already. E.g. {"ls", "-l" } -> {"/usr/bin/ls", "-l" }
 */
-int	replace_cmd(t_minishell *params, t_list *cmd)
+int	replace_cmd(t_minishell *params, char **args)
 {
 	char	*cmd_name;
 	char	*cmd_path;
 
-	cmd_name = ((t_cmd *)cmd->content)->args[0];
+	cmd_name = args[0];
 	cmd_path = get_cmd_path(cmd_name, params->paths, params);
 	if (cmd_path == NULL)
 		return (FAIL);
 	if (cmd_path != cmd_name)
 	{
 		free (cmd_name);
-		((t_cmd *)cmd->content)->args[0] = cmd_path;
+		args[0] = cmd_path;
 	}
 	return (SUCCESS);
 }
@@ -153,7 +153,6 @@ void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 
 int	exe_chd(t_minishell *params, t_list *cmd, int count)
 {
-	char	*path;
 	char	**cmd_args;
 
 	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
@@ -167,11 +166,12 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	closepipe(params->fd1);
 	closepipe(params->fd2);
 	closeredirfds(((t_cmd *)cmd->content)->redir);
-	if (replace_cmd(params, cmd) == FAIL)
-		exit (FAIL);
-	path = ((t_cmd *)cmd->content)->args[0];
 	cmd_args = ((t_cmd *)cmd->content)->args;
-	if (execve(path, cmd_args, params->envp_arr) == -1)
+	if (builtin(cmd_args[0]) != -1)
+		exit(exebuiltin(builtin(cmd_args[0]), cmd_args, params));
+	if (replace_cmd(params, cmd_args) == FAIL)
+		exit (FAIL);
+	if (execve(cmd_args[0], cmd_args, params->envp_arr) == -1)
 	{
 		perror(ERR);
 		spick_and_span(params, ERROR, FALSE);

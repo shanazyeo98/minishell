@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 16:28:30 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:57:59 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 		{
 			if (wildcard_expansion(t->wordgrp, params) == FAIL)
 				spick_and_span(params, FAIL, TRUE);
-			while (t->next != NULL && (t->next)->wordgrp != t->wordgrp)
+			while (t->next != NULL && (t->next)->wordgrp == t->wordgrp)
 				t = t->next;
 		}
 		t = t->next;
@@ -67,6 +67,7 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 {
 	int	status;
 
+	status = SUCCESS;
 	while (cmd != NULL)
 	{
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
@@ -98,12 +99,17 @@ int	waitforchild(int count, t_minishell *params)
 	int	pid;
 	int	status;
 	int	final_status;
-	int	i;
+	int	fail;
+//	int	i;
 
-	i = 0;
-	while (i < count)
+//	i = 0;
+	pid = 0;
+	fail = FALSE;
+	while (pid != -1)
 	{
 		pid = wait(&status);
+		if (WIFEXITED(status) && WEXITSTATUS(status) == FAIL)
+			fail = TRUE;
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
@@ -111,9 +117,10 @@ int	waitforchild(int count, t_minishell *params)
 			else if (WIFSIGNALED(status))
 				final_status = WTERMSIG(status) + FATALSIGNAL;
 		}
-		i++;
 	}
 	free(params->pid);
+	if (fail == TRUE)
+		spick_and_span(params, FAIL, TRUE);
 	return (final_status);
 }
 

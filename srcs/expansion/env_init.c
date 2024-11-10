@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:24:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:58:11 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ t_list	*stray_to_llist(char **str)
 	int		i;
 	char	*content;
 
+	if (*str == NULL)
+		return (NULL);
 	i = 1;
 	content = ft_strdup(str[0]);
 	if (content == NULL)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:35:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:24:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	ms.envp = stray_to_llist(envp);
-	if (ms.envp == NULL)
+	if (ms.envp == NULL && *envp != NULL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
 		exit (ERROR);
