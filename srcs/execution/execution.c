@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 16:57:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 20:15:13 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,8 @@ int	waitforchild(int count, t_minishell *params)
 	int	status;
 	int	final_status;
 	int	fail;
-//	int	i;
+	int	newline;
 
-//	i = 0;
 	pid = 0;
 	fail = FALSE;
 	while (pid != -1)
@@ -110,6 +109,8 @@ int	waitforchild(int count, t_minishell *params)
 		pid = wait(&status);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == FAIL)
 			fail = TRUE;
+		if (WIFSIGNALED(status))
+			newline = TRUE;
 		if (pid == params->pid[count - 1])
 		{
 			if (WIFEXITED(status))
@@ -121,6 +122,8 @@ int	waitforchild(int count, t_minishell *params)
 	free(params->pid);
 	if (fail == TRUE)
 		spick_and_span(params, FAIL, TRUE);
+	if (newline == TRUE)
+		write(1, "\n", 1);
 	return (final_status);
 }
 
@@ -134,8 +137,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 {
 	t_cmd	*cmd;
 	int		count;
-
-	int		i;
 
 	expandtokens(node, params);
 	updatetree(node, params);

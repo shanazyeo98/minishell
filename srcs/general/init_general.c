@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:24:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 19:49:16 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	getinput(t_minishell *ms)
 	char	*input;
 
 	input = readline(PROMPT);
+	if (g_sig_status != 0)
+		ms->exitstatus = FATALSIGNAL + g_sig_status;
 	if (g_sig_status != SIGINT)
 		add_history(input);
 	ms->input = input;

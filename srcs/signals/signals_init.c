@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:08:43 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 19:52:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	sig_handler(int signum)
 void	sig_noninteractive(int signum)
 {
 	if (signum == SIGINT || signum == SIGQUIT)
-		write(STDOUT_FILENO, "\n", 1);
+		g_sig_status = signum;
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the
