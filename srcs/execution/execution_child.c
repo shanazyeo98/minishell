@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:03:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:36:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 			free (cmd_path);
 		}
 	}
-	ft_putstr_fd(ERR, STDERR_FILENO);
+	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putendl_fd(": command not found", STDERR_FILENO);
 	spick_and_span(params, CMDNOTFOUND, FALSE);
@@ -91,15 +91,22 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
 void	redirect_pipes_in(t_minishell *params, t_list *cmd)
 {
 	int		in_idx;
+	t_redir	**redir;
 
-	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
+	redir = ((t_cmd *)cmd->content)->redir;
+	in_idx = get_last_redir(INPUT, redir);
 	if (in_idx != -1)
-		dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd, STDIN_FILENO);
+	{
+		if (redir[in_idx]->id == HEREDOC)
+			pipeheredoc(redir[in_idx], redir, params);
+		else
+			dup2(redir[in_idx]->fd, STDIN_FILENO);
+	}
 	else
 	{
 		if (params->exe_index % 2 == 0 && params->exe_index > 0)
 			dup2(params->fd2[0], STDIN_FILENO);
-		else if (params->exe_index % 2 == 1 && params->exe_index > 0)
+		else if (params->exe_index % 2 == 1)
 			dup2(params->fd1[0], STDIN_FILENO);
 	}
 }
