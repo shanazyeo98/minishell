@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 18:23:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:24:20 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,6 @@ char	**llist_to_stray(t_list *llist)
 		curr = curr->next;
 		i++;
 	}
-	stray[ft_lstsize(llist) + 1] = NULL;
+	stray[ft_lstsize(llist)] = NULL;
 	return (stray);
 }
