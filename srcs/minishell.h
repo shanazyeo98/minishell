@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 16:36:39 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 18:09:34 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -416,6 +416,7 @@ int			depressedmsg(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
+void		free_envp_arr_and_paths(t_minishell *ms);
 void		spick_and_span(t_minishell *ms, int status, int end);
 void		break_shell(t_minishell *ms);
 

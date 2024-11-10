@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 16:57:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 18:11:44 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	t_cmd	*cmd;
 	int		count;
 
-	int		i;
-
 	expandtokens(node, params);
 	updatetree(node, params);
 	if (populate_env_and_paths(params) == FAIL)
@@ -155,6 +153,4 @@ int	execute(t_cmdnode *node, t_minishell *params)
 			return (FAIL);
 		return (waitforchild(count, params));
 	}
-	ft_freearray(params->envp_arr);
-	free (params->paths);
 }

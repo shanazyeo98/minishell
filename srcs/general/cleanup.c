@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:04:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 18:08:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,31 @@ void	free_ft_split(char **arr)
 	free(arr);
 }
 
+/* Description: Checks if the envp array and the paths members in the
+   t_minishell structure are populated (not NULL). If they are populated, free
+   the memory allocated to these 2 members and set them to NULL.
+*/
+
+void	free_envp_arr_and_paths(t_minishell *ms)
+{
+	if (ms->envp_arr != NULL)
+	{
+		ft_freearray(ms->envp_arr);
+		ms->envp_arr = NULL;
+	}
+	if (ms->paths != NULL)
+	{
+		ft_freearray(ms->paths);
+		ms->paths = NULL;
+	}
+}
+
 /* Description: Overall clean up function. Frees all allocated memory:
-	- t_minishell -> char **paths
 	- t_minishell -> char * input
 	- t_minishell -> t_list *envp
+	- t_minishell -> char **envp_arr
+	- t_minishell -> char **paths
+
 	- TO ADD ON AFTERWARDS
 */
 void	spick_and_span(t_minishell *ms, int status, int end)
@@ -62,6 +83,7 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 		free(ms->cwd);
 	closepipe(ms->fd1);
 	closepipe(ms->fd2);
+	free_envp_arr_and_paths(ms);
 	if (status == FAIL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
