@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 11:37:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 15:39:39 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@
 # define ERR_SIGACTION_FAIL "Signal handler registration failed. Goodbye."
 # define ERR_SYNTAX "ಥ_ಥ : Syntax error"
 # define ERR "ಥ_ಥ "
+# define ERRCOLON "ಥ_ಥ : "
 
 /*Extra*/
 
@@ -312,7 +313,7 @@ t_token		*ret_tokenwordgrp(int wordgrp, t_token *token);
 int			heredoc(t_token *token, char *delim, t_minishell *params);
 void		heredoccheck(t_token **tokenlist, t_minishell *params);
 char		*delim(t_token *token, t_minishell *params);
-int			herefile(int hd);
+void		pipeheredoc(t_redir *redir, t_redir **list, t_minishell *params);
 
 //parsing
 int			ret_op(char *str);

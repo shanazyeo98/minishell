@@ -6,38 +6,11 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:19:57 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 15:39:20 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/*Description: Takes the string generated from the heredoc input and
-performs variable expansion if hd_expand is true*/
-
-int	inputheredoc(t_redir *redir, int fd, t_minishell *params)
-{
-	char	*newstr;
-	char	*content;
-
-	content = ft_strdup(redir->hd_content);
-	if (content == NULL)
-		return (FAIL);
-	if (redir->hd_expand == TRUE)
-	{
-		newstr = parameter_expansion(content, params->envp, params->exitstatus);
-		if (newstr == NULL)
-			return (FAIL);
-		ft_putstr_fd(newstr, fd);
-		free(newstr);
-	}
-	else
-	{
-		ft_putstr_fd(content, fd);
-		free(content);
-	}
-	return (SUCCESS);
-}
 
 /*Description: Generates a file to store the heredoc input and putstr into
 the generated file
@@ -46,31 +19,26 @@ else, SUCCESS*/
 
 int	expandheredoc(t_redir *redir, t_minishell *params)
 {
-	static int	i = 0;
-	int			fd;
-
-	fd = herefile(i);
-	if (fd == -1)
-		return (FAIL);
-	if (inputheredoc(redir, fd, params) == FAIL)
-		return (close(fd), FAIL);
-	redir->fd = fd;
-	return (i++, SUCCESS);
+	if (redir->hd_expand == TRUE)
+	{
+		redir->hd_content = parameter_expansion(redir->hd_content, \
+		params->envp, params->exitstatus);
+		if (redir->hd_content == NULL)
+			return (FAIL);
+	}
+	return (SUCCESS);
 }
 
-// num = ft_itoa(i);
-// 	if (num == NULL)
-// 		return (FAIL);
-// 	name = ft_strjoin(HEREDOCFILE, num);
-// 	if (name == NULL)
-// 		return (free(num), FAIL);
-// 	unlink(name);
-// 	fd = open(name, O_RDWR | O_CREAT | O_APPEND, 0644);
-// 	free (num);
-// 	unlink(name);
-// 	free(name);
-// 	if (fd == -1)
-// 	{
-// 		perror(ERR);
-// 		return (FAIL);
-// 	}
+void	pipeheredoc(t_redir *redir, t_redir **list, t_minishell *params)
+{
+	int	hd[2];
+
+	if (pipe(hd) == -1)
+	{
+		closeredirfds(list);
+		spick_and_span(params, FAIL, TRUE);
+	}
+	ft_putstr_fd(redir->hd_content, hd[1]);
+	dup2(hd[0], STDIN_FILENO);
+	closepipe(hd);
+}
