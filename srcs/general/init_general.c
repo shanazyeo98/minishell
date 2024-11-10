@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_general.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 16:39:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:35:58 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,24 @@ void	getinput(t_minishell *ms)
 	ms->input = input;
 }
 
+/* Description: Initialises all the fds stored in fd1 and fd2 to -1 */
+
+void	init_fds(t_minishell *ms)
+{
+	ms->fd1[0] = -1;
+	ms->fd1[1] = -1;
+	ms->fd2[0] = -1;
+	ms->fd2[1] = -1;
+}
+
 /* Description: Initialises the t_minishell structure.
    Members:
 	- casts int arc and char *argv[] as void to "use" them
 	- envp: linked list of environment variables
+	- envp_arr: used later during child execution when the envp linked is
+	  converted back to an array of strings
+	- paths: array of strings storing the different direcotries in the $PATH
+	  variable. Used for child execution
 	- paths: an array of strings containing the environment paths
 	- input: user input from the command line
 	- TO ADD ON AS WE ADD MORE MEMBERS IN THE STRUCT
@@ -61,12 +75,15 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
 		exit (ERROR);
 	}
+	ms.envp_arr = NULL;
+	ms.paths = NULL;
 	ms.input = NULL;
 	ms.tokenlist = NULL;
 	ms.ast = NULL;
 	ms.hd_expand = TRUE;
 	ms.cwd = getcwd(NULL, 0);
 	ms.exitstatus = 0;
+	init_fds(&ms);
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;

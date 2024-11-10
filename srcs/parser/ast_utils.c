@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 15:37:31 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:30:41 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,37 @@ void	print_ast_node(t_ast *node)
 	printf("ID: %d | Type: %s | Op Type: %s\n", node->id, type, op_type);
 }
 
-/* Desription: Prints out a command as well by joining all the tokens in the
+/* Desription: Prints out a command arguments in the contents of t_list *cmds
+   in a cmd node. Takes in the linked list of commands and prints out the
+   contents. This function is used for general debugging.
+*/
+
+void	print_ast_cmd(t_list *cmds)
+{
+	t_list	*curr;
+	int		i;
+
+	curr = cmds;
+	printf("Cmd Linked list:\n");
+	while (curr != NULL)
+	{
+		printf("Args:\n");
+		i = 0;
+		while (((t_cmd *)(curr->content))->args[i] != NULL)
+		{
+			printf("%s\n", ((t_cmd *)(curr->content))->args[i]);
+			i++;
+		}
+		curr = curr->next;
+	}
+}
+
+/* Desription: Prints out a command by joining all the tokens in the
    command structure. Takes in the start and end token as inputs. This function
    is used for general debugging.
 */
 
-void	print_ast_cmd(t_token *start, t_token *end)
+void	print_ast_tkn(t_token *start, t_token *end)
 {
 	t_token	*curr;
 
@@ -87,7 +112,8 @@ void	print_ast(t_ast *node, int ctr)
 			printf("--");
 			in_ctr--;
 		}
-		print_ast_cmd(node->cmdnode->start, node->cmdnode->end);
+		print_ast_tkn(node->cmdnode->start, node->cmdnode->end);
+		print_ast_cmd(node->cmdnode->cmds);
 	}
 }
 

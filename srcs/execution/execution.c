@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 17:49:56 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:41:35 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		params->pid[params->exe_index] = fork();
 		if (params->pid[params->exe_index] == -1)
 			return (free(params->pid), perror(ERR), FAIL);
-		// if (params->pid[params->exe_index] == 0)
-		// 	function to execute child process;
+		if (params->pid[params->exe_index] == 0)
+			exe_chd(params, cmd, count);
 		if (params->exe_index % 2 == 1)
 			closepipe(params->fd1);
 		if (params->exe_index > 0 && params->exe_index % 2 == 0)
@@ -98,9 +98,10 @@ int	waitforchild(int count, t_minishell *params)
 	int	pid;
 	int	status;
 	int	final_status;
+	int	i;
 
-	pid = 0;
-	while (pid != 1)
+	i = 0;
+	while (i < count)
 	{
 		pid = wait(&status);
 		if (pid == params->pid[count - 1])
@@ -110,6 +111,7 @@ int	waitforchild(int count, t_minishell *params)
 			else if (WIFSIGNALED(status))
 				final_status = WTERMSIG(status) + FATALSIGNAL;
 		}
+		i++;
 	}
 	free(params->pid);
 	return (final_status);
@@ -128,9 +130,11 @@ int	execute(t_cmdnode *node, t_minishell *params)
 
 	expandtokens(node, params);
 	updatetree(node, params);
+	if (populate_env_and_paths(params) == FAIL)
+		return (FAIL);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
-	if (count == 1 && cmd->args != NULL)// && builtin(cmd->args[0]) > 7)
+	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 0)
 		return (nonchildexe(cmd, params));
 	else
 	{
@@ -142,4 +146,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 			return (FAIL);
 		return (waitforchild(count, params));
 	}
+	ft_freearray(params->envp_arr);
+	free (params->paths);
 }

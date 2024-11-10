@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_retrieve.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 02:33:28 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 17:10:34 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:35:36 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_list	*find_env_var(char *var, t_list *envp)
 /* Description: retrieves the value of the of an environment variable given the
    the variable name (without $) and the envp list. Returns a NULL if the given
    variable does not exist within the list. If malloc fails, the status is set
-   as ERROR.
+   as FAIL.
 */
 
 char	*retrieve_env_var(char *var, t_list *envp, int *status)

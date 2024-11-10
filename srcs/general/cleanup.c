@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/03 16:57:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:35:02 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 	ms->input = NULL;
 	if (ms->envp != NULL && end == TRUE)
 	{
+		ft_lstclear(&(ms->envp), &free);
 		ft_lstclear(&(ms->envp), &free);
 		ms->envp = NULL;
 	}

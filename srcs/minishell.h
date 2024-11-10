@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/06 12:58:57 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:37:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <dirent.h>
+# include <errno.h>
 
 /* General */
 # define DELIMITER " '\n\"$?"
@@ -252,6 +253,8 @@ enum	e_exitstat
 typedef struct s_minishell
 {
 	t_list	*envp;
+	char	**envp_arr;
+	char	**paths;
 	char	*input;
 	t_token	**tokenlist;
 	char	connector[4];
@@ -271,7 +274,6 @@ typedef struct s_minishell
 
 /* Initialisation functions */
 void		declarearray(t_minishell *params);
-char		**getpaths(void);
 void		getinput(t_minishell *ms);
 t_minishell	init_ms(int argc, char *argv[], char *envp[]);
 int			rl_empty_event(void);
@@ -282,6 +284,8 @@ char		**llist_to_stray(t_list *llist);
 t_list		*find_env_var(char *var, t_list *envp);
 char		*retrieve_env_var(char *var, t_list *envp, int *status);
 char		*substring_after_char(char *input, char delim);
+int			populate_env_and_paths(t_minishell *params);
+int			getpaths(t_minishell *params);
 
 /* Signal functions */
 void		init_all_sig_handler(int state);
@@ -334,7 +338,9 @@ int			token_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
 void		print_ast_node(t_ast *node);
-void		print_ast_cmd(t_token *start, t_token *end);
+void		print_ast_tkn(t_token *start, t_token *end);
+void		print_ast_cmd(t_list *cmds);
+void		printcmdlist(t_list *node);
 void		print_ast(t_ast *node, int ctr);
 int			traverse_ast(t_ast *node, t_minishell *params);
 
@@ -356,6 +362,7 @@ int			expandheredoc(t_redir *redir, t_minishell *params);
 int			amendheredoc(int newfd, int oldfd, t_minishell *params);
 int			exe_redirection(t_redir **redir, t_minishell *params);
 void		closeredirfds(t_redir **redir);
+int			get_last_redir(int type, t_redir **redir);
 
 //wildcard
 int			searchdir(char **newstr, t_list *wclist, char *cwd);
@@ -370,6 +377,7 @@ int			openpipe(int fd[2]);
 int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
+int			exe_chd(t_minishell *params, t_list *cmd, int count);
 
 //cd
 int			checkslash(char *str);
