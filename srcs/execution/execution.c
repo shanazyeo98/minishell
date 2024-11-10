@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 11:41:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:28:30 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,15 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	t_cmd	*cmd;
 	int		count;
 
+	int		i;
+
 	expandtokens(node, params);
 	updatetree(node, params);
 	if (populate_env_and_paths(params) == FAIL)
 		return (FAIL);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
-	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 0)
+	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 7)
 		return (nonchildexe(cmd, params));
 	else
 	{

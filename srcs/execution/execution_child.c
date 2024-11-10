@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 15:41:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:36:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,21 +34,21 @@
 char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 {
 	char	*cmd_path;
-	int		i;
+	int		len;
 
-	i = 0;
+	len = ft_straylen(paths);
 	if (access(cmd, F_OK) == 0)
 		return (cmd);
 	if (paths != NULL)
 	{
-		while (paths[i] != NULL)
+		while (len >= 0)
 		{
-			cmd_path = ft_pathjoin(paths[i], cmd);
+			cmd_path = ft_pathjoin(paths[len], cmd);
 			if (cmd_path == NULL)
 				return (NULL);
 			if (access(cmd_path, F_OK) == 0)
 				return (cmd_path);
-			i++;
+			len--;
 			free (cmd_path);
 		}
 	}
