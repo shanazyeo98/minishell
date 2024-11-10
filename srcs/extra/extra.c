@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:57:23 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/25 15:55:22 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:49:57 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,44 @@ int	flirtmsg(void)
 	return (SUCCESS);
 }
 
-int	duck(void)
+int	depressedmsg(void)
 {
-	ft_putendl_fd("           -----", STDOUT_FILENO);
-	ft_putendl_fd("         < quack >", STDOUT_FILENO);
-	ft_putendl_fd("   __   /  -----", STDOUT_FILENO);
-	ft_putendl_fd("__( •)> ", STDOUT_FILENO);
-	ft_putendl_fd("\\____)", STDOUT_FILENO);
+	static int	i = 0;
+
+	if (i % 6 == 0)
+		ft_putendl_fd(DEE0, STDOUT_FILENO);
+	if (i % 6 == 1)
+		ft_putendl_fd(DEE1, STDOUT_FILENO);
+	if (i % 6 == 2)
+		ft_putendl_fd(DEE2, STDOUT_FILENO);
+	if (i % 6 == 3)
+		ft_putendl_fd(DEE3, STDOUT_FILENO);
+	if (i % 6 == 4)
+		ft_putendl_fd(DEE4, STDOUT_FILENO);
+	if (i % 6 == 5)
+		ft_putendl_fd(DEE5, STDOUT_FILENO);
+	i++;
 	return (SUCCESS);
 }
 
-int	confusedduck(void)
+int	duck(char **args)
 {
-	ft_putendl_fd("           ----------", STDOUT_FILENO);
-	ft_putendl_fd("  ?      < huh? quack >", STDOUT_FILENO);
-	ft_putendl_fd("   __   /  ----------", STDOUT_FILENO);
-	ft_putendl_fd("__( •)>", STDOUT_FILENO);
-	ft_putendl_fd("\\____)", STDOUT_FILENO);
+	if (ft_strcmp(args[0], DUCKCMD) == 0)
+	{
+		ft_putendl_fd("           -----", STDOUT_FILENO);
+		ft_putendl_fd("         < quack >", STDOUT_FILENO);
+		ft_putendl_fd("   __   /  -----", STDOUT_FILENO);
+		ft_putendl_fd("__( •)> ", STDOUT_FILENO);
+		ft_putendl_fd("\\____)", STDOUT_FILENO);
+	}
+	else
+	{
+		ft_putendl_fd("           ----------", STDOUT_FILENO);
+		ft_putendl_fd("  ?      < huh? quack >", STDOUT_FILENO);
+		ft_putendl_fd("   __   /  ----------", STDOUT_FILENO);
+		ft_putendl_fd("__( •)>", STDOUT_FILENO);
+		ft_putendl_fd("\\____)", STDOUT_FILENO);
+	}
 	return (SUCCESS);
 }
 

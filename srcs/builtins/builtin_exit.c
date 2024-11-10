@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:55:06 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/24 17:43:52 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/01 13:15:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	checkifnumeric(char *str)
 		return (FALSE);
 	while (str[i] != '\0')
 	{
-		if (ft_isalpha(str[i]) == 0)
+		if (ft_isdigit(str[i]) == 0)
 			return (FALSE);
 		i++;
 	}

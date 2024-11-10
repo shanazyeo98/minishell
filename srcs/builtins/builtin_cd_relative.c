@@ -6,11 +6,24 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 15:50:29 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	checkmatchingpath(char *dir, char *path, char *cwd)
+{
+	char	*subpath;
+
+	subpath = ft_substr(path, 0, ft_strlen(path) - ft_strlen(dir) - 1);
+	if (subpath == NULL)
+		return (FAIL);
+	if (ft_strcmp(subpath, cwd) != 0)
+		ft_putendl_fd(path, STDOUT_FILENO);
+	free(subpath);
+	return (SUCCESS);
+}
 
 int	retcdpath(char ***cdpath, int *checkwd, t_minishell params)
 {

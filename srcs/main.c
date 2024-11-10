@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/07 10:14:30 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:38:30 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	main(int argc, char *argv[], char *envp[])
 		g_sig_status = 0;
 		init_all_sig_handler(INTERACTIVE);
 		getinput(&ms);
-		init_all_sig_handler(NONINTERACTIVE);
-		if (ms.input == NULL) //|| ft_strcmp(ms.input, EXIT_CMD) == 0)
+		if (ms.input == NULL)
 			break_shell(&ms);
 		if (g_sig_status != SIGINT)
 			tokenize(ms.input, &ms);
@@ -47,9 +46,9 @@ int	main(int argc, char *argv[], char *envp[])
 		if (ms.tokenlist != NULL)
 		{
 			ms.ast = parse(*ms.tokenlist, -1);
-			// print_ast(ms.ast, 0);
-			// tree traversal portion here -> execute inside
-			execute(ms.ast->cmdnode, &ms);
+			if (ms.ast == NULL)
+				spick_and_span(&ms, FAIL, TRUE);
+			ms.exitstatus = traverse_ast(ms.ast, &ms);
 		}
 		spick_and_span(&ms, SUCCESS, FALSE);
 	}

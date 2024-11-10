@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:16:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:35:02 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 	if (ms->envp != NULL && end == TRUE)
 	{
 		ft_lstclear(&(ms->envp), &free);
+		ft_lstclear(&(ms->envp), &free);
 		ms->envp = NULL;
 	}
 	if (ms->tokenlist != NULL)
@@ -59,6 +60,8 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 	if (ms->ast != NULL)
 		free_tree(ms->ast);
 	ms->ast = NULL;
+	if (end == TRUE)
+		free(ms->cwd);
 	if (status == FAIL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:08:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 17:14:04 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ char	*newstring(char *str, char *addstr)
 	char	*result;
 
 	result = ft_strjoin(str, addstr);
-	free(str);
+	if (str != NULL)
+		free(str);
 	if (result == NULL)
 		return (NULL);
 	return (result);
@@ -26,17 +27,11 @@ char	*newstring(char *str, char *addstr)
 int	ft_assignstr(char *newstr, char **args)
 {
 	if (*args != NULL)
-	{
 		*args = newstring(*args, newstr);
-		if (*args == NULL)
-			return (FAIL);
-	}
 	else
-	{
 		*args = ft_strdup(newstr);
-		if (*args == NULL)
-			return (FAIL);
-	}
+	if (*args == NULL)
+		return (FAIL);
 	return (SUCCESS);
 }
 
@@ -61,7 +56,7 @@ int	splitbasic(t_token *token, char **args, int *i, t_token *end)
 			(*i)++;
 	}
 	j = 0;
-	while ((token->str)[j + 1] != '\0')
+	while ((token->str)[j] != '\0' && (token->str)[j + 1] != '\0')
 		j++;
 	if ((token->str)[j] == ' ' && token->next != end && \
 	token->wordgrp == (token->next)->wordgrp)

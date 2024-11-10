@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:58:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,16 +46,16 @@ char	*genpath(char *currdir, char *relpath)
 	return (combine);
 }
 
-int	checkmatchingpath(char *dir, char *path, char *cwd)
+int	setpwd(t_minishell *params)
 {
-	char	*subpath;
+	char	*args[3];
 
-	subpath = ft_substr(path, 0, ft_strlen(path) - ft_strlen(dir) - 1);
-	if (subpath == NULL)
-		return (FAIL);
-	if (ft_strcmp(subpath, cwd) != 0)
-		ft_putendl_fd(path, STDOUT_FILENO);
-	free(subpath);
+	args[0] = "export";
+	args[1] = ft_strjoin("PWD=", params->cwd);
+	args[2] = NULL;
+	if (builtin_export(args, &params->envp) == FAIL)
+		return (free(args[1]), FAIL);
+	free(args[1]);
 	return (SUCCESS);
 }
 
@@ -74,14 +74,15 @@ int	changedir(char *dir, char *path, t_minishell *params, int rel)
 	else
 	{
 		status = SUCCESS;
-		if (rel == TRUE && checkmatchingpath(dir, path, params->cwd) == FAIL)
-			return (FAIL);
-		params->cwd = getcwd(NULL, 0);
+		if (rel == TRUE)
+			status = checkmatchingpath(dir, path, params->cwd);
 		if (rel == TRUE)
 			free(path);
+		free(params->cwd);
+		params->cwd = getcwd(NULL, 0);
 		if (params->cwd == NULL)
 			return (FAIL);
-		//set pwd variable
+		status = setpwd(params);
 	}
 	return (status);
 }

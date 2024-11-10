@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:38:10 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/01 13:42:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,62 +107,3 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 		return (FAIL);
 	return (SUCCESS);
 }
-
-	// //testing:
-	// int	i;
-	// i = 0;
-	// while (i < args)
-	// {
-	// 	printf("ARG: %s\n", cmd->args[i]);
-	// 	i++;
-	// }
-	// i = 0;
-	// while (i < redir)
-	// {
-	// 	printf("FILE: %s\n", cmd->redir[i]->file);
-	// 	i++;
-	// }
-
-// int main(void)
-// {
-//     t_token a;
-//     t_token b;
-//     t_token c;
-//     t_token d;
-// 	t_token e;
-// 	t_token f;
-//     t_cmd   cmd;
-
-//     a.str = ">";
-//     a.type = REDIRECTOR;
-//     a.wordgrp = 0;
-//     b.str = "hello";
-//     b.type = BASIC;
-//     b.wordgrp = 0;
-//     a.next = &b;
-// 	b.prev = &a;
-//     b.next = &c;
-//     c.str = "heyy";
-//     c.type = BASIC;
-//     c.wordgrp = 1;
-//     c.next = &d;
-// 	c.prev = &b;
-//     d.str = "file hi";
-//     d.type = SINGLE;
-//     d.wordgrp = 1;
-//     d.next = &e;
-// 	d.prev = &c;
-// 	e.str = "hellooo hi hi";
-//     e.type = DOUBLE;
-//     e.wordgrp = 2;
-//     e.next = &f;
-// 	e.prev = &d;
-// 	f.str = "hi";
-//     f.type = BASIC;
-//     f.wordgrp = 3;
-//     f.next = NULL;
-// 	f.prev = &e;
-//     cmd.start = &a;
-//     cmd.end = NULL;
-//     updatetree(&cmd, NULL);
-// }

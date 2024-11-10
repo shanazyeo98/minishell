@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 14:24:40 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/09 15:48:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:43:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,12 @@ int	builtin(char *str)
 		return (POSITIVE);
 	if (ft_strcmp(str, FLIRTCMD) == 0)
 		return (FLIRT);
-	if (ft_strcmp(str, DUCKCMD) == 0)
+	if (ft_strcmp(str, DUCKCMD) == 0 || ft_strcmp(str, CONDUCKCMD) == 0)
 		return (DUCK);
-	if (ft_strcmp(str, CONDUCKCMD) == 0)
-		return (CONDUCK);
 	if (ft_strcmp(str, SOPHDUCKCMD) == 0)
 		return (SOPHDUCK);
+	if (ft_strcmp(str, DEPRESSCMD) == 0)
+		return (DEPRESS);
 	return (-1);
 }
 
@@ -89,10 +89,10 @@ int	exebuiltin(int func, char **args, t_minishell *params)
 	if (func == POSITIVE)
 		return (positivemsg());
 	if (func == DUCK)
-		return (duck());
-	if (func == CONDUCK)
-		return (confusedduck());
+		return (duck(args));
 	if (func == SOPHDUCK)
 		return (sophduck());
+	if (func == DEPRESS)
+		return (depressedmsg());
 	return (flirtmsg());
 }

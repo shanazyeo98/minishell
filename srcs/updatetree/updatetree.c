@@ -6,42 +6,43 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/19 17:02:29 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/29 15:33:09 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/03 15:41:07 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
 //To comment out
-void	printcmdlist(t_list *node)
-{
-	t_cmd	*cmd;
-	int		i;
+// void	printcmdlist(t_list *node)
+// {
+// 	t_cmd	*cmd;
+// 	int		i;
 
-	while (node != NULL)
-	{
-		printf("NODE:\n");
-		printf("args: \n");
-		cmd = (t_cmd *) node->content;
-		i = 0;
-		while (cmd->args != NULL && cmd->args[i] != NULL)
-		{
-			printf("%s\n", cmd->args[i]);
-			i++;
-		}
-		printf("redirections: \n");
-		i = 0;
-		while (cmd->redir != NULL && cmd->redir[i] != NULL)
-		{
-			printf("file: %s\n", cmd->redir[i]->file);
-			printf("fd: %d\n", cmd->redir[i]->fd);
-			printf("hd expand: %d\n", cmd->redir[i]->hd_expand);
-			printf("id: %d\n", cmd->redir[i]->id);
-			i++;
-		}
-		node = node->next;
-	}
-}
+// 	while (node != NULL)
+// 	{
+// 		printf("NODE:\n");
+// 		printf("args: \n");
+// 		cmd = (t_cmd *) node->content;
+// 		i = 0;
+// 		while (cmd->args != NULL && cmd->args[i] != NULL)
+// 		{
+// 			printf("%s\n", cmd->args[i]);
+// 			i++;
+// 		}
+// 		printf("redirections: \n");
+// 		i = 0;
+// 		while (cmd->redir != NULL && cmd->redir[i] != NULL)
+// 		{
+// 			printf("file: %s\n", cmd->redir[i]->file);
+// 			printf("fd: %d\n", cmd->redir[i]->fd);
+// 			printf("hd expand: %d\n", cmd->redir[i]->hd_expand);
+// 			printf("id: %d\n", cmd->redir[i]->id);
+// 			printf("heredoc content: %s\n", cmd->redir[i]->hd_content);
+// 			i++;
+// 		}
+// 		node = node->next;
+// 	}
+// }
 
 void	initchararray(char **array, int count)
 {
@@ -80,10 +81,7 @@ int	createcmdlist(t_token *start, t_token *end, t_cmdnode *cmdnode)
 	if (initcmd(cmd, start, end) == FAIL)
 		return (FAIL);
 	lst = ft_lstnew(cmd);
-	if (cmdnode->cmds == NULL)
-		cmdnode->cmds = lst;
-	else
-		ft_lstadd_back(&cmdnode->cmds, lst);
+	ft_lstadd_back(&cmdnode->cmds, lst);
 	return (SUCCESS);
 }
 

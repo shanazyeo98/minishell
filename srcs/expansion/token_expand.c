@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 19:31:00 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/03 16:18:03 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 	- FAIL: if there are malloc errors
 */
 
-int	token_parameter_expansion(t_token *token, t_list *envp, int exit_status)
+int	token_expansion(t_token *token, t_list *envp, int exit_status)
 {
 	char	*temp;
 	char	*out;

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 11:20:36 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:41:35 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 	{
 		if (t->type != SINGLE)
 		{
-			if (token_parameter_expansion(t, params->envp, \
+			if (token_expansion(t, params->envp, \
 			params->exitstatus) == FAIL)
 				spick_and_span(params, FAIL, TRUE);
 		}

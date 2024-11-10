@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/31 12:33:08 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:30:41 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,15 +121,24 @@ void	print_ast(t_ast *node, int ctr)
    last command.
 */
 
-void	traverse_ast_first_last(t_ast *node)
+int	traverse_ast(t_ast *node, t_minishell *params)
 {
+	int	status;
+
 	if (node->type != CMD)
 	{
-		traverse_ast_first_last(node->left);
-		traverse_ast_first_last(node->right);
+		status = traverse_ast(node->left, params);
+		if ((node->op == AND && status == SUCCESS) \
+		|| (node->op == OR && status != SUCCESS))
+			return (traverse_ast(node->right, params));
+		else
+			return (status);
 	}
 	else
 	{
-		//Do smth to the commands here
+		status = execute(node->cmdnode, params);
+		if (status == FAIL)
+			spick_and_span(params, FAIL, TRUE);
+		return (status);
 	}
 }
