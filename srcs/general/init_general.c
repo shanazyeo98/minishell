@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/09 15:42:28 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:19:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ void	getinput(t_minishell *ms)
 	if (g_sig_status != SIGINT)
 		add_history(input);
 	ms->input = input;
+}
+
+/* Description: Initialises all the fds stored in fd1 and fd2 to -1 */
+
+void	init_fds(t_minishell *ms)
+{
+	ms->fd1[0] = -1;
+	ms->fd1[1] = -1;
+	ms->fd2[0] = -1;
+	ms->fd2[1] = -1;
 }
 
 /* Description: Initialises the t_minishell structure.
@@ -73,13 +83,9 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	ms.hd_expand = TRUE;
 	ms.cwd = getcwd(NULL, 0);
 	ms.exitstatus = 0;
-	ms.fd1[0] = -1;
-	ms.fd1[1] = -1;
-	ms.fd2[0] = -1;
-	ms.fd2[1] = -1;
+	init_fds(&ms);
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;
-
 	return (ms);
 }

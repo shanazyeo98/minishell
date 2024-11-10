@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/09 18:52:06 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:21:07 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@
 # define INSULT0 "you're proof that broken things can still be beautiful"
 # define INSULT1 "the light at the end of the tunnel might be an oncoming train"
 # define INSULT2 "this is the worst day of my life... so far"
-# define INSULT3 "if at first you don't success, then skydiving is probably not for you"
+# define INSULT3 "if you don't succeed at first, then skydiving is not for you"
 
 //global variable
 
@@ -372,7 +372,6 @@ int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
 int			exe_chd(t_minishell *params, t_list *cmd, int count);
-
 
 //cd
 int			checkslash(char *str);

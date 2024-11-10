@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/09 19:31:25 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:20:13 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,14 @@
 	   E.g.: "/usr/bin/cat" or "/usr/bin/ls"
 	2. an array of paths. E.g.: {"/usr/bin", "usr/sbin", ...}
    Actions:
-	1. For each command, combine with each path from **paths and check if the
-	   combined filepath is executable.
-	   - If executable, ft_strdup into the cmd_paths if execuable
-	   - If there are no executable paths, add the command as it is into
-	   cmd_paths
-	2. If any of the malloc fails, free previously allocated memory and
+	1. For each command, check if the binary file exists. Return the path if
+	   it exists
+	2. If the binary file does not exist, combine with each path from **paths
+	   and check if the combined filepath exists.
+	   - If it exists, ft_strdup into the cmd_paths
+	   - If there are no found paths, output the error message exit the child
+	     process
+	3. If any of the malloc fails, free previously allocated memory and
 	   return NULL
 */
 
@@ -78,37 +80,68 @@ int	replace_cmd(t_minishell *params, t_list *cmd)
 	return (SUCCESS);
 }
 
+/* Description: Redirects the input of a command. dup2 should not fail here
+   as the fds' validity is checked beforehand already
+   Scenarios:
+	- If there are IN redirectors, redirect STDIN_FILENO to those
+	- If there are no IN redirectors and the command is not the first command,
+	  redirect STDIN_FILENO to the corresponding pipe FD[0]
+*/
+
+void	redirect_pipes_in(t_minishell *params, t_list *cmd)
+{
+	int		in_idx;
+
+	in_idx = get_last_redir(INPUT, ((t_cmd *)cmd->content)->redir);
+	if (in_idx != -1)
+		dup2((((t_cmd *)cmd->content)->redir)[in_idx]->fd, STDIN_FILENO);
+	else
+	{
+		if (params->exe_index % 2 == 0 && params->exe_index > 0)
+			dup2(params->fd2[0], STDIN_FILENO);
+		else if (params->exe_index % 2 == 1 && params->exe_index > 0)
+			dup2(params->fd1[0], STDIN_FILENO);
+	}
+}
+
+/* Description: Redirects the output of a command. dup2 should not fail here
+   as the fds' validity is checked beforehand already
+   Scenarios:
+	- If there are OUT redirectors, redirect STDOUT_FILENO to those
+	- If there are no OUT redirectors and the command is not the last command,
+	  redirect STDOUT_FILENO to the corresponding pipe FD[1]
+*/
+
 void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 {
 	int	out_idx;
 
-	ft_putendl_fd("in 1", STDERR_FILENO);
 	out_idx = get_last_redir(OUTPUT, ((t_cmd *)cmd->content)->redir);
 	if (out_idx != -1)
-	{
-		ft_putendl_fd("in 2", STDERR_FILENO);
-		dup2((((t_cmd *)cmd->content)->redir)[out_idx]->fd, \
-		STDOUT_FILENO);
-	}
+		dup2((((t_cmd *)cmd->content)->redir)[out_idx]->fd, STDOUT_FILENO);
 	else
 	{
-		ft_putendl_fd("in 3", STDERR_FILENO);
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
-		{
-			ft_putendl_fd("in 4", STDERR_FILENO);
 			dup2(params->fd1[1], STDOUT_FILENO);
-		}
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
-		{
-			ft_putendl_fd("in 5", STDERR_FILENO);
 			dup2(params->fd2[1], STDOUT_FILENO);
-		}
 	}
 }
 
-/* Description: Within a child process, executes a command using execve. Execve
-   takes over the child if it does not fail
-   XXXXXXXXX
+/* Description: Within a child process, perform the following:
+	1. Attempt to open all the files associated with the command both in and
+	   out files. Exits the child process the moment an error occurs
+	2. Redirect all the input fds if there are files to redirect in. Otherwise
+	   redirect in from the pipe or stdin
+	3. Redirect all the output fds if there are files to redirect out.
+	   Otherwise redirect out to the pipe or stdout
+	4. Close all the pipes
+	5. Close the redirected fds
+	6. Search for the command binary to execute. If the command exists but is
+	   not executable, the child process exits. If there are malloc issues,
+	   exit the child process with FAIL (256)
+	7. Execute the command using execve. Execve takes over the child if it does
+	   not fail. perror if execve fails. Free memory, and exit with the errorno
 */
 
 int	exe_chd(t_minishell *params, t_list *cmd, int count)
@@ -118,6 +151,7 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 
 	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
 	{
+		closeredirfds(((t_cmd *)cmd->content)->redir);
 		spick_and_span(params, ERROR, FALSE);
 		exit (ERROR);
 	}
@@ -132,27 +166,9 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	cmd_args = ((t_cmd *)cmd->content)->args;
 	if (execve(path, cmd_args, params->envp_arr) == -1)
 	{
-
 		perror(ERR);
 		spick_and_span(params, ERROR, FALSE);
 		exit(errno);
 	}
 	exit (SUCCESS);
-	//replace command path the t_list cmd.args with the full path -> done
-	//use exe_redirection to open all the files and store the fds. continue with next steps if Error -> done (at parent level)
-	//only stop if FAIL (malloc issues)
-	//redirection
-		//find the latest in / heredoc in the cmd.redir array -> done
-		//find the latest out / append in the cmd.redir array -> done
-		//perform redirection of fds within the child -> done
-		//close all the unused fds
-	//execve
-	//if execve fails,
-		//check if we still need to use strerror or if execve will already print out the error message
-		//call a cleanup function to free
-	//use closeredirfds to close all the fds -> might want to do this at the parent level
 }
-
-
-
-

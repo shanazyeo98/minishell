@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_parameter.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/30 16:49:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:15:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,17 @@ char	*replace_param(char *input, char *par_dollar, char *rep)
 
 char	*replace_exit_status(char *input, int exit_status)
 {
-    char    *rep;
+	char	*rep;
 	char	*out;
 
-    rep = ft_itoa(exit_status);
-    if (rep == NULL)
-        return (NULL);
-    out = ft_strreplace_one(input, "$?", rep, "");
-    free (rep);
+	rep = ft_itoa(exit_status);
+	if (rep == NULL)
+		return (NULL);
+	out = ft_strreplace_one(input, "$?", rep, "");
+	free (rep);
 	if (out == NULL)
-        return (NULL);
-    return (out);
+		return (NULL);
+	return (out);
 }
 
 /* Description: given the first found position of $ within the input string,

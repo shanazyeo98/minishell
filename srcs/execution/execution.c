@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/09 19:48:29 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:20:36 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 
 	while (cmd != NULL)
 	{
-
 		if (params->exe_index % 2 == 0 && params->exe_index != count - 1)
 			status = pipe(params->fd1);
 		else if (params->exe_index % 2 == 1 && params->exe_index != count - 1)
@@ -79,17 +78,8 @@ int	forkchild(int count, t_list *cmd, t_minishell *params)
 		params->pid[params->exe_index] = fork();
 		if (params->pid[params->exe_index] == -1)
 			return (free(params->pid), perror(ERR), FAIL);
-
-		// 	function to execute child process;
-		if (params->pid[params->exe_index] == 0) //inside  child process cos the PID is 0
-		{
-			exe_chd(params, cmd, count); //check behaviour here if the execve fails
-		}
-
-
-
-
-
+		if (params->pid[params->exe_index] == 0)
+			exe_chd(params, cmd, count);
 		if (params->exe_index % 2 == 1)
 			closepipe(params->fd1);
 		if (params->exe_index > 0 && params->exe_index % 2 == 0)
@@ -113,7 +103,6 @@ int	waitforchild(int count, t_minishell *params)
 	i = 0;
 	while (i < count)
 	{
-
 		pid = wait(&status);
 		if (pid == params->pid[count - 1])
 		{
@@ -139,18 +128,11 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	t_cmd	*cmd;
 	int		count;
 
-	// int			i;
-
 	expandtokens(node, params);
 	updatetree(node, params);
 	if (populate_env_and_paths(params) == FAIL)
 		return (FAIL);
-
-	//remember to clear the envp_arr and paths at the end of execute
-
-
 	count = ft_lstsize(node->cmds);
-	printf("Inside execute. Count: %d\n", count);
 	cmd = (t_cmd *) node->cmds->content;
 	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 0)
 		return (nonchildexe(cmd, params));
@@ -164,4 +146,6 @@ int	execute(t_cmdnode *node, t_minishell *params)
 			return (FAIL);
 		return (waitforchild(count, params));
 	}
+	ft_freearray(params->envp_arr);
+	free (params->paths);
 }

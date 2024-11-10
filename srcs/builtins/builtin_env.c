@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 19:34:15 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:08:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 int	builtin_env(char **arg, t_list **envp)
 {
-	int 	argcount;
+	int		argcount;
 	t_list	*curr;
 
 	argcount = countexeargs(arg);

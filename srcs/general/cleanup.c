@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/09 16:35:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 11:16:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 	ms->input = NULL;
 	if (ms->envp != NULL && end == TRUE)
 	{
-		ft_lstclear(&(ms->envp), &free); //to check with MJ On the clean function
+		ft_lstclear(&(ms->envp), &free);
 		ms->envp = NULL;
 	}
 	if (ms->tokenlist != NULL)
