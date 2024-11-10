@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleanup.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:35:02 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/10 16:04:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 		ft_lstclear(&(ms->envp), &free);
 		ms->envp = NULL;
 	}
-	if (ms->tokenlist != NULL)
-		freetokens(ms->tokenlist);
+	freetokens(ms->tokenlist);
 	ms->tokenlist = NULL;
-	if (ms->ast != NULL)
-		free_tree(ms->ast);
+	free_tree(ms->ast);
 	ms->ast = NULL;
 	if (end == TRUE)
 		free(ms->cwd);
+	closepipe(ms->fd1);
+	closepipe(ms->fd2);
 	if (status == FAIL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
