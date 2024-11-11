@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 16:36:39 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/11 10:32:07 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,7 +343,7 @@ void		print_ast_tkn(t_token *start, t_token *end);
 void		print_ast_cmd(t_list *cmds);
 void		printcmdlist(t_list *node);
 void		print_ast(t_ast *node, int ctr);
-int			traverse_ast(t_ast *node, t_minishell *params);
+void		traverse_ast(t_ast *node, t_minishell *params);
 
 //update tree
 void		count(int *args, int *redir, t_token *start, t_token *end);

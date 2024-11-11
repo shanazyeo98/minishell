@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:30:41 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/11 10:35:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,24 +121,22 @@ void	print_ast(t_ast *node, int ctr)
    last command.
 */
 
-int	traverse_ast(t_ast *node, t_minishell *params)
+void	traverse_ast(t_ast *node, t_minishell *params)
 {
 	int	status;
 
 	if (node->type != CMD)
 	{
-		status = traverse_ast(node->left, params);
-		if ((node->op == AND && status == SUCCESS) \
-		|| (node->op == OR && status != SUCCESS))
-			return (traverse_ast(node->right, params));
-		else
-			return (status);
+		traverse_ast(node->left, params);
+		if ((node->op == AND && params->exitstatus == SUCCESS) \
+		|| (node->op == OR && params->exitstatus != SUCCESS))
+			traverse_ast(node->right, params);
 	}
 	else
 	{
 		status = execute(node->cmdnode, params);
+		free(params->pid);
 		if (status == FAIL)
 			spick_and_span(params, FAIL, TRUE);
-		return (status);
 	}
 }

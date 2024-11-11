@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/11 10:40:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ int	gotohome(t_minishell *params)
 		ft_putendl_fd(": cd: HOME not set", STDERR_FILENO);
 		return (ERROR);
 	}
-	return (changedir(NULL, home, params, TRUE));
+	status = changedir(NULL, home, params, FALSE);
+	return (free(home), status);
 }
 
 int	gotodir(char *dir, t_minishell *params)

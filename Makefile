@@ -54,8 +54,8 @@ LIBFTDIR = libft
 LIBFT = libft.a
 LIB = -lreadline
 HEADERS = srcs/minishell.h
-# MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
-# MAC_LIB = -L/opt/homebrew/opt/readline/lib
+ MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
+ MAC_LIB = -L/opt/homebrew/opt/readline/lib
 
 all: $(NAME)
 

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 20:15:13 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/11 10:46:28 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,33 +98,29 @@ int	waitforchild(int count, t_minishell *params)
 {
 	int	pid;
 	int	status;
-	int	final_status;
 	int	fail;
 	int	newline;
 
 	pid = 0;
 	fail = FALSE;
+	newline = FALSE;
 	while (pid != -1)
 	{
 		pid = wait(&status);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == FAIL)
 			fail = TRUE;
-		if (WIFSIGNALED(status))
+		if (WIFSIGNALED(status) && WTERMSIG(status) != 13)
 			newline = TRUE;
-		if (pid == params->pid[count - 1])
-		{
-			if (WIFEXITED(status))
-				final_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				final_status = WTERMSIG(status) + FATALSIGNAL;
-		}
+		if (pid == params->pid[count - 1] && WIFEXITED(status))
+			params->exitstatus = WEXITSTATUS(status);
+		if (pid == params->pid[count - 1] && WIFSIGNALED(status))
+			params->exitstatus = WTERMSIG(status) + FATALSIGNAL;
 	}
-	free(params->pid);
 	if (fail == TRUE)
-		spick_and_span(params, FAIL, TRUE);
+		return (FAIL);
 	if (newline == TRUE)
 		write(1, "\n", 1);
-	return (final_status);
+	return (SUCCESS);
 }
 
 /*Description: Overall function to execute. Following steps will happen:
