@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/27 17:10:16 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/12 17:43:48 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ char	*combine_string(char *in, char *or, char *rep, char *found)
 	- rep: the string to replaced "or" within "in"
 	- delim: string containing all the delimiters for "or". "or" is only valid
 	  for replacement if it is delimited by a character within the delim set.
-	  If delim is "", "or" does not need to does not need to separated by a
-	  delimiter to be replaced
+	  If delim is "", "or" does not need to separated by a delimiter to be
+	  replaced
   The function frees the pointer to "in" and returns a new string with its own
   memory allocated.
 */

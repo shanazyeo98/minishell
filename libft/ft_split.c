@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:38:34 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 09:04:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 19:02:47 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ QUESTION: When to use free()??
 */
 
 #include "libft.h"
+#include <stdio.h>
 
 int	ft_countstr(char const *s, char c)
 {
@@ -90,4 +91,22 @@ char	**ft_split(char const *s, char c)
 	}
 	array[arr_index] = NULL;
 	return (array);
+}
+
+
+
+int	main(void)
+{
+	char	*in;
+	char	**out;
+
+	in = ft_strdup("$123$$$?456$");
+	printf("Original: %s\n", in);
+	out = ft_split(in, '$');
+	printf("-----Split results-----\n");
+	while (*out != NULL)
+	{
+		printf("res: %s\n", *out);
+		*out++;
+	}
 }

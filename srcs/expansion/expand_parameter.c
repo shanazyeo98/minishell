@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:32:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/12 18:20:43 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ char	*replace_exit_status(char *input, int exit_status)
    retrieves the parameter name and attempts to find the corresponding
    parameter value within the envp linked list. Performs a replacement of the
    original parameter within the input string afterwards. If there is no
-   corresponding parameter in the envp list, the parameter is replkaced with
+   corresponding parameter in the envp list, the parameter is replaced with
    "".
    Return:
 	- SUCCESS: if there are no malloc errors
@@ -140,17 +140,79 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
 	- NULL. If there are malloc errors. The input string is not freed
 */
 
+// char	*parameter_expansion(char *input, t_list *envp, int exit_status)
+// {
+// 	char	*temp;
+// 	char	*out;
+
+// 	temp = input;
+// 	if (ft_strchr(temp, '$') == NULL)
+// 		return (input);
+// 	while (ft_strchr(temp, '$') != NULL)
+// 	{
+// 		if (ft_strchr(temp, '$')[1] == '?')
+// 		{
+// 			out = replace_exit_status(temp, exit_status);
+// 			if (out == NULL)
+// 				return (NULL);
+// 		}
+// 		else
+// 		{
+// 			out = find_and_replace_param(temp, envp, ft_strchr(temp, '$'));
+// 			if (out == NULL)
+// 				return (NULL);
+// 		}
+// 		temp = out;
+// 	}
+// 	return (out);
+// }
+
 char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 {
+	int		len;
+	int		pos;
+	int		i;
 	char	*temp;
-	char	*out;
+
+	i = 0;
+	temp = input;
+	len = ft_strlen(input);
+	while (i < len)
+	{
+		if (temp[i] == '$')
+		{
+			if (temp[i + 1] == '?')
+			
+				i += 2;
+			else if (check_dollar(temp[i + 1]) == 0)
+				i += 2;
+			else
+			{
+
+			}
+		}
+	}
+
+
 
 	temp = input;
+	last = input;
+
 	if (ft_strchr(temp, '$') == NULL)
 		return (input);
-	while (ft_strchr(temp, '$') != NULL)
+	if (ft_strchr(temp, '$')[1] == '\0')
+		return (input);
+
+	while (ft_strchr(last, '$') != NULL)
 	{
-		if (ft_strchr(temp, '$')[1] == '?')
+		if(ft_strchr(last, '$')[1] == ' ') //function to check for invalid var names
+		{
+			out = last;
+			last = ft_strchr(temp, '$') + 1;
+			continue;
+		}
+
+		if (ft_strchr(last, '$')[1] == '?')
 		{
 			out = replace_exit_status(temp, exit_status);
 			if (out == NULL)
@@ -158,11 +220,14 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 		}
 		else
 		{
-			out = find_and_replace_param(temp, envp, ft_strchr(temp, '$'));
+			out = find_and_replace_param(temp, envp, ft_strchr(last, '$'));
+			// printf("out after replacement: %s\n", out);
 			if (out == NULL)
 				return (NULL);
 		}
 		temp = out;
+		last = out;
 	}
 	return (out);
 }
+
