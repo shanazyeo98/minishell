@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:38:34 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/12 19:02:47 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/13 06:40:31 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,18 +95,42 @@ char	**ft_split(char const *s, char c)
 
 
 
-int	main(void)
-{
-	char	*in;
-	char	**out;
+// int	main(void)
+// {
+// 	char	*in;
+// 	char	*in2;
+// 	char	*in3;
 
-	in = ft_strdup("$123$$$?456$");
-	printf("Original: %s\n", in);
-	out = ft_split(in, '$');
-	printf("-----Split results-----\n");
-	while (*out != NULL)
-	{
-		printf("res: %s\n", *out);
-		*out++;
-	}
-}
+// 	char	**out;
+// 	char	**out2;
+// 	char	**out3;
+
+
+// 	in = ft_strdup("$123$$$?456$");
+// 	in2 = ft_strdup("123$ $$?78 9$");
+// 	in3 = ft_strdup("1234");
+
+
+// 	printf("Original: %s\n", in);
+// 	out = ft_split(in, '$');
+// 	printf("-----Split results in-----\n");
+// 	while (*out != NULL)
+// 	{
+// 		printf("res: %s\n", *out);
+// 		*out++;
+// 	}
+// 	out2 = ft_split(in2, '$');
+// 	printf("-----Split results in2-----\n");
+// 	while (*out2 != NULL)
+// 	{
+// 		printf("res: %s\n", *out2);
+// 		*out2++;
+// 	}
+// 	out3 = ft_split(in3, '$');
+// 	printf("-----Split results in3-----\n");
+// 	while (*out3 != NULL)
+// 	{
+// 		printf("res: %s\n", *out3);
+// 		*out3++;
+// 	}
+// }

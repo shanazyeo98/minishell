@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/12 17:38:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/13 06:17:43 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
    characters. These special characters will be interpreted literally and not
    be expanded.
    Returns:
-	- 1: if the char is not in the special character list
-	- 0: if the char is in the special character list
+	- TRUE: if the char is not in the special character list
+	- FALSE: if the char is in the special character list
 */
 
 int	check_dollar(char c)

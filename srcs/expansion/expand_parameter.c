@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/12 18:20:43 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/13 07:03:51 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ char	*replace_exit_status(char *input, int exit_status)
 	rep = ft_itoa(exit_status);
 	if (rep == NULL)
 		return (NULL);
-	out = ft_strreplace_one(input, "$?", rep, "");
+	out = ft_strreplace_one(input, "?", rep, "");
 	free (rep);
 	if (out == NULL)
 		return (NULL);
@@ -167,67 +167,103 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
 // 	return (out);
 // }
 
-char	*parameter_expansion(char *input, t_list *envp, int exit_status)
+void	init_pamex(char *input, t_pamex *px)
 {
 	int		len;
-	int		pos;
-	int		i;
-	char	*temp;
+	char	**split;
 
-	i = 0;
-	temp = input;
 	len = ft_strlen(input);
-	while (i < len)
+	px->first = FALSE;
+	px->last = FALSE;
+	if (input[0] == '$')
+		px->first = TRUE;
+	if (input[len - 1] == '$')
+		px->last = TRUE;
+	split = ft_split(input, '$');
+	if (split == NULL)
+		px->error = TRUE;
+	else
 	{
-		if (temp[i] == '$')
-		{
-			if (temp[i + 1] == '?')
-			
-				i += 2;
-			else if (check_dollar(temp[i + 1]) == 0)
-				i += 2;
-			else
-			{
-
-			}
-		}
+		px->dollar = stray_to_llist(split);
+		ft_freearray(split);
+		if (px->dollar == NULL)
+			px->error = TRUE;
 	}
-
-
-
-	temp = input;
-	last = input;
-
-	if (ft_strchr(temp, '$') == NULL)
-		return (input);
-	if (ft_strchr(temp, '$')[1] == '\0')
-		return (input);
-
-	while (ft_strchr(last, '$') != NULL)
-	{
-		if(ft_strchr(last, '$')[1] == ' ') //function to check for invalid var names
-		{
-			out = last;
-			last = ft_strchr(temp, '$') + 1;
-			continue;
-		}
-
-		if (ft_strchr(last, '$')[1] == '?')
-		{
-			out = replace_exit_status(temp, exit_status);
-			if (out == NULL)
-				return (NULL);
-		}
-		else
-		{
-			out = find_and_replace_param(temp, envp, ft_strchr(last, '$'));
-			// printf("out after replacement: %s\n", out);
-			if (out == NULL)
-				return (NULL);
-		}
-		temp = out;
-		last = out;
-	}
-	return (out);
 }
 
+
+
+int	check_dollar(char c)
+{
+	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '/') ||
+	(c >= ':' && c < '?') || (c == '@') || (c >= '[' && c <= '^') || \
+	(c >= '{' && c <= '~'))
+		return (0);
+	return (1);
+}
+
+
+
+char	*parameter_expansion(char *input, t_list *envp, int exit_status)
+{
+	t_pamex	px;
+	t_list	*cur;
+	char	*temp;
+
+	init_pamex(input, &px);
+	if (px.error == TRUE)
+		return (NULL);
+	cur = px.dollar;
+	while (cur != NULL)
+	{
+		if ((cur == px.dollar && px.first == TRUE) || \
+		(cur->next == NULL && px.last == TRUE))
+		{
+			if (((char *)cur->content)[0] == '?')
+			{
+				cur->content = replace_exit_status(cur->content, exit_status);
+				if (cur->content == NULL)
+					return (ft_lstclear(&(px.dollar), &free), NULL);
+			}
+			else if (check_dollar(((char *)cur->content)[0]) == FALSE)
+			{
+				temp = ft_strjoin("$", (char *)cur->content);
+				if (temp == NULL)
+					return (ft_lstclear(&(px.dollar), &free), NULL);
+				free (cur->content);
+				cur->content = temp;
+			}
+			else
+			{
+				cur->content = find_and_replace_param(cur->content, envp, cur->content);
+				if (cur->content == NULL)
+					return (ft_lstclear(&(px.dollar), &free), NULL);
+			}
+		}
+		cur = cur->next;
+	}
+	return ("MJ");
+}
+
+// int	main(void)
+// {
+// 	t_pamex	px1;
+// 	t_pamex	px2;
+// 	t_pamex	px3;
+// 	t_list	*curr;
+
+// 	printf("here\n");
+// 	init_pamex("$123", &px1);
+// 	printf("px1. first: %d | last: %d\n", px1.first, px1.last);
+// 	init_pamex("123$", &px2);
+// 	printf("px2. first: %d | last: %d\n", px2.first, px2.last);
+// 	init_pamex("$123$456??$?$789", &px3);
+// 	printf("px3. first: %d | last: %d\n", px3.first, px3.last);
+// 	curr = px3.dollar;
+// 	printf("print px3 linked list\n");
+// 	while (curr != NULL)
+// 	{
+// 		printf("%s\n", (char *)curr->content);
+// 		curr = curr->next;
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/12 18:02:09 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/13 06:47:30 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,6 +219,16 @@ typedef struct s_wc
 	char	*str;
 	int		wildcard;
 }	t_wc;
+
+/* parameter expansion */
+typedef struct s_param_expand
+{
+	int		first;
+	int		last;
+	// char	**split;
+	int		error;
+	t_list	*dollar;
+}	t_pamex;
 
 //builtins
 enum	e_builtin
