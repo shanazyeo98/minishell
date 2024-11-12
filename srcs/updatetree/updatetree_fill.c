@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 17:14:04 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 14:49:00 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*newstring(char *str, char *addstr)
 
 int	ft_assignstr(char *newstr, char **args)
 {
+	if (args == NULL)
+		return (SUCCESS);
 	if (*args != NULL)
 		*args = newstring(*args, newstr);
 	else

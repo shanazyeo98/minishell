@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/01 13:42:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 17:58:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	countargs(char *str, t_token *token, t_token *start, t_token *end)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = ft_countstr(str, ' ');
 	j = 0;
 	while (str[j] != '\0')
 	{
@@ -34,7 +34,6 @@ int	countargs(char *str, t_token *token, t_token *start, t_token *end)
 		}
 		j++;
 	}
-	i = ft_countstr(str, ' ');
 	if (token != start && token->wordgrp == (token->prev)->wordgrp)
 		i--;
 	return (i);
@@ -64,8 +63,8 @@ void	count(int *args, int *redir, t_token *start, t_token *end)
 	grp = token->wordgrp;
 	while (token != end)
 	{
-		if (token->wordgrp != grp && (token->type == SINGLE || \
-		token->type == DOUBLE))
+		if ((token == start || token->wordgrp != grp) \
+		&& (token->type == SINGLE || token->type == DOUBLE))
 			(*args)++;
 		grp = token->wordgrp;
 		if (token->type == REDIRECTOR)

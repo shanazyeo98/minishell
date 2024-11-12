@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 04:06:37 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 16:58:40 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 17:15:28 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,22 @@ int	setpwd(t_minishell *params)
 	char	*args[3];
 
 	args[0] = "export";
+	args[1] = ft_strjoin("OLDPWD=", params->cwd);
+	args[2] = NULL;
+	if (args[1] == NULL)
+		return (free(args[1]), FAIL);
+	if (builtin_export(args, &params->envp) == FAIL)
+		return (free(args[1]), FAIL);
+	free(params->cwd);
+	free(args[1]);
+	params->cwd = getcwd(NULL, 0);
+	if (params->cwd == NULL)
+		return (FAIL);
+	args[0] = "export";
 	args[1] = ft_strjoin("PWD=", params->cwd);
 	args[2] = NULL;
+	if (args[1] == NULL)
+		return (FAIL);
 	if (builtin_export(args, &params->envp) == FAIL)
 		return (free(args[1]), FAIL);
 	free(args[1]);
@@ -75,13 +89,10 @@ int	changedir(char *dir, char *path, t_minishell *params, int rel)
 	{
 		status = SUCCESS;
 		if (rel == TRUE)
+		{
 			status = checkmatchingpath(dir, path, params->cwd);
-		if (rel == TRUE)
 			free(path);
-		free(params->cwd);
-		params->cwd = getcwd(NULL, 0);
-		if (params->cwd == NULL)
-			return (FAIL);
+		}
 		status = setpwd(params);
 	}
 	return (status);

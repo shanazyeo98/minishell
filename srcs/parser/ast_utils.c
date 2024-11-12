@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/11 10:35:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 17:43:39 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,11 @@ void	traverse_ast(t_ast *node, t_minishell *params)
 	else
 	{
 		status = execute(node->cmdnode, params);
-		free(params->pid);
+		if (params->pid != NULL)
+		{
+			free(params->pid);
+			params->pid = NULL;
+		}
 		if (status == FAIL)
 			spick_and_span(params, FAIL, TRUE);
 	}

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:38:34 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/14 09:04:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 17:36:03 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	ft_countstr(char const *s, char c)
 
 	index = 0;
 	count = 0;
+	if (s == NULL)
+		return (0);
 	while (s[index] != '\0')
 	{
 		if (s[index] != c && (s[index + 1] == c || s[index + 1] == '\0'))
