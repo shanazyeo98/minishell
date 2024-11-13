@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:15:20 by shayeo            #+#    #+#             */
-/*   Updated: 2024/05/21 15:28:16 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/14 05:33:43 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,16 @@ char	*ft_strjoin(char const *s1, char const *s2)
 		ft_strlcat(newstring, s2, len + 1);
 	}
 	return (newstring);
+}
+
+int	main(void)
+{
+	char	*s1;
+	char	*s2;
+	char	*out;
+
+	s1 = NULL;\
+	s2 = " result";
+	out = ft_strjoin(s1, s2);
+	ft_printf("result: %s\n", out);
 }

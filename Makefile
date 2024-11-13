@@ -31,6 +31,7 @@ srcs/expansion/env_init.c \
 srcs/expansion/env_retrieve.c \
 srcs/expansion/token_expand.c \
 srcs/expansion/expand_parameter.c \
+srcs/expansion/expand_utils.c \
 srcs/expansion/wildcard.c \
 srcs/expansion/wildcard_match.c \
 srcs/expansion/wildcard_utils.c \

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/13 06:34:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 06:36:05 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ int	main(int argc, char *argv[], char *envp[])
 
 
 	i1 = ft_strdup("$");
-	i2 = ft_strdup("$ ");
-	i3 = ft_strdup("$ $v1");
-	i4 = ft_strdup("$ $v1 $");
-	i5 = ft_strdup("$ $v1$?$v2");
-	i6 = ft_strdup("$ $v1$v1");
-	i7 = ft_strdup("$ $v1 $ $v1");
-	i8 = ft_strdup("$ $v1 $ $v1");
+	i2 = ft_strdup("$?");
+	i3 = ft_strdup("$USER");
+	i4 = ft_strdup("$ $USER $");
+	i5 = ft_strdup("$ $USER$?$v2");
+	i6 = ft_strdup("$& $USER$LANG nodolar");
+	i7 = ft_strdup("$ ");
+	i8 = ft_strdup("$ $USER");
 
 
 	o1 = parameter_expansion(i1, ms.envp, ms.exitstatus);

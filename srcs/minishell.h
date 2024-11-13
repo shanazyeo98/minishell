@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/13 06:47:30 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 05:59:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,7 +345,8 @@ char		*replace_param(char *input, char *par_dollar, char *rep);
 char		*replace_exit_status(char *input, int exit_status);
 char		*find_and_replace_param(char *input, t_list *envp, char *found);
 char		*parameter_expansion(char *input, t_list *envp, int exit_status);
-int			check_dollar(char c);
+int			check_special(char c);
+char		*strjoin_llist(t_list *lst);
 int			token_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */

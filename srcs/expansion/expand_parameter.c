@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/13 07:03:51 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 06:44:38 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*retrieve_param_name(char *str)
 	int		i;
 	int		j;
 
-	i = 1;
+	i = 0;
 	while (str[i] != '\0')
 	{
 		j = 0;
@@ -35,13 +35,13 @@ char	*retrieve_param_name(char *str)
 			i++;
 		else
 		{
-			param_name = ft_substr(str, 1, i - 1);
+			param_name = ft_substr(str, 0, i);
 			if (param_name == NULL)
 				return (NULL);
 			return (param_name);
 		}
 	}
-	param_name = ft_substr(str, 1, i - 1);
+	param_name = ft_substr(str, 0, i);
 	if (param_name == NULL)
 		return (NULL);
 	return (param_name);
@@ -109,7 +109,6 @@ char	*replace_exit_status(char *input, int exit_status)
 char	*find_and_replace_param(char *input, t_list *envp, char *found)
 {
 	char	*par_name;
-	char	*par_dollar;
 	char	*rep;
 	int		status;
 	char	*out;
@@ -120,11 +119,7 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
 	rep = retrieve_env_var(par_name, envp, &status);
 	if (status == FAIL)
 		return (free(par_name), NULL);
-	par_dollar = ft_strjoin("$", par_name);
-	free (par_name);
-	if (par_dollar == NULL)
-		return (NULL);
-	out = replace_param(input, par_dollar, rep);
+	out = replace_param(input, par_name, rep);
 	if (out == NULL)
 		return (NULL);
 	return (out);
@@ -171,10 +166,12 @@ void	init_pamex(char *input, t_pamex *px)
 {
 	int		len;
 	char	**split;
+	t_list	*new;
 
 	len = ft_strlen(input);
 	px->first = FALSE;
 	px->last = FALSE;
+	px->error = FALSE;
 	if (input[0] == '$')
 		px->first = TRUE;
 	if (input[len - 1] == '$')
@@ -193,15 +190,6 @@ void	init_pamex(char *input, t_pamex *px)
 
 
 
-int	check_dollar(char c)
-{
-	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '/') ||
-	(c >= ':' && c < '?') || (c == '@') || (c >= '[' && c <= '^') || \
-	(c >= '{' && c <= '~'))
-		return (0);
-	return (1);
-}
-
 
 
 char	*parameter_expansion(char *input, t_list *envp, int exit_status)
@@ -209,15 +197,17 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 	t_pamex	px;
 	t_list	*cur;
 	char	*temp;
+	char	*res;
 
+	//check for no $ and single character $ and return as is
+	//probably need to consider the case of multiple $$$ and $ at the end of the input
 	init_pamex(input, &px);
 	if (px.error == TRUE)
 		return (NULL);
 	cur = px.dollar;
 	while (cur != NULL)
 	{
-		if ((cur == px.dollar && px.first == TRUE) || \
-		(cur->next == NULL && px.last == TRUE))
+		if ((cur == px.dollar && px.first == TRUE) || (cur != px.dollar))
 		{
 			if (((char *)cur->content)[0] == '?')
 			{
@@ -225,7 +215,7 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 				if (cur->content == NULL)
 					return (ft_lstclear(&(px.dollar), &free), NULL);
 			}
-			else if (check_dollar(((char *)cur->content)[0]) == FALSE)
+			else if (check_special(((char *)cur->content)[0]) == TRUE)
 			{
 				temp = ft_strjoin("$", (char *)cur->content);
 				if (temp == NULL)
@@ -242,7 +232,11 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 		}
 		cur = cur->next;
 	}
-	return ("MJ");
+	res = strjoin_llist(px.dollar);
+	ft_lstclear(&(px.dollar), &free);
+	if (res == NULL)
+		return (NULL);
+	return (res);
 }
 
 // int	main(void)
