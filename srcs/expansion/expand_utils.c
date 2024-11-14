@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 08:13:15 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 08:28:38 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,12 @@ t_list	*split_money(char *str)
 	int	end_idx;
 
 	strt_idx = 0;
+	end_idx = strt_idx;
 	while (str[strt_idx] != '\0')
 	{
-		
+		while (str[end_idx] != '$' || str[end_idx] != '\0')
+			end_idx++;
+		if ()
 	}
 }
 
