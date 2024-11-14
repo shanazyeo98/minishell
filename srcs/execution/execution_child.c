@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:57:49 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/14 16:49:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,7 +153,7 @@ void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 
 int	exe_chd(t_minishell *params, t_list *cmd, int count)
 {
-	char	**cmd_args;
+	char	**args;
 
 	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
 	{
@@ -166,12 +166,12 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	closepipe(params->fd1);
 	closepipe(params->fd2);
 	closeredirfds(((t_cmd *)cmd->content)->redir);
-	cmd_args = ((t_cmd *)cmd->content)->args;
-	if (builtin(cmd_args[0]) != -1)
-		exit(exebuiltin(builtin(cmd_args[0]), cmd_args, params));
-	if (replace_cmd(params, cmd_args) == FAIL)
+	args = ((t_cmd *)cmd->content)->args;
+	if (args != NULL && builtin(args[0]) != -1)
+		exit(exebuiltin(builtin(args[0]), args, params));
+	if (args != NULL && replace_cmd(params, args) == FAIL)
 		exit (FAIL);
-	if (execve(cmd_args[0], cmd_args, params->envp_arr) == -1)
+	if (args != NULL && execve(args[0], args, params->envp_arr) == -1)
 	{
 		perror(ERR);
 		spick_and_span(params, ERROR, FALSE);
