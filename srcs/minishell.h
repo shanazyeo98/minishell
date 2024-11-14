@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/14 16:59:24 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:32:41 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,11 +343,14 @@ char		*replace_param(char *input, char *par_dollar, char *rep);
 char		*replace_exit_status(char *input, int exit_status);
 char		*find_and_replace_param(char *input, t_list *envp, char *found);
 void		init_pamex(char *input, t_pamex *px);
-int			expand_specialchars(t_list *cur, t_pamex *px);
+int			expand_specialchars(t_list *cur, t_list *dollar);
+int			expand_node(t_list *cur, t_list *dollar, int status, t_list *envp);
+
 char		*parameter_expansion(char *input, t_list *envp, int exit_status);
 t_list		*split_money(char *str);
 int			check_special(char c);
 char		*strjoin_llist(t_list *lst);
+char 		*join_expanded_str(t_list *lst);
 int			token_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 17:04:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:34:36 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,6 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 {
 	t_pamex	px;
 	t_list	*cur;
-	char	*res;
 
 	init_pamex(input, &px);
 	if (px.error == TRUE)
@@ -152,31 +151,12 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 	{
 		if ((cur == px.dollar && px.first == TRUE) || (cur != px.dollar))
 		{
-			if (((char *)cur->content)[0] == '?')
-			{
-				cur->content = replace_exit_status(cur->content, exit_status);
-				if (cur->content == NULL)
-					return (ft_lstclear(&(px.dollar), &free), NULL);
-			}
-			else if (check_special(((char *)cur->content)[0]) == TRUE)
-			{
-				if (expand_specialchars(cur, &px) == FAIL)
-					return (NULL);
-			}
-			else
-			{
-				cur->content = find_and_replace_param(cur->content, envp, cur->content);
-				if (cur->content == NULL)
-					return (ft_lstclear(&(px.dollar), &free), NULL);
-			}
+			if (expand_node(cur, px.dollar, exit_status, envp) == FAIL)
+				return (NULL);
 		}
 		cur = cur->next;
 	}
-	res = strjoin_llist(px.dollar);
-	ft_lstclear(&(px.dollar), &free);
-	if (res == NULL)
-		return (NULL);
-	return (res);
+	return (join_expanded_str(px.dollar));
 }
 
 // int	main(void)

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 17:12:24 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:34:58 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,13 @@ void	init_pamex(char *input, t_pamex *px)
    TAKES IN BLAH BLAH BLAH
 */
 
-int	expand_specialchars(t_list *cur, t_pamex *px)
+int	expand_specialchars(t_list *cur, t_list *dollar)
 {
 	char	*temp;
 
 	temp = ft_strjoin("$", (char *)cur->content);
 	if (temp == NULL)
-		return (ft_lstclear(&(px->dollar), &free), FAIL);
+		return (ft_lstclear(&(dollar), &free), FAIL);
 	free (cur->content);
 	cur->content = temp;
 	return (SUCCESS);
@@ -92,4 +92,38 @@ int	expand_specialchars(t_list *cur, t_pamex *px)
    linked list
 */
 
-char *gene
+char *join_expanded_str(t_list *lst)
+{
+	char	*res;
+
+	res = strjoin_llist(lst);
+	ft_lstclear(&(lst), &free);
+	if (res == NULL)
+		return (NULL);
+	return (res);
+}
+
+/* Description: WRITE DESCRIPTION HERE FIRST
+*/
+
+int	expand_node(t_list *cur, t_list *dollar, int status, t_list *envp)
+{
+	if (((char *)cur->content)[0] == '?')
+	{
+		cur->content = replace_exit_status(cur->content, status);
+		if (cur->content == NULL)
+			return (ft_lstclear(&(dollar), &free), FAIL);
+	}
+	else if (check_special(((char *)cur->content)[0]) == TRUE)
+	{
+		if (expand_specialchars(cur, dollar) == FAIL)
+			return (FAIL);
+	}
+	else
+	{
+		cur->content = find_and_replace_param(cur->content, envp, cur->content);
+		if (cur->content == NULL)
+			return (ft_lstclear(&(dollar), &free), FAIL);
+	}
+	return (SUCCESS);
+}

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 17:01:51 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 20:12:38 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int	main(int argc, char *argv[], char *envp[])
 	i2 = ft_strdup("$?");
 	i3 = ft_strdup("$USER $$$$$");
 	i4 = ft_strdup("$ $USER $");
-	i5 = ft_strdup("$ $USER$?$wrong$MAIL");
+	i5 = ft_strdup("$ $USER$?$wrong$SHLVL");
 	i6 = ft_strdup("$& $USER$LANG nodolar");
 	i7 = ft_strdup("$123 $$$$");
 	i8 = ft_strdup("$}} $USER");
