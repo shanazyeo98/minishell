@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 06:36:05 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 17:01:51 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,37 +55,37 @@ int	main(int argc, char *argv[], char *envp[])
 
 	i1 = ft_strdup("$");
 	i2 = ft_strdup("$?");
-	i3 = ft_strdup("$USER");
+	i3 = ft_strdup("$USER $$$$$");
 	i4 = ft_strdup("$ $USER $");
-	i5 = ft_strdup("$ $USER$?$v2");
+	i5 = ft_strdup("$ $USER$?$wrong$MAIL");
 	i6 = ft_strdup("$& $USER$LANG nodolar");
-	i7 = ft_strdup("$ ");
-	i8 = ft_strdup("$ $USER");
+	i7 = ft_strdup("$123 $$$$");
+	i8 = ft_strdup("$}} $USER");
 
 
 	o1 = parameter_expansion(i1, ms.envp, ms.exitstatus);
-	printf("o1: %s\n", o1);
+	printf("o1: '%s'\n", o1);
 
 	o2 = parameter_expansion(i2, ms.envp, ms.exitstatus);
-	printf("o2: %s\n", o2);
+	printf("o2: '%s'\n", o2);
 
 	o3 = parameter_expansion(i3, ms.envp, ms.exitstatus);
-	printf("o3: %s\n", o3);
+	printf("o3: '%s'\n", o3);
 
 	o4 = parameter_expansion(i4, ms.envp, ms.exitstatus);
-	printf("o4: %s\n", o4);
+	printf("o4: '%s'\n", o4);
 
 	o5 = parameter_expansion(i5, ms.envp, ms.exitstatus);
-	printf("o5: %s\n", o5);
+	printf("o5: '%s'\n", o5);
 
 	o6 = parameter_expansion(i6, ms.envp, ms.exitstatus);
-	printf("o6: %s\n", o6);
+	printf("o6: '%s'\n", o6);
 
 	o7 = parameter_expansion(i7, ms.envp, ms.exitstatus);
-	printf("o7: %s\n", o7);
+	printf("o7: '%s'\n", o7);
 
 	o8 = parameter_expansion(i8, ms.envp, ms.exitstatus);
-	printf("o8: %s\n", o8);
+	printf("o8: '%s'\n", o8);
 
 
 

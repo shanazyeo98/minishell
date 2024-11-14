@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:38:34 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/14 06:27:46 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 16:05:44 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,68 +95,68 @@ char	**ft_split(char const *s, char c)
 
 
 
-int	main(void)
-{
-	char	*in;
-	char	*in2;
-	char	*in3;
-	char	*in4;
-	char	*in5;
+// int	main(void)
+// {
+// 	char	*in;
+// 	char	*in2;
+// 	char	*in3;
+// 	char	*in4;
+// 	char	*in5;
 
 
-	char	**out;
-	char	**out2;
-	char	**out3;
-	char	**out4;
-	char	**out5;
-
-
-
-	in = ft_strdup("$123$$$?456$");
-	in2 = ft_strdup("123$ $$?78 9$");
-	in3 = ft_strdup("1234$$");
-	in4 = ft_strdup("$");
-	in5 = ft_strdup("$ ");
+// 	char	**out;
+// 	char	**out2;
+// 	char	**out3;
+// 	char	**out4;
+// 	char	**out5;
 
 
 
+// 	in = ft_strdup("$123$$$?456$");
+// 	in2 = ft_strdup("123$ $$?78 9$");
+// 	in3 = ft_strdup("1234$$");
+// 	in4 = ft_strdup("$");
+// 	in5 = ft_strdup("$ ");
 
-	printf("Original: %s\n", in);
-	out = ft_split(in, '$');
-	printf("-----Split results in-----\n");
-	while (*out != NULL)
-	{
-		printf("res: %s\n", *out);
-		*out++;
-	}
-	out2 = ft_split(in2, '$');
-	printf("-----Split results in2-----\n");
-	while (*out2 != NULL)
-	{
-		printf("res: %s\n", *out2);
-		*out2++;
-	}
-	out3 = ft_split(in3, '$');
-	printf("-----Split results in3-----\n");
-	while (*out3 != NULL)
-	{
-		printf("res: %s\n", *out3);
-		*out3++;
-	}
-	out4 = ft_split(in4, '$');
-	printf("-----Split results in4-----\n");
-	while (*out4 != NULL)
-	{
-		printf("res: %s\n", *out4);
-		*out4++;
-	}
-	out5 = ft_split(in5, '$');
-	printf("-----Split results in5-----\n");
-	while (*out5 != NULL)
-	{
-		printf("res: %s\n", *out5);
-		*out5++;
-	}
 
-}
+
+
+// 	printf("Original: %s\n", in);
+// 	out = ft_split(in, '$');
+// 	printf("-----Split results in-----\n");
+// 	while (*out != NULL)
+// 	{
+// 		printf("res: %s\n", *out);
+// 		*out++;
+// 	}
+// 	out2 = ft_split(in2, '$');
+// 	printf("-----Split results in2-----\n");
+// 	while (*out2 != NULL)
+// 	{
+// 		printf("res: %s\n", *out2);
+// 		*out2++;
+// 	}
+// 	out3 = ft_split(in3, '$');
+// 	printf("-----Split results in3-----\n");
+// 	while (*out3 != NULL)
+// 	{
+// 		printf("res: %s\n", *out3);
+// 		*out3++;
+// 	}
+// 	out4 = ft_split(in4, '$');
+// 	printf("-----Split results in4-----\n");
+// 	while (*out4 != NULL)
+// 	{
+// 		printf("res: %s\n", *out4);
+// 		*out4++;
+// 	}
+// 	out5 = ft_split(in5, '$');
+// 	printf("-----Split results in5-----\n");
+// 	while (*out5 != NULL)
+// 	{
+// 		printf("res: %s\n", *out5);
+// 		*out5++;
+// 	}
+
+// }
 

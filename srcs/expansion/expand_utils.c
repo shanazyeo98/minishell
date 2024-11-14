@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 09:06:55 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 17:12:24 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 
 int	check_special(char c)
 {
-	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '/') || \
-	(c >= ':' && c <= '@') || (c >= '[' && c <= '^') || \
-	(c >= '{' && c <= '~'))
+	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '@') || \
+	(c >= '[' && c <= '^') || (c >= '{' && c <= '~'))
 		return (TRUE);
 	return (FALSE);
 }
@@ -57,26 +56,40 @@ char	*strjoin_llist(t_list *lst)
 	return (res);
 }
 
+/* Description: initialises the pamex structure. Checks if the input starts
+   with a $ and splits the input string by $ to generate a linked list where
+   each member is individually expanded.
+*/
 
+void	init_pamex(char *input, t_pamex *px)
+{
+	px->first = FALSE;
+	px->error = FALSE;
+	if (input[0] == '$')
+		px->first = TRUE;
+	px->dollar = split_money(input);
+	if (px->dollar == NULL)
+		px->error = TRUE;
+}
 
+/* Description: expand node for special characters
+   TAKES IN BLAH BLAH BLAH
+*/
 
+int	expand_specialchars(t_list *cur, t_pamex *px)
+{
+	char	*temp;
 
-// int	main(void)
-// {
-// 	t_list	*n1;
-// 	t_list	*n2;
-// 	t_list	*curr;
-// 	char	*result;
+	temp = ft_strjoin("$", (char *)cur->content);
+	if (temp == NULL)
+		return (ft_lstclear(&(px->dollar), &free), FAIL);
+	free (cur->content);
+	cur->content = temp;
+	return (SUCCESS);
+}
 
-// 	n1 = ft_lstnew(ft_strdup("node 1"));
-// 	n2 = ft_lstnew(ft_strdup("node 2"));
-// 	ft_lstadd_back(&n1, n2);
-// 	// curr = n1;
-// 	// while (curr != NULL)
-// 	// {
-// 	// 	printf("%s\n", (char *)curr->content);
-// 	// 	curr = curr->next;
-// 	// }
-// 	result = strjoin_llist(n1);
-// 	printf("Result: %s\n", result);
-// }
+/* Description: Generate the expanded string by combining all the nodes in the
+   linked list
+*/
+
+char *gene

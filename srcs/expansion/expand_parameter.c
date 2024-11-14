@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 06:44:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 17:04:20 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,9 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
 /* Description: Takes in a string and scans through the content for parameters
    denoted by $ at the start and delimited by a space, double quotes, single
    quotes and a dollar sign. The parameter can also be a null-terminated word.
+   The input string is split into a linked list where each node is individually
+   expanded. The final string is the product of performing a string join on all
+   the expanded strings in each node of the linked list.
    Allocates new memory for the string with the expanded parameters.
    Return:
 	- A string with newly allocated memory with the parameters expanded. Input
@@ -135,72 +138,12 @@ char	*find_and_replace_param(char *input, t_list *envp, char *found)
 	- NULL. If there are malloc errors. The input string is not freed
 */
 
-// char	*parameter_expansion(char *input, t_list *envp, int exit_status)
-// {
-// 	char	*temp;
-// 	char	*out;
-
-// 	temp = input;
-// 	if (ft_strchr(temp, '$') == NULL)
-// 		return (input);
-// 	while (ft_strchr(temp, '$') != NULL)
-// 	{
-// 		if (ft_strchr(temp, '$')[1] == '?')
-// 		{
-// 			out = replace_exit_status(temp, exit_status);
-// 			if (out == NULL)
-// 				return (NULL);
-// 		}
-// 		else
-// 		{
-// 			out = find_and_replace_param(temp, envp, ft_strchr(temp, '$'));
-// 			if (out == NULL)
-// 				return (NULL);
-// 		}
-// 		temp = out;
-// 	}
-// 	return (out);
-// }
-
-void	init_pamex(char *input, t_pamex *px)
-{
-	int		len;
-	char	**split;
-	t_list	*new;
-
-	len = ft_strlen(input);
-	px->first = FALSE;
-	px->last = FALSE;
-	px->error = FALSE;
-	if (input[0] == '$')
-		px->first = TRUE;
-	if (input[len - 1] == '$')
-		px->last = TRUE;
-	split = ft_split(input, '$');
-	if (split == NULL)
-		px->error = TRUE;
-	else
-	{
-		px->dollar = stray_to_llist(split);
-		ft_freearray(split);
-		if (px->dollar == NULL)
-			px->error = TRUE;
-	}
-}
-
-
-
-
-
 char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 {
 	t_pamex	px;
 	t_list	*cur;
-	char	*temp;
 	char	*res;
 
-	//check for no $ and single character $ and return as is
-	//probably need to consider the case of multiple $$$ and $ at the end of the input
 	init_pamex(input, &px);
 	if (px.error == TRUE)
 		return (NULL);
@@ -217,11 +160,8 @@ char	*parameter_expansion(char *input, t_list *envp, int exit_status)
 			}
 			else if (check_special(((char *)cur->content)[0]) == TRUE)
 			{
-				temp = ft_strjoin("$", (char *)cur->content);
-				if (temp == NULL)
-					return (ft_lstclear(&(px.dollar), &free), NULL);
-				free (cur->content);
-				cur->content = temp;
+				if (expand_specialchars(cur, &px) == FAIL)
+					return (NULL);
 			}
 			else
 			{
