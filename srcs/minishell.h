@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/14 05:59:57 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 11:41:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,14 @@ typedef struct s_param_expand
 	int		error;
 	t_list	*dollar;
 }	t_pamex;
+
+typedef struct s_split_money
+{
+	int		start;
+	int		end;
+	int		len;
+	char	*split;
+}	t_sploney
 
 //builtins
 enum	e_builtin

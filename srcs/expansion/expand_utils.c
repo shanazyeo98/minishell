@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 08:28:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/14 09:06:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,31 +58,7 @@ char	*strjoin_llist(t_list *lst)
 }
 
 
-/* Description: Splits a string when "$$" is encountered. Each component is
-   stored in a linked list. if there are no "$$", the original string is stored
-   in one node in the linked list.
-   E.g.:
-	- "$$" -> "$", "$"
-	- "123$$456$$789" -> "123$", "$456$", "$789"
-	- "123" -> "123"
-	- "123$$" -> "123$", "$"
-	- "123$$$" -> "123$", "$", "$"
-*/
 
-t_list	*split_money(char *str)
-{
-	int	strt_idx;
-	int	end_idx;
-
-	strt_idx = 0;
-	end_idx = strt_idx;
-	while (str[strt_idx] != '\0')
-	{
-		while (str[end_idx] != '$' || str[end_idx] != '\0')
-			end_idx++;
-		if ()
-	}
-}
 
 
 // int	main(void)
