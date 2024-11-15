@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 20:34:36 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/15 08:46:23 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*replace_exit_status(char *input, int exit_status)
 	- FAIL: if there are malloc errors
 */
 
-char	*find_and_replace_param(char *input, t_list *envp, char *found)
+char	*find_n_replace_param(char *input, t_list *envp, char *found)
 {
 	char	*par_name;
 	char	*rep;

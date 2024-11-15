@@ -50,6 +50,7 @@ srcs/builtins/builtin_env.c \
 srcs/builtins/builtin_unset.c \
 srcs/builtins/builtin_export.c \
 srcs/builtins/builtin_export_utils.c \
+srcs/builtins/builtin_export_utils2.c \
 srcs/extra/extra.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft

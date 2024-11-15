@@ -6,26 +6,11 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 20:34:58 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/15 12:40:35 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-/* Description: checks if a character is a special character and hence not a
-   valid variable name
-   Returns:
-	- TRUE: if the char is not in the special character list
-	- FALSE: if the char is in the special character list
-*/
-
-int	check_special(char c)
-{
-	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '@') || \
-	(c >= '[' && c <= '^') || (c >= '{' && c <= '~'))
-		return (TRUE);
-	return (FALSE);
-}
 
 /* Description: takes in a linked list where the contents are strings and joins
    all of the strings together. Outputs the joined string. Outputs NULL if there
@@ -68,6 +53,7 @@ void	init_pamex(char *input, t_pamex *px)
 	if (input[0] == '$')
 		px->first = TRUE;
 	px->dollar = split_money(input);
+	free (input);
 	if (px->dollar == NULL)
 		px->error = TRUE;
 }
@@ -89,7 +75,7 @@ int	expand_specialchars(t_list *cur, t_list *dollar)
 }
 
 /* Description: Generate the expanded string by combining all the nodes in the
-   linked list
+   linked list. The input linked list is freed after the contents are joined.
 */
 
 char *join_expanded_str(t_list *lst)
@@ -103,7 +89,17 @@ char *join_expanded_str(t_list *lst)
 	return (res);
 }
 
-/* Description: WRITE DESCRIPTION HERE FIRST
+/* Description: Given a node in a linked list, where the contents are a string
+   to be expanded, perform variable expansion depending on the various
+   scenarios. Frees the whole linked list if there are malloc errors
+	- "?xxxx": string starts with ? -> replace ? with exit status
+	- "$$$$": single $ or consecutive ? -> each dollar is printed literally
+	- "~!@#$%^&*()_+{}| etc": special characters (excluding ?) and numbers ->
+	   printed literally
+	- "_asd": valid variable names -> look for matching variable value in the
+	  envp list and replace the variable name:
+	  	- Found: replace variable name with value
+		- Not found: replace variable name with ""
 */
 
 int	expand_node(t_list *cur, t_list *dollar, int status, t_list *envp)
@@ -114,14 +110,14 @@ int	expand_node(t_list *cur, t_list *dollar, int status, t_list *envp)
 		if (cur->content == NULL)
 			return (ft_lstclear(&(dollar), &free), FAIL);
 	}
-	else if (check_special(((char *)cur->content)[0]) == TRUE)
+	else if (chk_dollar(((char *)cur->content)[0]) == TRUE)
 	{
 		if (expand_specialchars(cur, dollar) == FAIL)
 			return (FAIL);
 	}
 	else
 	{
-		cur->content = find_and_replace_param(cur->content, envp, cur->content);
+		cur->content = find_n_replace_param(cur->content, envp, cur->content);
 		if (cur->content == NULL)
 			return (ft_lstclear(&(dollar), &free), FAIL);
 	}

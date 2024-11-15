@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:33:34 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/15 13:34:03 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,10 +109,12 @@ int	export_print(t_list **sorted, t_list **envp)
 			if (status == ERROR)
 				return (ERROR);
 			printf("declare -x ");
+			//try changing all printf to putstring
 			if (varlue == NULL)
 				printf("%s\n", (char *)curr->content);
 			else
-				printf("%s=\"%s\"\n", (char *)curr->content, varlue);
+				print_varlue((char *)curr->content, varlue);
+				// printf("%s=\"%s\"\n", (char *)curr->content, varlue);
 			free (varlue);
 			varlue = NULL;
 		}

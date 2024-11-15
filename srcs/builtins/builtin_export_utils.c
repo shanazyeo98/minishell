@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 00:20:43 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/15 09:02:40 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int	check_var(char *var)
 	i = 1;
 	while (var[i] != '\0')
 	{
-		if (check_special(var[i]) == TRUE)
+		if (chk_invalid_var(var[i]) == TRUE)
 		{
 			print_invalid_var_err(var);
 			return (ERROR);

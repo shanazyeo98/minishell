@@ -1,33 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   builtin_export_utils2.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/21 15:15:20 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/15 08:22:13 by mintan           ###   ########.fr       */
+/*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
+/*   Updated: 2024/11/15 13:31:41 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-Function: Concatenates s1 and s2
-Return: The new string
+#include "../minishell.h"
+
+/* Description
 */
 
-#include "libft.h"
-
-char	*ft_strjoin(char const *s1, char const *s2)
+void	print_varlue(char *key, char *varlue)
 {
-	char	*newstring;
-	int		len;
+	int	i;
 
-	len = ft_strlen(s1) + ft_strlen(s2);
-	newstring = malloc((len + 1) * sizeof(char));
-	if (newstring != NULL)
+	printf("%s=\"", key);
+	i = 0;
+	while (varlue[i] != '\0')
 	{
-		ft_strlcpy(newstring, s1, ft_strlen(s1) + 1);
-		ft_strlcat(newstring, s2, len + 1);
+		if (varlue[i] == '$')
+			ft_putchar_fd('\\', STDOUT_FILENO);
+		ft_putchar_fd(varlue[i], STDOUT_FILENO);
+		i++;
 	}
-	return (newstring);
+	printf("\"\n");
 }
