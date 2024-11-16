@@ -52,7 +52,7 @@ int	builtin_exit(char **arg, t_minishell *params)
 		while (exitstat > 255)
 			exitstat %= 256;
 	}
-	if (checkifnumeric(arg[1]) == TRUE && argcount > 2)
+	if (argcount != 1 && checkifnumeric(arg[1]) == TRUE && argcount > 2)
 	{
 		exit_error(": exit: too many arguments");
 		return (ERROR);

@@ -123,6 +123,8 @@ void	print_ast(t_ast *node, int ctr)
 
 void	traverse_ast(t_ast *node, t_minishell *params)
 {
+	int	status;
+	
 	if (node->type != CMD)
 	{
 		traverse_ast(node->left, params);
@@ -132,10 +134,10 @@ void	traverse_ast(t_ast *node, t_minishell *params)
 	}
 	else
 	{
-		params->exitstatus = execute(node->cmdnode, params);
+		status = execute(node->cmdnode, params);
 		free(params->pid);
 		params->pid = NULL;
-		if (params->exitstatus == FAIL)
+		if (status == FAIL)
 			spick_and_span(params, FAIL, TRUE);
 	}
 }

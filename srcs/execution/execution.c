@@ -72,7 +72,8 @@ int	nonchildexe(t_list *cmdlist, t_minishell *params)
 		dup2(original, STDOUT_FILENO);
 		close(original);
 	}
-	return (status);
+	params->exitstatus = status;
+	return (SUCCESS);
 }
 
 /*Description: Function to generate the child processes for applicable
