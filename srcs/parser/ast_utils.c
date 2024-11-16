@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 12:47:14 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:12:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,6 @@ void	print_ast(t_ast *node, int ctr)
 
 void	traverse_ast(t_ast *node, t_minishell *params)
 {
-	int	status;
-
 	if (node->type != CMD)
 	{
 		traverse_ast(node->left, params);
@@ -134,10 +132,10 @@ void	traverse_ast(t_ast *node, t_minishell *params)
 	}
 	else
 	{
-		status = execute(node->cmdnode, params);
+		params->exitstatus = execute(node->cmdnode, params);
 		free(params->pid);
 		params->pid = NULL;
-		if (status == FAIL)
+		if (params->exitstatus == FAIL)
 			spick_and_span(params, FAIL, TRUE);
 	}
 }
