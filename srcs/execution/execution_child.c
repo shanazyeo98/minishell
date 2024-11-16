@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 16:49:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:12:59 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,7 +158,7 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
 	{
 		closeredirfds(((t_cmd *)cmd->content)->redir);
-		spick_and_span(params, ERROR, FALSE);
+		spick_and_span(params, ERROR, TRUE);
 		exit (ERROR);
 	}
 	redirect_pipes_in(params, cmd);
@@ -174,7 +174,7 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	if (args != NULL && execve(args[0], args, params->envp_arr) == -1)
 	{
 		perror(ERR);
-		spick_and_span(params, ERROR, FALSE);
+		spick_and_span(params, ERROR, TRUE);
 		exit(errno);
 	}
 	exit (SUCCESS);
