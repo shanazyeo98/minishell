@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/11 10:46:28 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:43:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,26 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 /*Description: Function to execute builtins that do not require a child process
 It will open and close the redirectors if applicable.*/
 
-int	nonchildexe(t_cmd *cmd, t_minishell *params)
+int	nonchildexe(t_list *cmdlist, t_minishell *params)
 {
-	int	status;
-	int	func;
+	int		status;
+	int		func;
+	int		original;
+	t_cmd	*cmd;
 
+	cmd = (t_cmd *) cmdlist->content;
+	params->exe_index = 0;
 	status = exe_redirection(cmd->redir, params);
+	original = dup(STDOUT_FILENO);
+	redirect_pipes_out(params, cmdlist, 1);
 	closeredirfds(cmd->redir);
 	if (status != SUCCESS)
 		return (status);
 	func = builtin(cmd->args[0]);
-	return (exebuiltin(func, cmd->args, params));
+	status = exebuiltin(func, cmd->args, params);
+	dup2(original, STDOUT_FILENO);
+	close(original);
+	return (status);
 }
 
 /*Description: Function to generate the child processes for applicable
@@ -141,7 +150,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
 	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 7)
-		return (nonchildexe(cmd, params));
+		return (nonchildexe(node->cmds, params));
 	else
 	{
 		params->exe_index = 0;
