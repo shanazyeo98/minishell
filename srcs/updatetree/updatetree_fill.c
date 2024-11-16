@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/12 14:49:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 16:01:33 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	fill(t_cmd *cmd, t_token *start, t_token *end)
 		start = start->next;
 		if (start != NULL && start->wordgrp != grp)
 		{
-			if (cmd->args[i_arg] != NULL)
+			if (cmd->args != NULL && cmd->args[i_arg] != NULL)
 				i_arg++;
 			grp = start->wordgrp;
 		}
