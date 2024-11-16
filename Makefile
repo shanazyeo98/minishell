@@ -4,6 +4,7 @@ NAME = minishell
 SRCS = srcs/main.c \
 srcs/execution/execution.c \
 srcs/execution/execution_child.c \
+srcs/execution/execution_child_utils.c \
 srcs/execution/execution_heredoc.c \
 srcs/execution/execution_redirection.c \
 srcs/execution/execution_utils.c \

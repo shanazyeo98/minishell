@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 12:12:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:27:00 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
 	ft_putstr_fd(cmd, STDERR_FILENO);
 	ft_putendl_fd(": command not found", STDERR_FILENO);
-	spick_and_span(params, CMDNOTFOUND, FALSE);
+	spick_and_span(params, CMDNOTFOUND, TRUE);
 	exit (CMDNOTFOUND);
 }
 
@@ -154,23 +154,18 @@ void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 int	exe_chd(t_minishell *params, t_list *cmd, int count)
 {
 	char	**args;
+	int		status;
 
-	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
-	{
-		closeredirfds(((t_cmd *)cmd->content)->redir);
-		spick_and_span(params, ERROR, TRUE);
-		exit (ERROR);
-	}
-	redirect_pipes_in(params, cmd);
-	redirect_pipes_out(params, cmd, count);
-	closepipe(params->fd1);
-	closepipe(params->fd2);
-	closeredirfds(((t_cmd *)cmd->content)->redir);
+	redirectchild(params, cmd, count);
 	args = ((t_cmd *)cmd->content)->args;
 	if (args != NULL && builtin(args[0]) != -1)
-		exit(exebuiltin(builtin(args[0]), args, params));
+	{
+		status = exebuiltin(builtin(args[0]), args, params);
+		spick_and_span(params, SUCCESS, TRUE);
+		exit(status);
+	}
 	if (args != NULL && replace_cmd(params, args) == FAIL)
-		exit (FAIL);
+		spick_and_span(params, FAIL, TRUE);
 	if (args != NULL && execve(args[0], args, params->envp_arr) == -1)
 	{
 		perror(ERR);

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/11 10:32:07 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:28:27 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -379,6 +379,9 @@ int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
 int			exe_chd(t_minishell *params, t_list *cmd, int count);
+void		redirectchild(t_minishell *params, t_list *cmd, int count);
+void		redirect_pipes_out(t_minishell *params, t_list *cmd, int count);
+void		redirect_pipes_in(t_minishell *params, t_list *cmd);
 
 //cd
 int			checkslash(char *str);
