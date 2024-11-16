@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:21:16 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 12:23:39 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 21:43:58 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,11 @@ void	redirectchild(t_minishell *params, t_list *cmd, int count)
 	closepipe(params->fd1);
 	closepipe(params->fd2);
 	closeredirfds(((t_cmd *)cmd->content)->redir);
+}
+
+void	printsignals(int status)
+{
+	if (status == 3)
+		ft_putstr_fd("Quit (core dumped)", STDOUT_FILENO);
+	ft_putendl_fd("", STDOUT_FILENO);
 }

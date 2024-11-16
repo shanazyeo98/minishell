@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 15:44:45 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 21:44:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	sig_noninteractive(int signum)
 {
 	if (signum == SIGINT || signum == SIGQUIT)
 		g_sig_status = signum;
-	if (signum == SIGQUIT)
-		ft_putstr_fd("Quit (core dumped)", STDOUT_FILENO);
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the

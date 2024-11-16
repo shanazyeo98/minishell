@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 15:22:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 21:44:34 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,18 +115,18 @@ int	waitforchild(int count, t_minishell *params)
 	int	pid;
 	int	status;
 	int	fail;
-	int	newline;
+	int	signal;
 
 	pid = 0;
 	fail = FALSE;
-	newline = FALSE;
+	signal = -1;
 	while (pid != -1)
 	{
 		pid = wait(&status);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == FAIL)
 			fail = TRUE;
 		if (WIFSIGNALED(status) && WTERMSIG(status) != 13)
-			newline = TRUE;
+			signal = WTERMSIG(status);
 		if (pid == params->pid[count - 1] && WIFEXITED(status))
 			params->exitstatus = WEXITSTATUS(status);
 		if (pid == params->pid[count - 1] && WIFSIGNALED(status))
@@ -134,8 +134,8 @@ int	waitforchild(int count, t_minishell *params)
 	}
 	if (fail == TRUE)
 		return (FAIL);
-	if (newline == TRUE)
-		write(1, "\n", 1);
+	if (signal != -1)
+		printsignals(signal);
 	return (SUCCESS);
 }
 

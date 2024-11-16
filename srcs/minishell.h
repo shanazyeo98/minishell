@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 20:04:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 21:44:12 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -383,6 +383,7 @@ int			exe_chd(t_minishell *params, t_list *cmd, int count);
 void		redirectchild(t_minishell *params, t_list *cmd, int count);
 void		redirect_pipes_out(t_minishell *params, t_list *cmd, int count);
 void		redirect_pipes_in(t_minishell *params, t_list *cmd);
+void		printsignals(int status);
 
 //cd
 int			checkslash(char *str);
