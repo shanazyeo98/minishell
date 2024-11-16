@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/01 03:41:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 15:17:31 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 15:44:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ void	sig_noninteractive(int signum)
 {
 	if (signum == SIGINT || signum == SIGQUIT)
 		g_sig_status = signum;
+	if (signum == SIGQUIT)
+		ft_putstr_fd("Quit (core dumped)", STDOUT_FILENO);
 }
 
 /* Description: Sets up the signal handler using sigaction. Declares the
@@ -68,11 +70,6 @@ void	init_all_sig_handler(int state)
 	{
 		init_signal_handler(SIGINT, &sig_handler);
 		init_signal_handler(SIGQUIT, SIG_IGN);
-	}
-	else if (state == CHILD)
-	{
-		init_signal_handler(SIGINT, SIG_DFL);
-		init_signal_handler(SIGQUIT, SIG_DFL);
 	}
 	else
 	{
