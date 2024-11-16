@@ -57,16 +57,21 @@ int	nonchildexe(t_list *cmdlist, t_minishell *params)
 	cmd = (t_cmd *) cmdlist->content;
 	params->exe_index = 0;
 	status = exe_redirection(cmd->redir, params);
-	original = dup(STDOUT_FILENO);
-	redirect_pipes_out(params, cmdlist, 1);
+	if (builtin(cmd->args[0]) != EXIT)
+	{
+		original = dup(STDOUT_FILENO);
+		redirect_pipes_out(params, cmdlist, 1);
+	}
 	closeredirfds(cmd->redir);
 	if (status != SUCCESS)
 		return (status);
 	func = builtin(cmd->args[0]);
 	status = exebuiltin(func, cmd->args, params);
-	close(STDOUT_FILENO);
-	dup2(original, STDOUT_FILENO);
-	close(original);
+	if (builtin(cmd->args[0]) != EXIT)
+	{
+		dup2(original, STDOUT_FILENO);
+		close(original);
+	}
 	return (status);
 }
 

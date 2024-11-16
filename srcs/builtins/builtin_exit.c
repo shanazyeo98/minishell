@@ -28,11 +28,10 @@ int	checkifnumeric(char *str)
 	return (TRUE);
 }
 
-int	exit_error(char *msg)
+void	exit_error(char *msg)
 {
 	ft_putstr_fd(ERR, STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
-	return (ERROR);
 }
 
 int	builtin_exit(char **arg, t_minishell *params)
@@ -43,13 +42,13 @@ int	builtin_exit(char **arg, t_minishell *params)
 	ft_putendl_fd(EXITCMDMSG, 1);
 	argcount = countexeargs(arg);
 	if (argcount > 2)
-		return (exit_error(": exit: too many arguments"));
+		exit_error(": exit: too many arguments");
 	else if (argcount == 1)
 		exitstat = params->exitstatus;
 	else
 	{
 		if (checkifnumeric(arg[1]) == FALSE)
-			return (exit_error(": exit: numeric argument required"));
+			exit_error(": exit: numeric argument required");
 		exitstat = ft_atoi(arg[1]);
 		while (exitstat > 255)
 			exitstat %= 256;
