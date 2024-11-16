@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/15 13:34:49 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/16 15:30:27 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,4 @@ char	*ft_strreplace_one(char *in, char *or, char *rep, char *delim)
 		}
 	}
 	return (res);
-}
+}	

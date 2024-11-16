@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/15 13:34:03 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/16 15:58:56 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,13 +108,11 @@ int	export_print(t_list **sorted, t_list **envp)
 			varlue = retrieve_env_var((char *)curr->content, *envp, &status);
 			if (status == ERROR)
 				return (ERROR);
-			printf("declare -x ");
-			//try changing all printf to putstring
+			ft_putstr_fd("declare -x ", STDOUT_FILENO);
 			if (varlue == NULL)
-				printf("%s\n", (char *)curr->content);
+				ft_putendl_fd((char *)curr->content, STDOUT_FILENO);
 			else
 				print_varlue((char *)curr->content, varlue);
-				// printf("%s=\"%s\"\n", (char *)curr->content, varlue);
 			free (varlue);
 			varlue = NULL;
 		}
