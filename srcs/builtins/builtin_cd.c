@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 08:19:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/11 10:40:23 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:49:59 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	gotodir(char *dir, t_minishell *params)
 {
 	if (ft_strcmp(dir, "") == 0)
 		return (SUCCESS);
-	if (dir[0] == '/')
+	if (dir[0] == '/' || ft_strncmp(dir, "..", 2) == 0)
 		return (changedir(dir, dir, params, FALSE));
 	else
 		return (gotorelative(dir, params));
