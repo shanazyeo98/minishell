@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:02:14 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:53:47 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 15:53:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void	tokenstatus(t_minishell *params, int status)
 	if (status == FAIL)
 		spick_and_span(params, FAIL, TRUE);
 	else if (status == ERROR)
+	{
 		ft_putendl_fd(ERR_SYNTAX, 2);
+		params->exitstatus = INVALIDUSAGE;
+	}
 	if (status == ERROR || *(params->tokenlist) == NULL)
 	{
 		freetokens(params->tokenlist);
