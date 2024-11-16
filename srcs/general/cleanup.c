@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:56:18 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:04:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:42:31 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,8 @@ void	spick_and_span(t_minishell *ms, int status, int end)
 		free(ms->cwd);
 	closepipe(ms->fd1);
 	closepipe(ms->fd2);
+	free(ms->pid);
+	ms->pid = NULL;
 	if (status == FAIL)
 	{
 		ft_putendl_fd(ERR_MALLOC_FAIL, STDERR_FILENO);
