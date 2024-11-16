@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/12 17:58:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 20:05:00 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 			return (FAIL);
 		initredirarray(cmd->redir, redir + 1);
 	}
-	if (fill(cmd, start, end) == FAIL)
+	if (fill(cmd, start, end, args) == FAIL)
 		return (FAIL);
 	return (SUCCESS);
 }

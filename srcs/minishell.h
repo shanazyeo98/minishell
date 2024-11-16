@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 15:17:25 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 20:04:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,7 @@ void		traverse_ast(t_ast *node, t_minishell *params);
 void		count(int *args, int *redir, t_token *start, t_token *end);
 int			countargs(char *str, t_token *token, t_token *start, t_token *end);
 int			ft_assignstr(char *newstr, char **args);
-int			fill(t_cmd *cmd, t_token *start, t_token *end);
+int			fill(t_cmd *cmd, t_token *start, t_token *end, int args);
 void		free_tree(t_ast *node);
 int			initcmd(t_cmd *cmd, t_token *start, t_token *end);
 void		initredirarray(t_redir **array, int count);
