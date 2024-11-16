@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 13:43:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:52:57 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int	nonchildexe(t_list *cmdlist, t_minishell *params)
 		return (status);
 	func = builtin(cmd->args[0]);
 	status = exebuiltin(func, cmd->args, params);
+	close(STDOUT_FILENO);
 	dup2(original, STDOUT_FILENO);
 	close(original);
 	return (status);
