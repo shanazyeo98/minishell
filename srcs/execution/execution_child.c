@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 12:27:00 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 12:50:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,5 +172,6 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 		spick_and_span(params, ERROR, TRUE);
 		exit(errno);
 	}
+	spick_and_span(params, SUCCESS, TRUE);
 	exit (SUCCESS);
 }
