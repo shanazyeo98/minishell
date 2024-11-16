@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 19:52:19 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/06 12:59:06 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 21:19:26 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*nonwccheck(char *file, char *oldpos, t_list *wclist, int i)
 	char	*pos;
 
 	str = (char *) wclist->content;
-	pos = ft_strnstr(file, str, ft_strlen(file));
+	pos = ft_strnstr(oldpos, str, ft_strlen(file));
 	if (pos == NULL)
 		return (NULL);
 	if ((i == 0 && pos != file) || (oldpos != NULL && pos < oldpos))
@@ -41,7 +41,7 @@ int	patternmatch(char *file, t_list *wclist)
 	char	*oldpos;
 
 	i = 0;
-	oldpos = NULL;
+	oldpos = file;
 	while (wclist != NULL)
 	{
 		if (wclist->content != NULL)

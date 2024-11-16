@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 20:05:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 21:25:59 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	splitbasic(t_token *token, char **args, int *i, t_token *end)
 
 int	det_action(t_cmd *cmd, t_token **token, int *i_arg, t_token *end)
 {
-	if ((*token)->type == BASIC)
+	if ((*token)->type == BASIC && (*token)->str != NULL)
 	{
 		if (splitbasic(*token, cmd->args, i_arg, end) == FAIL)
 			return (FAIL);
