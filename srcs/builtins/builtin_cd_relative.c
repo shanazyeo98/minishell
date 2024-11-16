@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 09:30:22 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/03 15:50:29 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:21:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int	retcdpath(char ***cdpath, int *checkwd, t_minishell params)
 		return (FAIL);
 	if (path[0] == ':')
 		*checkwd = TRUE;
+	free(path);
 	return (SUCCESS);
 }
 
