@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 15:58:56 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/16 17:22:42 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ int	export_print(t_list **sorted, t_list **envp)
 int	builtin_export(char **args, t_list **envp)
 {
 	t_list	*sorted;
+	int		status;
 
 	if (countexeargs(args) == 1)
 	{
@@ -141,8 +142,9 @@ int	builtin_export(char **args, t_list **envp)
 	}
 	else
 	{
-		if (add_var(envp, args) == FAIL)
-			return (FAIL);
+		status = add_var(envp, args);
+		if (status != SUCCESS)
+			return (status);
 	}
 	return (SUCCESS);
 }
