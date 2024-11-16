@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 12:50:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 15:22:47 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	char	**args;
 	int		status;
 
+	init_all_sig_handler(CHILD);
 	redirectchild(params, cmd, count);
 	args = ((t_cmd *)cmd->content)->args;
 	if (args != NULL && builtin(args[0]) != -1)
