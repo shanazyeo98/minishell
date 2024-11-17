@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 15:13:46 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 15:08:12 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/18 00:00:27 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ char	*delim(t_token *token, t_minishell *params)
 	char	*limiter;
 
 	word = token->wordgrp;
-	limiter = ft_strdup(token->str);
+	limiter = ft_strdup("");
 	if (limiter == NULL)
 		return (NULL);
-	token = token->next;
 	params->hd_expand = TRUE;
 	while (token != NULL && token->wordgrp == word && token->type != OPERATOR \
 	&& token->type != REDIRECTOR)

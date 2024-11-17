@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/28 19:52:19 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 21:19:26 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/18 00:33:04 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,9 +121,7 @@ int	searchdir(char **newstr, t_list *wclist, char *cwd)
 		direntry = readdir(dirstream);
 		if (direntry == NULL)
 			break ;
-		if (ft_strcmp(direntry->d_name, ".") != 0 && \
-		ft_strcmp(direntry->d_name, "..") && \
-		checkfile(direntry->d_name, wclist, newstr) == FAIL)
+		if (checkfile(direntry->d_name, wclist, newstr) == FAIL)
 			return (closedir(dirstream), FAIL);
 	}
 	closedir(dirstream);
@@ -133,3 +131,5 @@ int	searchdir(char **newstr, t_list *wclist, char *cwd)
 		return (FAIL);
 	return (SUCCESS);
 }
+
+// ft_strcmp(direntry->d_name, ".") != 0 && ft_strcmp(direntry->d_name, "..") &&

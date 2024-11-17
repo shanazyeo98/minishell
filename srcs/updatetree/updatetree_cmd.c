@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 18:32:32 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/18 00:49:54 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	count(int *args, int *redir, t_token *start, t_token *end)
 	while (token != end)
 	{
 		if ((token == start || (token->str != NULL && !(token->wordgrp == grp \
-		&& token->prev->str != NULL && token->prev->str[0] != '\0'))) && \
+		&& token->prev->str != NULL && ft_countstr(token->prev->str, ' ') > 0))) && \
 		(token->type == SINGLE || token->type == DOUBLE))
 			(*args)++;
 		grp = token->wordgrp;
@@ -90,6 +90,7 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 	args = 0;
 	redir = 0;
 	count(&args, &redir, start, end);
+	printf("args: %d\n", args);
 	if (args > 0)
 	{
 		cmd->args = malloc(sizeof(char *) * (args + 1));
@@ -108,3 +109,7 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 		return (FAIL);
 	return (SUCCESS);
 }
+
+// if ((token == start || (token->str != NULL && !(token->wordgrp == grp \
+// 		&& token->prev->str != NULL && token->prev->str[0] != '\0'))) && \
+// 		(token->type == SINGLE || token->type == DOUBLE))
