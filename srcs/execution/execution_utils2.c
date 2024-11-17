@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:18:20 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 18:23:51 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/17 19:14:43 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,6 @@ char	*path_getpath(char	*path, t_minishell *params)
 	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
 	ft_putstr_fd(path, STDERR_FILENO);
 	ft_putendl_fd(": is a directory", STDERR_FILENO);
-	spick_and_span(params, NOTEXECUTABLE, FALSE);
+	spick_and_span(params, NOTEXECUTABLE, TRUE);
 	exit (NOTEXECUTABLE);
 }
