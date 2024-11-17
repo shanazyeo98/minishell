@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 05:51:50 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:19:57 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -361,7 +361,7 @@ t_list		*split_money(char *str);
 int			chk_dollar(char c);
 int			chk_invalid_var(char c);
 char		*strjoin_llist(t_list *lst);
-char 		*join_expanded_str(t_list *lst);
+char		*join_expanded_str(t_list *lst);
 int			token_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
@@ -407,7 +407,9 @@ int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
 int			exe_chd(t_minishell *params, t_list *cmd, int count);
 int			check_path(char *path);
-
+char		*path_getpath(char	*path, t_minishell *params);
+int			combinedpath_cmdnotfound(char *cmd, t_minishell *params);
+char		*combinedpath_check(char *cmd, char **paths, int *status);
 
 //cd
 int			checkslash(char *str);

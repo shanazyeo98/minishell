@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:18:20 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 09:11:52 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:19:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,16 @@ int	get_last_redir(int type, t_redir **redir)
 	return (last);
 }
 
+/* Description: performs the following checks on a given path:
+	- checks if the path exists
+	- if it exists, checks if the path is a directory
+	- if it is not a directory, checks if the file has execute access
+*/
 
 int	check_path(char *path)
 {
-	struct	stat	statbuf;
-	int				status;
+	struct stat	statbuf;
+	int			status;
 
 	status = stat(path, &statbuf);
 	if (status != 0)
@@ -99,4 +104,23 @@ int	check_path(char *path)
 	if (access(path, X_OK) == 0)
 		return (EXE);
 	return (NOTEXE);
+}
+
+/* Description: given a file path, checks the path and returns an error message
+   if the given path is a directory. Otherwise, return the given file path as
+   it is and let it be handled by execve subsequently
+*/
+
+char	*path_getpath(char	*path, t_minishell *params)
+{
+	int	status;
+
+	status = check_path(path);
+	if (status != ISADIR)
+		return (path);
+	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
+	ft_putstr_fd(path, STDERR_FILENO);
+	ft_putendl_fd(": is a directory", STDERR_FILENO);
+	spick_and_span(params, NOTEXECUTABLE, FALSE);
+	exit (NOTEXECUTABLE);
 }

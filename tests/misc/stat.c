@@ -18,7 +18,7 @@ int	main(void)
 
 
 	p1 = strdup("notadirorexecutable");
-	p2 = strdup("tests/bin2");
+	p2 = strdup("wrong/wrong");
 	p3 = strdup("tests/bin2/permtest");
 
 	status = stat(p1, &statbuf);

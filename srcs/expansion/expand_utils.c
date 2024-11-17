@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 15:59:27 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/15 12:40:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:17:28 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	init_pamex(char *input, t_pamex *px)
 		px->first = TRUE;
 	px->dollar = split_money(input);
 	free (input);
+	input = NULL;
 	if (px->dollar == NULL)
 		px->error = TRUE;
 }
@@ -78,7 +79,7 @@ int	expand_specialchars(t_list *cur, t_list *dollar)
    linked list. The input linked list is freed after the contents are joined.
 */
 
-char *join_expanded_str(t_list *lst)
+char	*join_expanded_str(t_list *lst)
 {
 	char	*res;
 

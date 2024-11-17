@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/13 06:33:22 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 15:41:23 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,9 +100,7 @@ int	waitforchild(int count, t_minishell *params)
 	int	status;
 	int	final_status;
 	int	fail;
-//	int	i;
 
-//	i = 0;
 	pid = 0;
 	fail = FALSE;
 	while (pid != -1)
