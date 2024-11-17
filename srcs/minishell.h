@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 17:19:57 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:27:49 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define FALSE 0
 # define INTERACTIVE 0
 # define NONINTERACTIVE 1
+# define CHILD 2
 # define CDPATH "CDPATH"
 # define HOME "HOME"
 # define PWDVAR "PWD"
@@ -370,13 +371,13 @@ void		print_ast_tkn(t_token *start, t_token *end);
 void		print_ast_cmd(t_list *cmds);
 void		printcmdlist(t_list *node);
 void		print_ast(t_ast *node, int ctr);
-int			traverse_ast(t_ast *node, t_minishell *params);
+void		traverse_ast(t_ast *node, t_minishell *params);
 
 //update tree
 void		count(int *args, int *redir, t_token *start, t_token *end);
 int			countargs(char *str, t_token *token, t_token *start, t_token *end);
 int			ft_assignstr(char *newstr, char **args);
-int			fill(t_cmd *cmd, t_token *start, t_token *end);
+int			fill(t_cmd *cmd, t_token *start, t_token *end, int args);
 void		free_tree(t_ast *node);
 int			initcmd(t_cmd *cmd, t_token *start, t_token *end);
 void		initredirarray(t_redir **array, int count);
@@ -410,6 +411,10 @@ int			check_path(char *path);
 char		*path_getpath(char	*path, t_minishell *params);
 int			combinedpath_cmdnotfound(char *cmd, t_minishell *params);
 char		*combinedpath_check(char *cmd, char **paths, int *status);
+void		redirectchild(t_minishell *params, t_list *cmd, int count);
+void		redirect_pipes_out(t_minishell *params, t_list *cmd, int count);
+void		redirect_pipes_in(t_minishell *params, t_list *cmd);
+void		printsignals(int status);
 
 //cd
 int			checkslash(char *str);

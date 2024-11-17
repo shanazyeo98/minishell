@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 16:58:02 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:32:32 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,29 +151,25 @@ void	redirect_pipes_out(t_minishell *params, t_list *cmd, int count)
 
 int	exe_chd(t_minishell *params, t_list *cmd, int count)
 {
-	char	**cmd_args;
+	char	**args;
+	int		status;
 
-	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
+	redirectchild(params, cmd, count);
+	args = ((t_cmd *)cmd->content)->args;
+	if (args != NULL && builtin(args[0]) != -1)
 	{
-		closeredirfds(((t_cmd *)cmd->content)->redir);
-		spick_and_span(params, ERROR, FALSE);
-		exit (ERROR);
+		status = exebuiltin(builtin(args[0]), args, params);
+		spick_and_span(params, SUCCESS, TRUE);
+		exit(status);
 	}
-	redirect_pipes_in(params, cmd);
-	redirect_pipes_out(params, cmd, count);
-	closepipe(params->fd1);
-	closepipe(params->fd2);
-	closeredirfds(((t_cmd *)cmd->content)->redir);
-	cmd_args = ((t_cmd *)cmd->content)->args;
-	if (builtin(cmd_args[0]) != -1)
-		exit(exebuiltin(builtin(cmd_args[0]), cmd_args, params));
-	if (replace_cmd(params, cmd_args) == FAIL)
-		exit (FAIL);
-	if (execve(cmd_args[0], cmd_args, params->envp_arr) == -1)
+	if (args != NULL && replace_cmd(params, args) == FAIL)
+		spick_and_span(params, FAIL, TRUE);
+	if (args != NULL && execve(args[0], args, params->envp_arr) == -1)
 	{
 		perror(ERR);
-		spick_and_span(params, ERROR, FALSE);
+		spick_and_span(params, ERROR, TRUE);
 		exit(errno);
 	}
+	spick_and_span(params, SUCCESS, TRUE);
 	exit (SUCCESS);
 }

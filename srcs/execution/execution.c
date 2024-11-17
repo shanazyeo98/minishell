@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 15:41:23 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:32:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,33 @@ void	expandtokens(t_cmdnode *node, t_minishell *params)
 /*Description: Function to execute builtins that do not require a child process
 It will open and close the redirectors if applicable.*/
 
-int	nonchildexe(t_cmd *cmd, t_minishell *params)
+int	nonchildexe(t_list *cmdlist, t_minishell *params)
 {
-	int	status;
-	int	func;
+	int		status;
+	int		func;
+	int		original;
+	t_cmd	*cmd;
 
+	cmd = (t_cmd *) cmdlist->content;
+	params->exe_index = 0;
 	status = exe_redirection(cmd->redir, params);
+	if (builtin(cmd->args[0]) != EXIT)
+	{
+		original = dup(STDOUT_FILENO);
+		redirect_pipes_out(params, cmdlist, 1);
+	}
 	closeredirfds(cmd->redir);
 	if (status != SUCCESS)
 		return (status);
 	func = builtin(cmd->args[0]);
-	return (exebuiltin(func, cmd->args, params));
+	status = exebuiltin(func, cmd->args, params);
+	if (builtin(cmd->args[0]) != EXIT)
+	{
+		dup2(original, STDOUT_FILENO);
+		close(original);
+	}
+	params->exitstatus = status;
+	return (SUCCESS);
 }
 
 /*Description: Function to generate the child processes for applicable
@@ -98,28 +114,29 @@ int	waitforchild(int count, t_minishell *params)
 {
 	int	pid;
 	int	status;
-	int	final_status;
 	int	fail;
+	int	signal;
 
 	pid = 0;
 	fail = FALSE;
+	signal = -1;
 	while (pid != -1)
 	{
 		pid = wait(&status);
 		if (WIFEXITED(status) && WEXITSTATUS(status) == FAIL)
 			fail = TRUE;
-		if (pid == params->pid[count - 1])
-		{
-			if (WIFEXITED(status))
-				final_status = WEXITSTATUS(status);
-			else if (WIFSIGNALED(status))
-				final_status = WTERMSIG(status) + FATALSIGNAL;
-		}
+		if (WIFSIGNALED(status) && WTERMSIG(status) != 13)
+			signal = WTERMSIG(status);
+		if (pid == params->pid[count - 1] && WIFEXITED(status))
+			params->exitstatus = WEXITSTATUS(status);
+		if (pid == params->pid[count - 1] && WIFSIGNALED(status))
+			params->exitstatus = WTERMSIG(status) + FATALSIGNAL;
 	}
-	free(params->pid);
 	if (fail == TRUE)
-		spick_and_span(params, FAIL, TRUE);
-	return (final_status);
+		return (FAIL);
+	if (signal != -1)
+		printsignals(signal);
+	return (SUCCESS);
 }
 
 /*Description: Overall function to execute. Following steps will happen:
@@ -140,7 +157,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
 	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 7)
-		return (nonchildexe(cmd, params));
+		return (nonchildexe(node->cmds, params));
 	else
 	{
 		params->exe_index = 0;

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 15:39:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/14 16:55:21 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ else, SUCCESS*/
 
 int	expandheredoc(t_redir *redir, t_minishell *params)
 {
-	if (redir->hd_expand == TRUE)
+	if (redir->hd_expand == TRUE && redir->hd_content != NULL)
 	{
 		redir->hd_content = parameter_expansion(redir->hd_content, \
 		params->envp, params->exitstatus);

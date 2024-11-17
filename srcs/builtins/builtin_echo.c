@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 05:20:13 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/22 18:09:17 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 17:51:15 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	echo(char **args)
 		if (i == 1 && ft_strcmp(args[i], "-n") == 0)
 		{
 			newline = FALSE;
-			i++;
+			while (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
+				i++;
 		}
 		else
 		{

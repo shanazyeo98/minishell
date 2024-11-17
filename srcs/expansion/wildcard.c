@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/27 14:46:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/06 12:59:07 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/12 17:32:25 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ int	replacestrs(t_token *tokenlist, char *newstr, int wordgrp)
 	while (token != NULL && token->wordgrp == wordgrp)
 	{
 		free(token->str);
-		token->str = ft_strdup("");
-		if (token->str == NULL)
-			return (FAIL);
+		token->str = NULL;
 		token = token->next;
 	}
 	return (SUCCESS);

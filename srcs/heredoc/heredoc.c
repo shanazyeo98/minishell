@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 10:46:07 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/06 11:31:55 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/10 17:15:35 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	heredoccheck(t_token **tokenlist, t_minishell *params)
 	}
 	if (status == FAIL)
 		spick_and_span(params, status, TRUE);
-	else if (status == ERROR)
+	else if (status != SUCCESS)
 		spick_and_span(params, status, FALSE);
 }
 
@@ -57,7 +57,7 @@ int	writeheredoc(t_token *token, char *delim)
 		if (g_sig_status == SIGINT)
 		{
 			free(input);
-			return (ERROR);
+			return (FATALSIGNAL + SIGINT);
 		}
 		if (input == NULL || ft_strcmp(input, delim) == 0)
 		{

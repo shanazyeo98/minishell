@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 15:38:34 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/15 08:23:50 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:25:55 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ QUESTION: When to use free()??
 */
 
 #include "libft.h"
-#include <stdio.h>
 
 int	ft_countstr(char const *s, char c)
 {
@@ -28,6 +27,8 @@ int	ft_countstr(char const *s, char c)
 
 	index = 0;
 	count = 0;
+	if (s == NULL)
+		return (0);
 	while (s[index] != '\0')
 	{
 		if (s[index] != c && (s[index + 1] == c || s[index + 1] == '\0'))

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 17:16:42 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:26:54 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char *argv[], char *envp[])
 			ms.ast = parse(*ms.tokenlist, -1);
 			if (ms.ast == NULL)
 				spick_and_span(&ms, FAIL, TRUE);
-			ms.exitstatus = traverse_ast(ms.ast, &ms);
+			traverse_ast(ms.ast, &ms);
 		}
 		spick_and_span(&ms, SUCCESS, FALSE);
 	}

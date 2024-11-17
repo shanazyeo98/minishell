@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:55:06 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/01 13:15:40 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 14:42:26 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@ int	checkifnumeric(char *str)
 	return (TRUE);
 }
 
-int	exit_error(char *msg)
+void	exit_error(char *msg)
 {
 	ft_putstr_fd(ERR, STDERR_FILENO);
 	ft_putendl_fd(msg, STDERR_FILENO);
-	return (ERROR);
 }
 
 int	builtin_exit(char **arg, t_minishell *params)
@@ -42,17 +41,21 @@ int	builtin_exit(char **arg, t_minishell *params)
 
 	ft_putendl_fd(EXITCMDMSG, 1);
 	argcount = countexeargs(arg);
-	if (argcount > 2)
-		return (exit_error(": exit: too many arguments"));
-	else if (argcount == 1)
+	if (argcount == 1)
 		exitstat = params->exitstatus;
 	else
 	{
+		exitstat = params->exitstatus;
 		if (checkifnumeric(arg[1]) == FALSE)
-			return (exit_error(": exit: numeric argument required"));
+			exit_error(": exit: numeric argument required");
 		exitstat = ft_atoi(arg[1]);
 		while (exitstat > 255)
 			exitstat %= 256;
+	}
+	if (argcount != 1 && checkifnumeric(arg[1]) == TRUE && argcount > 2)
+	{
+		exit_error(": exit: too many arguments");
+		return (ERROR);
 	}
 	spick_and_span(params, SUCCESS, TRUE);
 	exit(exitstat);

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:24:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/16 13:43:38 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	getinput(t_minishell *ms)
 	char	*input;
 
 	input = readline(PROMPT);
+	if (g_sig_status != 0)
+		ms->exitstatus = FATALSIGNAL + g_sig_status;
 	if (g_sig_status != SIGINT)
 		add_history(input);
 	ms->input = input;
@@ -87,5 +89,6 @@ t_minishell	init_ms(int argc, char *argv[], char *envp[])
 	declarearray(&ms);
 	rl_event_hook = rl_empty_event;
 	rl_signal_event_hook = rl_empty_event;
+	ms.pid = NULL;
 	return (ms);
 }
