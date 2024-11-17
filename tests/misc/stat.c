@@ -13,6 +13,7 @@ int	main(void)
 	char	*p2;
 	char	*p3;
 	int		status;
+	int		bool;
 
 
 
@@ -22,7 +23,29 @@ int	main(void)
 
 	status = stat(p1, &statbuf);
 	if (status != 0)
-		perror("test");
+		perror("test1");
+	status = stat(p2, &statbuf);
+	if (status != 0)
+		perror("test2");
+	else
+	{
+		printf("p2\n");
+		bool = S_ISDIR(statbuf.st_mode);
+		printf("Directory?: %d\n", bool);
+		bool = S_ISREG(statbuf.st_mode);
+		printf("Regular?: %d\n", bool);
+	}
+	status = stat(p3, &statbuf);
+	if (status != 0)
+		perror("test3");
+	else
+	{
+		printf("p3\n");
+		bool = S_ISDIR(statbuf.st_mode);
+		printf("Directory?: %d\n", bool);
+		bool = S_ISREG(statbuf.st_mode);
+		printf("Regular?: %d\n", bool);
+	}
 
 
 

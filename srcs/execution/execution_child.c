@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 17:39:23 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 09:20:22 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,34 +32,77 @@
 */
 
 char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
+// {
+// 	char	*cmd_path;
+// 	int		len;
+
+// 	len = ft_straylen(paths);
+// 	if (access(cmd, F_OK) == 0)
+// 		return (cmd);
+// 	if (paths != NULL)
+// 	{
+// 		while (len >= 0)
+// 		{
+// 			cmd_path = ft_pathjoin(paths[len], cmd);
+// 			if (cmd_path == NULL)
+// 				return (NULL);
+// 			if (access(cmd_path, F_OK) == 0)
+// 				return (cmd_path);
+// 			len--;
+// 			free (cmd_path);
+// 		}
+// 	}
+// 	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
+// 	ft_putstr_fd(cmd, STDERR_FILENO);
+// 	ft_putendl_fd(": command not found", STDERR_FILENO);
+// 	spick_and_span(params, CMDNOTFOUND, FALSE);
+// 	exit (CMDNOTFOUND);
+// }
+
 {
 	char	*cmd_path;
-	int		len;
+	int		status;
+	int		finalstat;
+	char	*final;
+	int		i;
 
-	len = ft_straylen(paths);
-	if (access(cmd, F_OK) == 0)
-		return (cmd);
-	if (paths != NULL)
+	final = NULL;
+	finalstat = check_path(cmd);
+	if (finalstat == EXE)
+		return (CMD);
+	i = 0;
+	while (paths[i] != NULL)
 	{
-		while (len >= 0)
+		cmd_path = ft_pathjoin(paths[i], cmd);
+		if (cmd_path == NULL)
+			return (NULL);
+		status = check_path(cmd_path);
+		if (status == EXE)
+			return (cmd_path);
+		if (status == ISADIR || status == NOTEXE)
 		{
-			cmd_path = ft_pathjoin(paths[len], cmd);
-			if (cmd_path == NULL)
-				return (NULL);
-			if (access(cmd_path, F_OK) == 0)
-				return (cmd_path);
-			len--;
-			free (cmd_path);
+			if (final != NULL)
+				free (final);
+			final = cmd_path;
+			finalstat = status;
 		}
+		else
+			free (cmd_path);
+		i++;
 	}
+	if (final == NULL)
+		final = cmd;
 	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
+	ft_putstr_fd(final, STDERR_FILENO);
+	if (finalstat == NOTEXIST)
+		ft_putendl_fd(": command not found", STDERR_FILENO);
+	else if (finalstat == ISADIR)
+		ft_putendl_fd(": is a directory", STDERR_FILENO);
 	spick_and_span(params, CMDNOTFOUND, FALSE);
 	exit (CMDNOTFOUND);
 }
 
-//logic is to check if f_ok
+
 
 /* Description: Replaces the first argument in the argument array of the
    argument array with the full command path if the command is not the full

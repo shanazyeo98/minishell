@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/15 13:28:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 05:51:50 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,16 @@ typedef struct s_param_expand
 	t_list	*dollar;
 }	t_pamex;
 
+/* Path validity */
+
+enum	e_path
+{
+	NOTEXIST,
+	ISADIR,
+	NOTEXE,
+	EXE
+};
+
 //builtins
 enum	e_builtin
 {
@@ -396,6 +406,8 @@ int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
 int			exe_chd(t_minishell *params, t_list *cmd, int count);
+int			check_path(char *path);
+
 
 //cd
 int			checkslash(char *str);

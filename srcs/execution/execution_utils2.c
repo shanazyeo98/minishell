@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:18:20 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/04 11:03:32 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 09:11:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,4 +83,20 @@ int	get_last_redir(int type, t_redir **redir)
 		i++;
 	}
 	return (last);
+}
+
+
+int	check_path(char *path)
+{
+	struct	stat	statbuf;
+	int				status;
+
+	status = stat(path, &statbuf);
+	if (status != 0)
+		return (NOTEXIST);
+	if (S_ISDIR(statbuf.st_mode) == TRUE)
+		return (ISADIR);
+	if (access(path, X_OK) == 0)
+		return (EXE);
+	return (NOTEXE);
 }
