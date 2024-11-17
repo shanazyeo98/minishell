@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 19:53:42 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:32:32 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,29 +34,27 @@
 char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 {
 	char	*cmd_path;
-	int		len;
+	int		status;
 
-	len = ft_straylen(paths);
-	if (access(cmd, F_OK) == 0)
-		return (cmd);
-	if (paths != NULL)
+	cmd_path = NULL;
+	if (ft_strchr(cmd, '/') != NULL)
+		return (path_getpath(cmd, params));
+	else
 	{
-		while (len >= 0)
-		{
-			cmd_path = ft_pathjoin(paths[len], cmd);
-			if (cmd_path == NULL)
-				return (NULL);
-			if (access(cmd_path, F_OK) == 0)
-				return (cmd_path);
-			len--;
+		if (cmd_path != NULL)
 			free (cmd_path);
+		cmd_path = combinedpath_check(cmd, paths, &status);
+		if (status == EXE)
+			return (cmd_path);
+		if (status == NOTEXIST)
+		{
+			if (cmd_path != NULL)
+				free (cmd_path);
+			exit (combinedpath_cmdnotfound(cmd, params));
 		}
+		else
+			return (cmd_path);
 	}
-	ft_putstr_fd(ERRCOLON, STDERR_FILENO);
-	ft_putstr_fd(cmd, STDERR_FILENO);
-	ft_putendl_fd(": command not found", STDERR_FILENO);
-	spick_and_span(params, CMDNOTFOUND, TRUE);
-	exit (CMDNOTFOUND);
 }
 
 /* Description: Replaces the first argument in the argument array of the

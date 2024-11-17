@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 21:44:12 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:27:49 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,24 @@ typedef struct s_wc
 	int		wildcard;
 }	t_wc;
 
+/* parameter expansion */
+typedef struct s_param_expand
+{
+	int		first;
+	int		error;
+	t_list	*dollar;
+}	t_pamex;
+
+/* Path validity */
+
+enum	e_path
+{
+	NOTEXIST,
+	ISADIR,
+	NOTEXE,
+	EXE
+};
+
 //builtins
 enum	e_builtin
 {
@@ -334,8 +352,17 @@ char		*retrieve_env_var(char *var, t_list *envp, int *status);
 char		*retrieve_param_name(char *str);
 char		*replace_param(char *input, char *par_dollar, char *rep);
 char		*replace_exit_status(char *input, int exit_status);
-char		*find_and_replace_param(char *input, t_list *envp, char *found);
+char		*find_n_replace_param(char *input, t_list *envp, char *found);
+void		init_pamex(char *input, t_pamex *px);
+int			expand_specialchars(t_list *cur, t_list *dollar);
+int			expand_node(t_list *cur, t_list *dollar, int status, t_list *envp);
+
 char		*parameter_expansion(char *input, t_list *envp, int exit_status);
+t_list		*split_money(char *str);
+int			chk_dollar(char c);
+int			chk_invalid_var(char c);
+char		*strjoin_llist(t_list *lst);
+char		*join_expanded_str(t_list *lst);
 int			token_expansion(t_token *token, t_list *envp, int exit_status);
 
 /* AST utils */
@@ -380,6 +407,10 @@ int			builtin(char *str);
 int			exebuiltin(int func, char **args, t_minishell *params);
 int			execute(t_cmdnode *node, t_minishell *params);
 int			exe_chd(t_minishell *params, t_list *cmd, int count);
+int			check_path(char *path);
+char		*path_getpath(char	*path, t_minishell *params);
+int			combinedpath_cmdnotfound(char *cmd, t_minishell *params);
+char		*combinedpath_check(char *cmd, char **paths, int *status);
 void		redirectchild(t_minishell *params, t_list *cmd, int count);
 void		redirect_pipes_out(t_minishell *params, t_list *cmd, int count);
 void		redirect_pipes_in(t_minishell *params, t_list *cmd);
@@ -402,6 +433,7 @@ t_list		*clone_envp(t_list **envp);
 int			export_print(t_list **sorted, t_list **envp);
 int			add_var(t_list **envp, char **args);
 int			builtin_export(char **args, t_list **envp);
+void		print_varlue(char *key, char *varlue);
 
 //builtin general
 int			countexeargs(char **args);
@@ -421,6 +453,7 @@ int			depressedmsg(void);
 
 /* Clean up functions */
 void		free_ft_split(char **arr);
+void		free_envp_arr_and_paths(t_minishell *ms);
 void		spick_and_span(t_minishell *ms, int status, int end);
 void		break_shell(t_minishell *ms);
 

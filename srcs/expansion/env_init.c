@@ -3,14 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   env_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 16:58:11 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/15 09:01:36 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+/* Description: checks if a character is a special character. This function is
+   used to check the first character after $ if it is valid for expansion.
+   Numbers are also considered as invalid as ${digit} is not expanded.
+   Returns:
+	- TRUE: if the char is in in the special character list
+	- FALSE: if the char is not the special character list
+*/
+
+int	chk_dollar(char c)
+{
+	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '@') || \
+	(c >= '[' && c <= '^') || (c >= '{' && c <= '~'))
+		return (TRUE);
+	return (FALSE);
+}
+
+/* Description: checks if a character is a special character. This function is
+   used to check all the characters in the provided variable name
+   Returns:
+	- TRUE: if the char is in in the special character list
+	- FALSE: if the char is not the special character list
+*/
+
+int	chk_invalid_var(char c)
+{
+	if ((c >= ' ' && c <= '#') || (c >= '%' && c <= '/') || \
+	(c >= ':' && c <= '@') || (c >= '[' && c <= '^') || (c >= '{' && c <= '~'))
+		return (TRUE);
+	return (FALSE);
+}
 
 /* Description: Takes in an array of strings and converts them into a linked
    list. Each string is stored in the content of the linked list by using

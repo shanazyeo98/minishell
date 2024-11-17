@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strreplace_all.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 10:49:21 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/29 15:48:16 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/15 13:35:03 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 /* Description: Checks if a character, "c" is contained within a set of
    characters, "str". Returns 1 if "c" is found within "str" and 0 if not.

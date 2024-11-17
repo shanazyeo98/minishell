@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/10/30 01:22:04 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/15 09:02:40 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,7 @@ int	check_var(char *var)
 	i = 1;
 	while (var[i] != '\0')
 	{
-		if ((var[i] >= ' ' && var[i] <= '#') || \
-		(var[i] >= '%' && var[i] <= '/') || \
-		(var[i] >= ':' && var[i] <= '@') || \
-		(var[i] >= '[' && var[i] <= '^') || \
-		(var[i] >= '{' && var[i] <= '~'))
+		if (chk_invalid_var(var[i]) == TRUE)
 		{
 			print_invalid_var_err(var);
 			return (ERROR);

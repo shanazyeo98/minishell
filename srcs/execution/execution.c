@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 21:44:34 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/17 17:32:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,6 +168,4 @@ int	execute(t_cmdnode *node, t_minishell *params)
 			return (FAIL);
 		return (waitforchild(count, params));
 	}
-	ft_freearray(params->envp_arr);
-	free (params->paths);
 }

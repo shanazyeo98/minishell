@@ -9,6 +9,7 @@ srcs/execution/execution_heredoc.c \
 srcs/execution/execution_redirection.c \
 srcs/execution/execution_utils.c \
 srcs/execution/execution_utils2.c \
+srcs/execution/execution_utils3.c \
 srcs/general/init_general.c \
 srcs/signals/signals_init.c \
 srcs/general/cleanup.c \
@@ -32,6 +33,8 @@ srcs/expansion/env_init.c \
 srcs/expansion/env_retrieve.c \
 srcs/expansion/token_expand.c \
 srcs/expansion/expand_parameter.c \
+srcs/expansion/expand_utils.c \
+srcs/expansion/split_money.c \
 srcs/expansion/wildcard.c \
 srcs/expansion/wildcard_match.c \
 srcs/expansion/wildcard_utils.c \
@@ -49,6 +52,7 @@ srcs/builtins/builtin_env.c \
 srcs/builtins/builtin_unset.c \
 srcs/builtins/builtin_export.c \
 srcs/builtins/builtin_export_utils.c \
+srcs/builtins/builtin_export_utils2.c \
 srcs/extra/extra.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
