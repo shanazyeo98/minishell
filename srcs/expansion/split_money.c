@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 09:05:33 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/14 16:15:08 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 19:51:09 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,37 @@ t_list	*get_split(int start, int end, char *input)
 	return (node);
 }
 
+
+/* Description: generates a node with "" if the input string is "". Returns a
+   NULL if there are malloc errors.
+*/
+
+t_list	*gen_emptystr_node(void)
+{
+	t_list	*split;
+	char	*content;
+
+	content = ft_strdup("");
+	if (content == NULL)
+		return (NULL);
+	split = ft_lstnew(content);
+	return (split);
+}
+
+
+
+void	get_strt_end_idx(char *str, int *strt_idx, int *end_idx)
+{
+	if (str[*strt_idx] == '$')
+		*strt_idx = *strt_idx + 1;
+	*end_idx = *strt_idx;
+	while ((str[*end_idx + 1] != '$') && (str[*end_idx + 1] != '\0'))
+		*end_idx = *end_idx + 1;
+}
+
+
+
+
 /* Description: Splits a string when "$$" is encountered. Each component is
    stored in a linked list. if there are no "$$", the original string is stored
    in one node in the linked list.
@@ -53,20 +84,21 @@ t_list	*split_money(char *str)
 	t_list	*node;
 
 	strt_idx = 0;
-	split = NULL;
+	if (ft_strlen(str) == 0)
+	{
+		split = gen_emptystr_node();
+		if (split == NULL)
+			return (NULL);
+	}
+	else
+		split = NULL;
 	while (str[strt_idx] != '\0')
 	{
 		if (str[strt_idx] == '$' && \
 		((str[strt_idx + 1] == '$') || (str[strt_idx + 1] == '\0')))
 			end_idx = strt_idx;
 		else
-		{
-			if (str[strt_idx] == '$')
-				strt_idx++;
-			end_idx = strt_idx;
-			while ((str[end_idx + 1] != '$') && (str[end_idx + 1] != '\0'))
-				end_idx++;
-		}
+			get_strt_end_idx(str, &strt_idx, &end_idx);
 		node = get_split(strt_idx, end_idx, str);
 		if (node == NULL)
 			return (ft_lstclear(&split, &free), NULL);
