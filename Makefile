@@ -67,14 +67,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
+	$(CC) $(FLAGS) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

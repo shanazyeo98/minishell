@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 21:25:59 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/17 18:31:46 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	fill(t_cmd *cmd, t_token *start, t_token *end, int args)
 	grp = start->wordgrp;
 	while (start != end)
 	{
-		if (args!= 0 && det_action(cmd, &start, &i_arg, end) == FAIL)
+		if (args != 0 && det_action(cmd, &start, &i_arg, end) == FAIL)
 			return (FAIL);
 		if (start->type == REDIRECTOR)
 		{

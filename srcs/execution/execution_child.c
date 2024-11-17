@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 17:32:32 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 18:34:24 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,11 @@ char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 		return (path_getpath(cmd, params));
 	else
 	{
-		if (cmd_path != NULL)
-			free (cmd_path);
 		cmd_path = combinedpath_check(cmd, paths, &status);
-		if (status == EXE)
-			return (cmd_path);
+		if (cmd_path == NULL)
+			spick_and_span(params, FAIL, TRUE);
 		if (status == NOTEXIST)
-		{
-			if (cmd_path != NULL)
-				free (cmd_path);
-			exit (combinedpath_cmdnotfound(cmd, params));
-		}
+			exit(combinedpath_cmdnotfound(cmd, params));
 		else
 			return (cmd_path);
 	}
@@ -168,7 +162,9 @@ int	exe_chd(t_minishell *params, t_list *cmd, int count)
 	{
 		perror(ERR);
 		spick_and_span(params, ERROR, TRUE);
-		exit(errno);
+		if (errno == 2)
+			exit(127);
+		exit(126);
 	}
 	spick_and_span(params, SUCCESS, TRUE);
 	exit (SUCCESS);
