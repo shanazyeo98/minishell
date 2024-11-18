@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/15 14:50:58 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 19:27:06 by mintan           ###   ########.fr       */
+/*   Created: 2024/05/15 14:40:07 by shayeo            #+#    #+#             */
+/*   Updated: 2024/11/19 00:06:48 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-//returns the length of the string
+/* Description: returns 1 if the character c, is any of the following:
+	-  9 (horizontal tab) <= c =< 13 (carriage return)
+	- c == 32 (space)
+   else, returns 0
+*/
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *a)
+int	ft_isspace(int c)
 {
-	size_t	length;
-
-	if (a == NULL)
-		return (0);
-	length = 0;
-	while (*a != '\0')
-	{
-		length++;
-		a++;
-	}
-	return (length);
+	if ((c >= 9 && c <= 13) || c == 32)
+		return (1);
+	return (0);
 }
