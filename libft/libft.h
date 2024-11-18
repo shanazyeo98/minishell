@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 11:43:04 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 16:01:20 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/19 00:30:22 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int		ft_isalpha(int a);
 int		ft_isascii(int a);
 int		ft_isdigit(int a);
 int		ft_isprint(int a);
+int		ft_isspace(int c);
 int		ft_intlen(int n);
 char	*ft_itoa(int n);
 void	*ft_memchr(const void *s, int c, size_t n);
@@ -74,6 +75,7 @@ int		ft_strncmp(const char *s1, const char *s2, size_t n);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strtrim(char const *s1, char const *set);
+char	*ft_strtrimspace(char *in);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strreplace_all(char *in, char *or, char *rep, char *delim);
 char	*ft_strreplace_one(char *in, char *or, char *rep, char *delim);
