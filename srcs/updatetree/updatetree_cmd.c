@@ -109,7 +109,3 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 		return (FAIL);
 	return (SUCCESS);
 }
-
-// if ((token == start || (token->str != NULL && !(token->wordgrp == grp \
-// 		&& token->prev->str != NULL && token->prev->str[0] != '\0'))) && \
-// 		(token->type == SINGLE || token->type == DOUBLE))
