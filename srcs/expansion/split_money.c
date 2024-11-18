@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 09:05:33 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 19:51:09 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/18 23:21:02 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ t_list	*gen_emptystr_node(void)
 	return (split);
 }
 
-
+/* Description: function to find the starting index for splitting up the word.
+   This function is only used when are no consecutive $$. Populates the start
+   and end index into the given addresses.
+*/
 
 void	get_strt_end_idx(char *str, int *strt_idx, int *end_idx)
 {
@@ -60,9 +63,6 @@ void	get_strt_end_idx(char *str, int *strt_idx, int *end_idx)
 	while ((str[*end_idx + 1] != '$') && (str[*end_idx + 1] != '\0'))
 		*end_idx = *end_idx + 1;
 }
-
-
-
 
 /* Description: Splits a string when "$$" is encountered. Each component is
    stored in a linked list. if there are no "$$", the original string is stored
@@ -78,123 +78,30 @@ void	get_strt_end_idx(char *str, int *strt_idx, int *end_idx)
 
 t_list	*split_money(char *str)
 {
-	int		strt_idx;
-	int		end_idx;
-	t_list	*split;
+	t_money	mon;
 	t_list	*node;
 
-	strt_idx = 0;
+	mon.start = 0;
 	if (ft_strlen(str) == 0)
 	{
-		split = gen_emptystr_node();
-		if (split == NULL)
+		mon.split = gen_emptystr_node();
+		if (mon.split == NULL)
 			return (NULL);
 	}
 	else
-		split = NULL;
-	while (str[strt_idx] != '\0')
+		mon.split = NULL;
+	while (str[mon.start] != '\0')
 	{
-		if (str[strt_idx] == '$' && \
-		((str[strt_idx + 1] == '$') || (str[strt_idx + 1] == '\0')))
-			end_idx = strt_idx;
+		if (str[mon.start] == '$' && \
+		((str[mon.start + 1] == '$') || (str[mon.start + 1] == '\0')))
+			mon.end = mon.start;
 		else
-			get_strt_end_idx(str, &strt_idx, &end_idx);
-		node = get_split(strt_idx, end_idx, str);
+			get_strt_end_idx(str, &mon.start, &mon.end);
+		node = get_split(mon.start, mon.end, str);
 		if (node == NULL)
-			return (ft_lstclear(&split, &free), NULL);
-		ft_lstadd_back(&split, node);
-		strt_idx = end_idx + 1;
+			return (ft_lstclear(&(mon.split), &free), NULL);
+		ft_lstadd_back(&(mon.split), node);
+		mon.start = mon.end + 1;
 	}
-	return (split);
+	return ((mon.split));
 }
-
-
-
-// int	main(void)
-// {
-// 	char		*i1;
-// 	char		*i2;
-// 	char		*i3;
-// 	char		*i4;
-// 	char		*i5;
-// 	char		*i6;
-// 	char		*i7;
-// 	char		*i8;
-
-// 	t_list		*l1;
-// 	t_list		*l2;
-// 	t_list		*l3;
-// 	t_list		*l4;
-// 	t_list		*l5;
-// 	t_list		*l6;
-// 	t_list		*l7;
-// 	t_list		*l8;
-
-
-// 	i1 = ft_strdup("$");
-// 	i2 = ft_strdup("$ ");
-// 	i3 = ft_strdup("$USER");
-// 	i4 = ft_strdup("$$$$$$ $USER $");
-// 	i5 = ft_strdup("USER$$456$?$v2");
-// 	i6 = ft_strdup("$& $USER$LANG nodolar");
-// 	i7 = ft_strdup("123456");
-// 	i8 = ft_strdup("$ $USER");
-
-
-// 	l1 = split_money(i1);
-// 	printf("l1\n");
-// 	while (l1 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l1->content);
-// 		l1 = l1->next;
-// 	}
-// 	l2 = split_money(i2);
-// 	printf("l2\n");
-// 	while (l2 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l2->content);
-// 		l2 = l2->next;
-// 	}
-// 	l3 = split_money(i3);
-// 	printf("l3\n");
-// 	while (l3 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l3->content);
-// 		l3 = l3->next;
-// 	}
-// 	l4 = split_money(i4);
-// 	printf("l4\n");
-// 	while (l4 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l4->content);
-// 		l4 = l4->next;
-// 	}
-// 	l5 = split_money(i5);
-// 	printf("l5\n");
-// 	while (l5 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l5->content);
-// 		l5 = l5->next;
-// 	}
-// 	l6 = split_money(i6);
-// 	printf("l6\n");
-// 	while (l6 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l6->content);
-// 		l6 = l6->next;
-// 	}
-// 	l7 = split_money(i7);
-// 	printf("l7\n");
-// 	while (l7 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l7->content);
-// 		l7 = l7->next;
-// 	}
-// 	l8 = split_money(i8);
-// 	printf("l8\n");
-// 	while (l8 != NULL)
-// 	{
-// 		printf("'%s'\n", (char *)l8->content);
-// 		l8 = l8->next;
-// 	}
-// }

@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 17:27:49 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/18 21:55:08 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,6 +228,15 @@ typedef struct s_param_expand
 	int		error;
 	t_list	*dollar;
 }	t_pamex;
+
+typedef struct s_money
+{
+	int		start;
+	int		end;
+	t_list	*split;
+}	t_money;
+
+
 
 /* Path validity */
 
