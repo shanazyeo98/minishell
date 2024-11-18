@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 06:13:04 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/19 01:17:09 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/19 01:22:20 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	getinput(t_minishell *ms)
 	char	*trim;
 
 	input = readline(PROMPT);
+	trim = input;
 	if (g_sig_status != 0)
 		ms->exitstatus = FATALSIGNAL + g_sig_status;
 	if (input != NULL)
@@ -48,15 +49,9 @@ void	getinput(t_minishell *ms)
 		}
 		ms->input = trim;
 		free (input);
-		if (g_sig_status != SIGINT && ft_strlen(trim) > 0)
-			add_history(trim);
 	}
-	else
-	{
-		if (g_sig_status != SIGINT)
-			add_history(input);
-	}
-
+	if (g_sig_status != SIGINT && ft_strlen(trim) > 0)
+		add_history(trim);
 }
 
 /* Description: Initialises all the fds stored in fd1 and fd2 to -1 */
