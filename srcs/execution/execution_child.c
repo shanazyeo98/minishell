@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_child.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 10:43:30 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 18:34:24 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 17:26:37 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*get_cmd_path(char *cmd, char **paths, t_minishell *params)
 		return (path_getpath(cmd, params));
 	else
 	{
+		if (paths == NULL)
+			return (cmd);
 		cmd_path = combinedpath_check(cmd, paths, &status);
 		if (cmd_path == NULL)
 			spick_and_span(params, FAIL, TRUE);
