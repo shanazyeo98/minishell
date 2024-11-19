@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/19 20:08:35 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/19 20:12:59 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <errno.h>
+# include <limits.h>
 
 /* General */
-# define DELIMITER " '\n\"$?"
+# define DELIMITER " '\n\"$?="
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
@@ -285,7 +286,7 @@ typedef struct s_minishell
 	char	**paths;
 	char	*input;
 	t_token	**tokenlist;
-	char	connector[4];
+	char	connector[8];
 	char	operator[3];
 	char	redirector[3];
 	char	*validopre[8];
@@ -393,6 +394,8 @@ void		initchararray(char **array, int count);
 void		updatetree(t_cmdnode *cmdnode, t_minishell *params);
 char		*newstring(char *str, char *addstr);
 int			redirection(t_token *end, t_token **token, t_redir **redir, int *i);
+char		**split(char const *s);
+int			countstr(const char *s);
 
 //redirections
 int			expandheredoc(t_redir *redir, t_minishell *params);

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 18:31:46 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:00:13 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,31 +39,31 @@ int	ft_assignstr(char *newstr, char **args)
 
 int	splitbasic(t_token *token, char **args, int *i, t_token *end)
 {
-	char	**split;
+	char	**arr;
 	int		j;
 	int		k;
 
-	if ((token->str)[0] == ' ' && args[*i] != NULL)
+	if (ft_isspace((token->str)[0]) == 1 && args[*i] != NULL)
 		(*i)++;
-	split = ft_split(token->str, ' ');
-	if (split == NULL)
+	arr = split(token->str);
+	if (arr == NULL)
 		return (FAIL);
 	k = 0;
-	while (split[k] != NULL)
+	while (arr[k] != NULL)
 	{
-		if (ft_assignstr(split[k], args + *i) == FAIL)
-			return (ft_freearray(split), FAIL);
+		if (ft_assignstr(arr[k], args + *i) == FAIL)
+			return (ft_freearray(arr), FAIL);
 		k++;
-		if (split[k] != NULL)
+		if (arr[k] != NULL)
 			(*i)++;
 	}
 	j = 0;
 	while ((token->str)[j] != '\0' && (token->str)[j + 1] != '\0')
 		j++;
-	if ((token->str)[j] == ' ' && token->next != end && \
-	token->wordgrp == (token->next)->wordgrp)
+	if (ft_isspace((token->str)[j]) == 1 && token->next != end && \
+	token->wordgrp == (token->next)->wordgrp && countstr(token->str) > 0)
 		(*i)++;
-	return (ft_freearray(split), SUCCESS);
+	return (ft_freearray(arr), SUCCESS);
 }
 
 int	det_action(t_cmd *cmd, t_token **token, int *i_arg, t_token *end)

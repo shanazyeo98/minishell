@@ -42,6 +42,7 @@ srcs/updatetree/updatetree.c \
 srcs/updatetree/updatetree_cmd.c \
 srcs/updatetree/updatetree_fill.c \
 srcs/updatetree/updatetree_redirector.c \
+srcs/updatetree/updatetree_utils.c \
 srcs/builtins/builtin_cd.c \
 srcs/builtins/builtin_cd_relative.c \
 srcs/builtins/builtin_cd_utils.c \
@@ -67,14 +68,14 @@ all: $(NAME)
 bonus: $(BONUSNAME)
 
 $(NAME): $(LIBFT) $(OBJS)
-	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJS) $(LIBFT) $(LIB) $(MAC_LIB) -o $(NAME)
 
 $(LIBFT):
 	make bonus -C $(LIBFTDIR)
 	cp $(LIBFTDIR)/$(LIBFT) $(LIBFT)
 
 srcs/%.o: srcs/%.c $(HEADERS)
-	$(CC) $(FLAGS) -c $< -o $@
+	$(CC) $(FLAGS) $(MAC_INCLUDE) -c $< -o $@
 
 clean:
 	make clean -C ./$(LIBFTDIR)

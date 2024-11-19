@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/29 15:21:09 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 14:33:22 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 12:33:44 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	freetokens(t_token **list)
 	t_token	*token;
 	t_token	*next;
 
-	if (list != NULL && *list != NULL)
+	if (list != NULL)
 	{
 		token = *list;
 		while (token != NULL)
