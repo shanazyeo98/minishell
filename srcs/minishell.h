@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/18 21:55:08 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/19 20:08:35 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,9 +234,8 @@ typedef struct s_money
 	int		start;
 	int		end;
 	t_list	*split;
+	int		error;
 }	t_money;
-
-
 
 /* Path validity */
 

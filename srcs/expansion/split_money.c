@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/14 09:05:33 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/18 23:21:02 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/19 19:40:39 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ t_list	*get_split(int start, int end, char *input)
 		return (free(content), NULL);
 	return (node);
 }
-
 
 /* Description: generates a node with "" if the input string is "". Returns a
    NULL if there are malloc errors.
@@ -64,6 +63,23 @@ void	get_strt_end_idx(char *str, int *strt_idx, int *end_idx)
 		*end_idx = *end_idx + 1;
 }
 
+/* Description: Initialises the money structure used for split money
+*/
+
+void	init_money(char *str, t_money *mon)
+{
+	mon->start = 0;
+	mon->error = FALSE;
+	if (ft_strlen(str) == 0)
+	{
+		mon->split = gen_emptystr_node();
+		if (mon->split == NULL)
+			mon->error = TRUE;
+	}
+	else
+		mon->split = NULL;
+}
+
 /* Description: Splits a string when "$$" is encountered. Each component is
    stored in a linked list. if there are no "$$", the original string is stored
    in one node in the linked list.
@@ -81,15 +97,9 @@ t_list	*split_money(char *str)
 	t_money	mon;
 	t_list	*node;
 
-	mon.start = 0;
-	if (ft_strlen(str) == 0)
-	{
-		mon.split = gen_emptystr_node();
-		if (mon.split == NULL)
-			return (NULL);
-	}
-	else
-		mon.split = NULL;
+	init_money(str, &mon);
+	if (mon.error == TRUE)
+		return (NULL);
 	while (str[mon.start] != '\0')
 	{
 		if (str[mon.start] == '$' && \
