@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 11:03:54 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/21 16:36:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 15:24:28 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	declareconnector(t_minishell *params)
 	params->connector[1] = ')';
 	params->connector[2] = ' ';
 	params->connector[3] = '\0';
+	params->connector[4] = '	';
+	params->connector[5] = 10;
+	params->connector[6] = 11;
+	params->connector[7] = 12;
 }
 
 void	declareoperator(t_minishell *params)

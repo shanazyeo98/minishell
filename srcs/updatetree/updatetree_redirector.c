@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 02:22:38 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:08:20 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 15:38:44 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,17 @@ int	ret_redirection(char *str)
 
 int	assignfilename(t_token *token, t_redir *redir)
 {
-	char	**split;
+	char	**arr;
 	int		status;
 
 	if (token->type == BASIC)
 	{
-		split = ft_split(token->str, ' ');
-		if (split == NULL)
+		arr = split(token->str);
+		if (arr == NULL)
 			return (FAIL);
-		status = ft_assignstr(*split, &redir->file);
-		free(*split);
-		free(split);
+		status = ft_assignstr(*arr, &redir->file);
+		free(*arr);
+		free(arr);
 		if (status == FAIL)
 			return (FAIL);
 	}
@@ -80,7 +80,7 @@ int	redirection(t_token *end, t_token **token, t_redir **redir, int *i)
 	while (1)
 	{
 		if ((redir[*i])->id != HEREDOC && (*token)->type == BASIC \
-		&& ft_countstr((*token)->str, ' ') != 1)
+		&& countstr((*token)->str) != 1)
 		{
 			null = 1;
 			free((redir[*i])->file);
