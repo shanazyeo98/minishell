@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils3.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/03 12:18:20 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 17:56:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 20:07:11 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,28 @@ int	combinedpath_cmdnotfound(char *cmd, t_minishell *params)
 	return (CMDNOTFOUND);
 }
 
+/* Description: Initialises the cmd_path and final_path variables to NULL.
+   Function is used to reduce lines to pass norminette for the
+   combinedpath_check function.
+*/
+
+void	init_paths(char	**cmd_path, char **final_path)
+{
+	*cmd_path = NULL;
+	*final_path = NULL;
+}
+
+/* Description: Frees the old final path and strdup a new final path.
+   Function is used to reduce lines to pass norminette for the
+   combinedpath_check function.
+*/
+
+void	get_final_path(char **final_path, char *cmd_path)
+{
+	free(*final_path);
+	*final_path = ft_strdup(cmd_path);
+}
+
 /* Description: for each path in the list of paths, combine with the the given
    command and check if the combined path can be executed. Returns either the
    executable command path or the final combined path if there are n executable
@@ -33,17 +55,14 @@ int	combinedpath_cmdnotfound(char *cmd, t_minishell *params)
 
 char	*combinedpath_check(char *cmd, char **paths, int *status)
 {
-	int		i;
 	char	*cmd_path;
 	char	*final_path;
 
-	i = 0;
-	cmd_path = NULL;
-	final_path = NULL;
-	while (paths[i] != NULL)
+	init_paths(&cmd_path, &final_path);
+	while (*paths != NULL)
 	{
 		free (cmd_path);
-		cmd_path = ft_pathjoin(paths[i], cmd);
+		cmd_path = ft_pathjoin(*paths, cmd);
 		if (cmd_path == NULL)
 			return (NULL);
 		*status = check_path(cmd_path);
@@ -51,12 +70,11 @@ char	*combinedpath_check(char *cmd, char **paths, int *status)
 			return (cmd_path);
 		if (*status == ISADIR || *status == NOTEXE)
 		{
-			free (final_path);
-			final_path = ft_strdup(cmd_path);
+			get_final_path(&final_path, cmd_path);
 			if (final_path == NULL)
 				return (NULL);
 		}
-		i++;
+		paths++;
 	}
 	free (cmd_path);
 	if (final_path == NULL)
