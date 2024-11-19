@@ -237,8 +237,6 @@ typedef struct s_money
 	t_list	*split;
 }	t_money;
 
-
-
 /* Path validity */
 
 enum	e_path

@@ -12,7 +12,7 @@
 
 #include "../minishell.h"
 
-int		countstr(const char *s)
+int	countstr(const char *s)
 {
 	int		index;
 	int		count;

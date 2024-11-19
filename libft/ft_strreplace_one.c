@@ -107,4 +107,4 @@ char	*ft_strreplace_one(char *in, char *or, char *rep, char *delim)
 		}
 	}
 	return (res);
-}	
+}
