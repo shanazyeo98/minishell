@@ -23,9 +23,9 @@
 // 	curr_token = *(ms.tokenlist);
 // 	while (curr_token != NULL)
 // 	{
-// 		printf("Content: %s | Type: %d | Grp: %d | Word Grp: %d\n", \
-// 		curr_token->str, curr_token->type, curr_token->grp, \
-// 		curr_token->wordgrp);
+// 		printf("Content: %s | Type: %d | Grp: %d | Word Grp: %d\n",
+// 		 curr_token->str, curr_token->type, curr_token->grp, 
+// 		 curr_token->wordgrp);
 // 		curr_token = curr_token->next;
 // 	}
 // }
