@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 13:06:01 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/10 11:32:38 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/19 18:06:45 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtin_env(char **arg, t_list **envp)
 	while (curr != NULL)
 	{
 		if (ft_strchr((char *)curr->content, '=') != NULL)
-			printf("%s\n", (char *)curr->content);
+			ft_putendl_fd((char *)curr->content, STDOUT_FILENO);
 		curr = curr->next;
 	}
 	return (SUCCESS);
