@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 11:47:28 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/14 16:55:21 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/17 18:48:23 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,14 @@ else, SUCCESS*/
 
 int	expandheredoc(t_redir *redir, t_minishell *params)
 {
+	char	*str;
+
 	if (redir->hd_expand == TRUE && redir->hd_content != NULL)
 	{
-		redir->hd_content = parameter_expansion(redir->hd_content, \
+		str = ft_strdup(redir->hd_content);
+		if (str == NULL)
+			return (FAIL);
+		redir->hd_content = parameter_expansion(str, \
 		params->envp, params->exitstatus);
 		if (redir->hd_content == NULL)
 			return (FAIL);
@@ -39,6 +44,7 @@ void	pipeheredoc(t_redir *redir, t_redir **list, t_minishell *params)
 		spick_and_span(params, FAIL, TRUE);
 	}
 	ft_putstr_fd(redir->hd_content, hd[1]);
+	free(redir->hd_content);
 	dup2(hd[0], STDIN_FILENO);
 	closepipe(hd);
 }

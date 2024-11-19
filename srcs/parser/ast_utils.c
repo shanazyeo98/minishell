@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ast_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 16:48:45 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 17:29:26 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/17 19:23:26 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	traverse_ast(t_ast *node, t_minishell *params)
 	else
 	{
 		status = execute(node->cmdnode, params);
-		// free_envp_arr_and_paths(params);
+		free_envp_arr_and_paths(params);
 		free(params->pid);
 		params->pid = NULL;
 		if (status == FAIL)
