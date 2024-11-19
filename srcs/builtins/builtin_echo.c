@@ -6,11 +6,30 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 05:20:13 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/10 17:51:15 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:09:16 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+int	checkifflag(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str == NULL || str[i] == '\0')
+		return (FALSE);
+	if (ft_strncmp(str, "-n", 2) != 0)
+		return (FALSE);
+	i += 2;
+	while (str[i] != '\0')
+	{
+		if (str[i] != 'n')
+			return (FALSE);
+		i++;
+	}
+	return (TRUE);
+}
 
 int	echo(char **args)
 {
@@ -21,10 +40,10 @@ int	echo(char **args)
 	newline = TRUE;
 	while (args[i] != NULL)
 	{
-		if (i == 1 && ft_strcmp(args[i], "-n") == 0)
+		if (i == 1 && checkifflag(args[i]) == TRUE)
 		{
 			newline = FALSE;
-			while (args[i] != NULL && ft_strcmp(args[i], "-n") == 0)
+			while (args[i] != NULL && checkifflag(args[i]) == TRUE)
 				i++;
 		}
 		else

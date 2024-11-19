@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/12 02:44:30 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/19 15:38:23 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:00:13 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	splitbasic(t_token *token, char **args, int *i, t_token *end)
 	while ((token->str)[j] != '\0' && (token->str)[j + 1] != '\0')
 		j++;
 	if (ft_isspace((token->str)[j]) == 1 && token->next != end && \
-	token->wordgrp == (token->next)->wordgrp && j != 0)
+	token->wordgrp == (token->next)->wordgrp && countstr(token->str) > 0)
 		(*i)++;
 	return (ft_freearray(arr), SUCCESS);
 }

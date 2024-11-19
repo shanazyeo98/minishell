@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/18 08:55:06 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 19:36:39 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/19 16:04:06 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	returnexitstat(char **arg, t_minishell *params, int argcount)
 		return (params->exitstatus);
 	else
 	{
-		if (checkifnumeric(arg[1]) == FALSE)
+		if (checkifnumeric(arg[1]) == FALSE || (long) arg[1] > INT_MAX)
 		{
 			exitstat = INVALIDUSAGE;
 			exit_error(": exit: numeric argument required");
