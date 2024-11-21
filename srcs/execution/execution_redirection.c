@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:48:48 by shayeo            #+#    #+#             */
-/*   Updated: 2024/10/30 17:25:35 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/21 22:55:50 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ Returns: ERROR - if there is any issue opening the file (excluding heredoc)
 FAIL - malloc issues or unable to generate file for heredoc
 Else, SUCCESS*/
 
-int	exe_redirection(t_redir **redir, t_minishell *params)
+int	exe_redirection(t_redir **redir, t_minishell *params, int parent)
 {
 	int	input_i;
 	int	i;
@@ -102,7 +102,7 @@ int	exe_redirection(t_redir **redir, t_minishell *params)
 			input_i = i;
 		i++;
 	}
-	if (input_i > -1 && redir[input_i]->id == HEREDOC)
+	if (input_i > -1 && redir[input_i]->id == HEREDOC && parent == FALSE)
 	{
 		if (expandheredoc(redir[input_i], params) == FAIL)
 			return (FAIL);

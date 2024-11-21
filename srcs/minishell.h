@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/21 13:58:52 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:33 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -400,7 +400,7 @@ int			countstr(const char *s);
 //redirections
 int			expandheredoc(t_redir *redir, t_minishell *params);
 int			amendheredoc(int newfd, int oldfd, t_minishell *params);
-int			exe_redirection(t_redir **redir, t_minishell *params);
+int			exe_redirection(t_redir **redir, t_minishell *params, int parent);
 void		closeredirfds(t_redir **redir);
 int			get_last_redir(int type, t_redir **redir);
 

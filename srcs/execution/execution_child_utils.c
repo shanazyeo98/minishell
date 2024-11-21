@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/16 12:21:16 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/16 21:43:58 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/21 22:57:03 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	redirectchild(t_minishell *params, t_list *cmd, int count)
 {
-	if (exe_redirection(((t_cmd *)cmd->content)->redir, params) == ERROR)
+	if (exe_redirection(((t_cmd *)cmd->content)->redir, params, FALSE) == ERROR)
 	{
 		closeredirfds(((t_cmd *)cmd->content)->redir);
 		spick_and_span(params, ERROR, TRUE);

@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/21 15:15:19 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/21 22:56:40 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,15 +56,15 @@ int	nonchildexe(t_list *cmdlist, t_minishell *params)
 
 	cmd = (t_cmd *) cmdlist->content;
 	params->exe_index = 0;
-	status = exe_redirection(cmd->redir, params);
+	status = exe_redirection(cmd->redir, params, TRUE);
+	if (status != SUCCESS)
+		return (closeredirfds(cmd->redir), status);
 	if (builtin(cmd->args[0]) != EXIT)
 	{
 		original = dup(STDOUT_FILENO);
 		redirect_pipes_out(params, cmdlist, 1);
 	}
 	closeredirfds(cmd->redir);
-	if (status != SUCCESS)
-		return (status);
 	func = builtin(cmd->args[0]);
 	status = exebuiltin(func, cmd->args, params);
 	if (builtin(cmd->args[0]) != EXIT)

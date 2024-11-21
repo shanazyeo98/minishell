@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/28 18:11:07 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/17 17:26:54 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 22:48:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	break_shell(t_minishell *ms)
 {
 	ft_putendl_fd(EXITCMDMSG, STDOUT_FILENO);
 	spick_and_span(ms, SUCCESS, TRUE);
-	exit(EXIT_SUCCESS);
+	exit(ms->exitstatus);
 }
 
 /* Description: main programme for minishell

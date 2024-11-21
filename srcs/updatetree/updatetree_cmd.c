@@ -6,35 +6,36 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/19 15:40:49 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/21 22:46:36 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-int	countargs(char *str, t_token *token, t_token *start, t_token *end)
+int	countargs(char *str, t_token *token, t_token *st, t_token *end)
 {
 	int	i;
 	int	j;
 
-	i = ft_countstr(str, ' ');
+	i = countstr(str);
 	j = 0;
 	while (str != NULL && str[j] != '\0')
 	{
-		if (j == 0 && ft_isspace(str[j]) == 1)
+		if (j == 0 && ft_isspace(str[j]) == 1 && token != st)
 		{
-			if (token != start && token->wordgrp == (token->prev)->wordgrp)
+			if (token != st && token->wordgrp == (token->prev)->wordgrp && \
+			token->next !=end)
 				i++;
 		}
-		else if (str[j + 1] == '\0' && ft_isspace(str[j]) == 1)
+		else if (token != st && str[j + 1] == '\0' && ft_isspace(str[j]) == 1)
 		{
 			if (token->next != end && (token->next)->type != REDIRECTOR && \
-			token->wordgrp == (token->next)->wordgrp)
+			token->wordgrp == (token->next)->wordgrp && countstr(str) > 0)
 				i++;
 		}
 		j++;
 	}
-	if (str != NULL && token != start && token->wordgrp \
+	if (str != NULL && token != st && token->wordgrp \
 	== (token->prev)->wordgrp)
 		i--;
 	return (i);
@@ -90,6 +91,7 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 	args = 0;
 	redir = 0;
 	count(&args, &redir, start, end);
+	printf("args: %d\n", args);
 	if (args > 0)
 	{
 		cmd->args = malloc(sizeof(char *) * (args + 1));
