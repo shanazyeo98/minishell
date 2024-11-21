@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/26 12:19:15 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/19 20:12:59 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 13:58:52 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # include <limits.h>
 
 /* General */
-# define DELIMITER " '\n\"$?="
+# define DELIMITER " '\n\"$?=/"
 # define PROMPT "٩(ఠ益ఠ)۶ > "
 # define EXIT_CMD "exit"
 # define EXIT_MSG "Goodbye\n"
