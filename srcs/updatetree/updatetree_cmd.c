@@ -6,7 +6,7 @@
 /*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 07:21:02 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/21 23:30:41 by shayeo           ###   ########.fr       */
+/*   Updated: 2024/11/21 23:37:05 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	countargs(char *str, t_token *token, t_token *st, t_token *end)
 		if (j == 0 && ft_isspace(str[j]) == 1 && token != st)
 		{
 			if (token != st && token->wordgrp == (token->prev)->wordgrp && \
-			token->next !=end)
+			token->next != end)
 				i++;
 		}
 		else if (j != 0 && str[j + 1] == '\0' && ft_isspace(str[j]) == 1)
@@ -91,7 +91,6 @@ int	initcmd(t_cmd *cmd, t_token *start, t_token *end)
 	args = 0;
 	redir = 0;
 	count(&args, &redir, start, end);
-//	printf("args: %d\n", args);
 	if (args > 0)
 	{
 		cmd->args = malloc(sizeof(char *) * (args + 1));
