@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
+/*   By: shayeo <shayeo@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/21 10:23:51 by shayeo            #+#    #+#             */
-/*   Updated: 2024/11/17 17:32:04 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 15:15:19 by shayeo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ int	execute(t_cmdnode *node, t_minishell *params)
 		return (FAIL);
 	count = ft_lstsize(node->cmds);
 	cmd = (t_cmd *) node->cmds->content;
-	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 7)
+	if ((count == 1 && cmd->args != NULL) && builtin(cmd->args[0]) > 1)
 		return (nonchildexe(node->cmds, params));
 	else
 	{
