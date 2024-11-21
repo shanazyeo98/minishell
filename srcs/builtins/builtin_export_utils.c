@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/15 09:02:40 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 10:14:04 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*get_var_name(char *in, char c)
 {
 	char	*var;
 
-	if (ft_strchr(in, c) == NULL)
+	if (ft_strchr(in, c) == NULL || ft_strchr(in, c) == in)
 		var = ft_strdup(in);
 	else
 		var = ft_substr(in, 0, ft_strchr(in, c) - in);
