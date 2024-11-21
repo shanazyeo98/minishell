@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/10 19:46:15 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/16 17:22:42 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 11:23:33 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,5 +146,15 @@ int	builtin_export(char **args, t_list **envp)
 		if (status != SUCCESS)
 			return (status);
 	}
+
+	// t_list	*curr;
+
+	// curr = *envp;
+	// while (curr != NULL)
+	// {
+	// 	printf("envp after add: %s\n", (char *)curr->content);
+	// 	curr = curr->next;
+	// }
+
 	return (SUCCESS);
 }
