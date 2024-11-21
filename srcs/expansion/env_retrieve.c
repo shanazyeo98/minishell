@@ -6,7 +6,7 @@
 /*   By: mintan <mintan@student.42singapore.sg>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/17 02:33:28 by mintan            #+#    #+#             */
-/*   Updated: 2024/11/21 14:07:03 by mintan           ###   ########.fr       */
+/*   Updated: 2024/11/21 14:12:00 by mintan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ char	*retrieve_env_var(char *var, t_list *envp, int *status)
 	found_node = find_env_var(var, envp);
 	if (found_node == NULL)
 		return (NULL);
-	if (strchr((char *)found_node->content, '=') == NULL)
+	if (ft_strchr((char *)found_node->content, '=') == NULL)
 		value = NULL;
 	else
 	{
