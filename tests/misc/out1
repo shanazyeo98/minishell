@@ -4,10 +4,12 @@ NAME = minishell
 SRCS = srcs/main.c \
 srcs/execution/execution.c \
 srcs/execution/execution_child.c \
+srcs/execution/execution_child_utils.c \
 srcs/execution/execution_heredoc.c \
 srcs/execution/execution_redirection.c \
 srcs/execution/execution_utils.c \
 srcs/execution/execution_utils2.c \
+srcs/execution/execution_utils3.c \
 srcs/general/init_general.c \
 srcs/signals/signals_init.c \
 srcs/general/cleanup.c \
@@ -31,12 +33,16 @@ srcs/expansion/env_init.c \
 srcs/expansion/env_retrieve.c \
 srcs/expansion/token_expand.c \
 srcs/expansion/expand_parameter.c \
+srcs/expansion/expand_utils.c \
+srcs/expansion/split_money.c \
 srcs/expansion/wildcard.c \
 srcs/expansion/wildcard_match.c \
+srcs/expansion/wildcard_utils.c \
 srcs/updatetree/updatetree.c \
 srcs/updatetree/updatetree_cmd.c \
 srcs/updatetree/updatetree_fill.c \
 srcs/updatetree/updatetree_redirector.c \
+srcs/updatetree/updatetree_utils.c \
 srcs/builtins/builtin_cd.c \
 srcs/builtins/builtin_cd_relative.c \
 srcs/builtins/builtin_cd_utils.c \
@@ -47,14 +53,15 @@ srcs/builtins/builtin_env.c \
 srcs/builtins/builtin_unset.c \
 srcs/builtins/builtin_export.c \
 srcs/builtins/builtin_export_utils.c \
+srcs/builtins/builtin_export_utils2.c \
 srcs/extra/extra.c
 OBJS = $(SRCS:.c=.o)
 LIBFTDIR = libft
 LIBFT = libft.a
 LIB = -lreadline
 HEADERS = srcs/minishell.h
-# MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
-# MAC_LIB = -L/opt/homebrew/opt/readline/lib
+ MAC_INCLUDE = -I/opt/homebrew/opt/readline/include
+ MAC_LIB = -L/opt/homebrew/opt/readline/lib
 
 all: $(NAME)
 
