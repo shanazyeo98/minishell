@@ -7,9 +7,13 @@ Minishell is a simple implementation of bash written in C. It allows user to nav
 **Concepts**
 
 Process management through forking
+
 Interprocess communication via pipes
+
 Signal handling
+
 Lexical analysis
+
 AST
 
 **PROGRAM FLOW CHART**
